@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">M Pay</string>
+    <string name="logo">Logo</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+
+    <string name="validationUsername">Username is not valid</string>
+    <string name="validationPassword">Password is not valid</string>
+
+    <string name="more">Lihat Semua</string>
+
+    <string name="title_home">Home</string>
+    <string name="reset">Reset</string>
+    <string name="back">Back</string>
+    <string name="menu">Menu</string>
+    <string name="icon">Icon</string>
+    <string name="scan">Scan</string>
+    <string name="mp_id">M Pay ID</string>
+    <string name="transfer">Transfer</string>
+    <string name="top_up">Top Up</string>
+    <string name="rp">Rp</string>
+    <string name="saldo_cash">SALDO CASH</string>
+    <string name="ovo">OVO</string>
+    <string name="grab">GRAB</string>
+    <string name="go_pay">GO-Pay</string>
+    <string name="pulsa_pascabayar">Pulsa Pascabayar</string>
+    <string name="tv_kabel_dan_speedy">TV kabel dan Speedy</string>
+    <string name="pulsa">Pulsa</string>
+    <string name="pln">PLN</string>
+    <string name="dana">DANA</string>
+    <string name="asuransi">Asuransi</string>
+    <string name="bpjs">BPJS</string>
+    <string name="finance">Finance</string>
+    <string name="payment">Payment</string>
+    <string name="e_money_mandiri">E-Money Mandiri</string>
+    <string name="tap_cash_bni">Tap Cash BNI</string>
+    <string name="pdam">PDAM</string>
+    <string name="pln_pascabayar">PLN Pascabayar</string>
+    <string name="tiket">Tiket</string>
+    <string name="default_value">0</string>
+    <string name="member">Member</string>
+    <string name="qr_code">QR Code</string>
+    <string name="phone_number">Nomor Telfon</string>
+    <string name="nominal">Total Nominal Yang Di Transfer</string>
+</resources>
