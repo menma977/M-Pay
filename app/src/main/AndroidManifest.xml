@@ -18,7 +18,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".user.menu.SetNominalActivity">
+        <activity
+            android:label="Lupa Kata Sandi"
+            android:name=".password.update.UpdatePasswordActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".password.edit.EditPasswordActivity"
+            android:label="Lupa Kata Sandi">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".RegisterUserActivity"
+            android:label="Pendaftaran">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".user.menu.SetNominalActivity"
+            android:label="@string/transfer">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".user.menu.ScanActivity" />

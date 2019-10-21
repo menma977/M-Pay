@@ -25,7 +25,6 @@ class HomeMerchantActivity : AppCompatActivity() {
             finish()
         }
 
-
         navView.setupWithNavController(navController)
     }
 }

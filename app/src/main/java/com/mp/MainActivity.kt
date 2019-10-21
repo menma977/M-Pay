@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.core.content.ContextCompat
+import com.mp.password.edit.EditPasswordActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import net.glxn.qrgen.android.QRCode
 
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val loginButton : Button = findViewById(R.id.login)
+        val registerButton : Button = findViewById(R.id.register)
+        val forgotPassword : Button = findViewById(R.id.forgotPassword)
 
         doRequestPermission()
 
@@ -27,6 +30,18 @@ class MainActivity : AppCompatActivity() {
             val goTo = Intent(this, VerifyLoginActivity::class.java)
             startActivity(goTo)
             finish()
+        }
+
+        registerButton.setOnClickListener {
+            doRequestPermission()
+            val goTo = Intent(this, RegisterUserActivity::class.java)
+            startActivity(goTo)
+        }
+
+        forgotPassword.setOnClickListener {
+            doRequestPermission()
+            val goTo = Intent(this, EditPasswordActivity::class.java)
+            startActivity(goTo)
         }
     }
 

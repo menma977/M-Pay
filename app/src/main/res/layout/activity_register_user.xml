@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mp.RegisterUserActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_phone_android_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:hint="@string/no_telfon_yang_terpasang_di_hp_anda"
+            android:importantForAutofill="no"
+            android:inputType="phone"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_email_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:hint="@string/email_aktif_saat_ini"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_account_circle_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:hint="@string/nama_sesuai_ktp"
+            android:importantForAutofill="no"
+            android:inputType="textAutoCorrect|text"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_lock_open_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:inputType="numberPassword"
+            android:hint="@string/password"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute"
+            android:autofillHints="@string/password" />
+
+        <EditText
+            android:id="@+id/passwordValidation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_lock_open_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:inputType="numberPassword"
+            android:hint="@string/password_validation"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute"
+            android:autofillHints="@string/password" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/CodeValidation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:hint="@string/code_verifikasi_no_telfon"
+                android:backgroundTint="@color/Success"
+                android:drawableTint="@color/Success"
+                android:textColor="@color/Success"
+                android:textColorHint="@color/colorSecondaryLight"
+                tools:ignore="Autofill,LabelFor,UnusedAttribute" />
+
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_info"
+                android:textColor="@color/textPrimary"
+                android:text="@string/kirim_code" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_success"
+            android:textColor="@color/textPrimary"
+            android:text="@string/daftar" />
+
+    </LinearLayout>
+
+</ScrollView>
