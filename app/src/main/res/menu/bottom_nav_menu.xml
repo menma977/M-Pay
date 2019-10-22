@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_shop_black_24dp"
         android:iconTint="@color/textPrimary"
-        android:title="@string/title_home" />
+        android:title="@string/title_home"
+        tools:ignore="UnusedAttribute" />
 
     <item
         android:id="@+id/navigation_menu"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:iconTint="@color/textPrimary"
-        android:title="@string/menu" />
+        android:title="@string/menu"
+        tools:ignore="UnusedAttribute" />
+
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_restore_black_24dp"
+        android:iconTint="@color/textPrimary"
+        android:title="@string/history"
+        tools:ignore="UnusedAttribute" />
 
 </menu>

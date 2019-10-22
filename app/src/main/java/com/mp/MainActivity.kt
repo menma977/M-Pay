@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Nomor Telfon Anda Tidak boleh kosong", Toast.LENGTH_LONG).show()
             } else {
                 val pin = "462066"
-                val typeUser = 1
+                val typeUser = 0
                 session.saveString("phoneUser", phoneTemporary)
                 session.saveString("pinUser", pin)
                 session.saveInteger("typeUser", typeUser)

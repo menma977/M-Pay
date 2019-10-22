@@ -10,10 +10,11 @@
 
     <string name="more">Lihat Semua</string>
 
-    <string name="title_home">Home</string>
+    <string name="title_home">PPOB</string>
+    <string name="menu">Merchant</string>
+
     <string name="reset">Reset</string>
     <string name="back">Back</string>
-    <string name="menu">Menu</string>
     <string name="icon">Icon</string>
     <string name="scan">Scan</string>
     <string name="mp_id">M Pay ID</string>
@@ -57,4 +58,5 @@
     <string name="update_password">Update Password</string>
     <string name="password_baru_anda">password baru anda</string>
     <string name="validasi_password_baru_anda">validasi password baru anda</string>
+    <string name="history">History</string>
 </resources>

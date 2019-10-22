@@ -203,8 +203,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -240,8 +240,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -277,8 +277,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -314,8 +314,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -362,8 +362,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -399,8 +399,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -436,8 +436,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -474,8 +474,8 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"

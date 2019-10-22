@@ -35,6 +35,16 @@
             android:textStyle="bold"/>
 
         <ImageButton
+            android:id="@+id/history"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/Link"
+            android:contentDescription="@string/icon"
+            android:tint="@color/textPrimary"
+            app:srcCompat="@drawable/ic_restore_black_24dp" />
+
+        <ImageButton
             android:id="@+id/logout"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -48,7 +58,7 @@
 
     <fragment
         android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:name="com.mp.user.ui.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"

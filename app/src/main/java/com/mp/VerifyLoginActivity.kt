@@ -19,10 +19,6 @@ class VerifyLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_login)
 
-//        finish()
-//        val goTo = Intent(this, HomeMemberActivity::class.java)
-//        startActivity(goTo)
-
         back.setOnClickListener {
             val goTo = Intent(this, MainActivity::class.java)
             startActivity(goTo)
@@ -31,6 +27,7 @@ class VerifyLoginActivity : AppCompatActivity() {
 
         reset.setOnClickListener {
             password = ""
+            setTextToInput(password)
         }
 
         button1.setOnClickListener {
