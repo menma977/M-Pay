@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.mp.model.User
 import com.mp.user.member.HomeMemberActivity
 import com.mp.user.merchant.HomeMerchantActivity
 import kotlinx.android.synthetic.main.activity_verify_login.*
@@ -95,14 +96,30 @@ class VerifyLoginActivity : AppCompatActivity() {
 
     private fun validationPassword() {
         if (password.length == 6) {
-            if (password == "462066") {
-                val goTo = Intent(this, HomeMerchantActivity::class.java)
-                startActivity(goTo)
-                finish()
-            } else {
-                password = ""
-                setTextToInput(password)
-                Toast.makeText(this, R.string.validationPassword, Toast.LENGTH_LONG).show()
+            when (password) {
+                User.getPin() -> {
+                    if (User.getType() == 1) {
+                        val goTo = Intent(this, HomeMemberActivity::class.java)
+                        startActivity(goTo)
+                        finish()
+                    } else {
+                        val goTo = Intent(this, HomeMerchantActivity::class.java)
+                        startActivity(goTo)
+                        finish()
+                    }
+                }
+                else -> {
+                    password = ""
+                    countPasswordWrong += 1
+                    if (countPasswordWrong == 3) {
+                        val goTo = Intent(this, MainActivity::class.java)
+                        startActivity(goTo)
+                        finish()
+                    } else {
+                        setTextToInput(password)
+                        Toast.makeText(this, R.string.validationPassword, Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }

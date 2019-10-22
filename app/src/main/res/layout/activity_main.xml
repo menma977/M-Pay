@@ -40,7 +40,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -49,9 +49,9 @@
                 android:drawableStart="@drawable/ic_account_box_black_24dp"
                 android:drawableTint="@color/Success"
                 android:ems="10"
-                android:hint="@string/username"
+                android:hint="@string/phone_number"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName"
+                android:inputType="phone"
                 android:textColor="@color/Success"
                 android:textColorHint="@color/colorSecondaryLight"
                 tools:ignore="UnusedAttribute" />

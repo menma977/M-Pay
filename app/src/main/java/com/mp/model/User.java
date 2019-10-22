@@ -2,49 +2,58 @@ package com.mp.model;
 
 public class User {
 
-    private String phone;
-    private String name;
-    private String type;
-    private String image;
-    private Integer balance;
+    private static String phone;
+    private static String pin;
+    private static String name;
+    private static Integer type;
+    private static String image;
+    private static Integer balance;
 
-    public String getPhone() {
+    public static String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public static void setPhone(String phone) {
+        User.phone = phone;
     }
 
-    public String getName() {
+    public static String getPin() {
+        return pin;
+    }
+
+    public static void setPin(String pin) {
+        User.pin = pin;
+    }
+
+    public static String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static void setName(String name) {
+        User.name = name;
     }
 
-    public String getType() {
+    public static Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public static void setType(Integer type) {
+        User.type = type;
     }
 
-    public String getImage() {
+    public static String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public static void setImage(String image) {
+        User.image = image;
     }
 
-    public Integer getBalance() {
+    public static Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
-        this.balance = balance;
+    public static void setBalance(Integer balance) {
+        User.balance = balance;
     }
 }

@@ -4,14 +4,15 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.mp.model.Session
+import com.mp.model.User
 import com.mp.password.edit.EditPasswordActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import net.glxn.qrgen.android.QRCode
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +26,34 @@ class MainActivity : AppCompatActivity() {
 
         doRequestPermission()
 
-        loginButton.setOnClickListener {
-            doRequestPermission()
+        val session = Session(this)
+        if (session.getString("phoneUser").toString().isNotEmpty() && session.getString("pinUser").toString().isNotEmpty()) {
+            User.setPhone(session.getString("phoneUser"))
+            User.setPin(session.getString("pinUser"))
+            User.setType(session.getInteger("typeUser"))
             val goTo = Intent(this, VerifyLoginActivity::class.java)
             startActivity(goTo)
             finish()
+        }
+
+        loginButton.setOnClickListener {
+            val phoneTemporary = phoneNumber.text.toString()
+            if (phoneTemporary.isEmpty()) {
+                Toast.makeText(this, "Nomor Telfon Anda Tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else {
+                val pin = "462066"
+                val typeUser = 1
+                session.saveString("phoneUser", phoneTemporary)
+                session.saveString("pinUser", pin)
+                session.saveInteger("typeUser", typeUser)
+                User.setPhone(phoneTemporary)
+                User.setPin(pin)
+                User.setType(typeUser)
+                doRequestPermission()
+                val goTo = Intent(this, VerifyLoginActivity::class.java)
+                startActivity(goTo)
+                finish()
+            }
         }
 
         registerButton.setOnClickListener {
