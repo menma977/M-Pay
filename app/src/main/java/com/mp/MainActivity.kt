@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.mp.controller.RegisterController
 import com.mp.model.Session
 import com.mp.model.User
 import com.mp.password.edit.EditPasswordActivity
@@ -64,8 +65,28 @@ class MainActivity : AppCompatActivity() {
 
         forgotPassword.setOnClickListener {
             doRequestPermission()
-            val goTo = Intent(this, EditPasswordActivity::class.java)
-            startActivity(goTo)
+            if (phoneNumber.text.isNotEmpty()) {
+                try {
+                    val response = RegisterController.VerifiedPhone(phoneNumber.text.toString()).execute().get()
+                    println()
+                    println("===============Register===================")
+                    println(response)
+                    println("==========================================")
+                    if (response["Status"].toString() == "0") {
+                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
+                        val goTo = Intent(this, EditPasswordActivity::class.java)
+                            .putExtra("pin", response["code_key"].toString())
+                        startActivity(goTo)
+                    } else {
+                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
+                    }
+                } catch (e : Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Ada masalah saat pengiriman kode mohon ulangi lagi", Toast.LENGTH_LONG).show()
+                }
+            } else {
+                Toast.makeText(this, "Nomor Telfon Tidak boleh kosong", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -85,10 +106,6 @@ class MainActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE)
             != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.FOREGROUND_SERVICE), 100)
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 100)
         }
     }
 }

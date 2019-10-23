@@ -28,7 +28,11 @@ class PostPaidController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=ReqPulsa&username=${username}&nohp=$phone&nominal=$nominal&type=$type"
+                val urlParameters = "a=ReqPulsa" +
+                        "&username=${username}" +
+                        "&nohp=$phone" +
+                        "&nominal=$nominal" +
+                        "&type=$type"
                 println(urlParameters)
 
                 // Send post request
@@ -77,7 +81,11 @@ class PostPaidController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=ReqPulsa&username=${username}&nohp=$phone&nominal=$nominal&type=$type"
+                val urlParameters = "a=ReqPulsa" +
+                        "&username=${username}" +
+                        "&nohp=$phone" +
+                        "&nominal=$nominal" +
+                        "&type=$type"
 
                 // Send post request
                 httpURLConnection.doOutput = true

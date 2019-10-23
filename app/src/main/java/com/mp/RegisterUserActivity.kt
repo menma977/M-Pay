@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,10 @@ import com.mp.model.Session
 import kotlinx.android.synthetic.main.activity_register_user.*
 import net.gotev.uploadservice.MultipartUploadRequest
 import java.lang.Exception
+import java.util.*
+import kotlin.concurrent.schedule
+import android.os.Handler
+
 
 class RegisterUserActivity : AppCompatActivity() {
 
@@ -33,6 +38,7 @@ class RegisterUserActivity : AppCompatActivity() {
         return true
     }
 
+    @SuppressLint("ShowToast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_user)
@@ -78,18 +84,23 @@ class RegisterUserActivity : AppCompatActivity() {
             loading.show()
             if (phone.text.isNotEmpty()) {
                 try {
-                    val response = RegisterController.VerifiedPhone(phone.text.toString()).execute().get()
-                    println()
-                    println("===============Register===================")
-                    println(response)
-                    println("code : $code")
-                    println("==========================================")
-                    if (response["Status"].toString() == "0") {
-                        code = response["code_key"].toString()
-                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this, "Error : ${response["Pesan"]}", Toast.LENGTH_LONG).show()
-                    }
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            val response = RegisterController.VerifiedPhone(phone.text.toString()).execute().get()
+                            val massageResponse: String
+                            if (response["Status"].toString() == "0") {
+                                code = response["code_key"].toString()
+                                massageResponse = response["Pesan"].toString()
+                            } else {
+                                massageResponse = response["Pesan"].toString()
+                            }
+                            runOnUiThread {
+                                Handler().postDelayed({
+                                    Toast.makeText(applicationContext, massageResponse, Toast.LENGTH_SHORT).show()
+                                }, 1500)
+                            }
+                        }
+                    }, 1000)
                 } catch (e : Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, "Ada masalah saat pengiriman kode mohon ulangi lagi", Toast.LENGTH_LONG).show()
@@ -97,7 +108,9 @@ class RegisterUserActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Nomor Tlefon tidak boleh kosong", Toast.LENGTH_LONG).show()
             }
-            loading.dismiss()
+            Timer().schedule(1000) {
+                loading.dismiss()
+            }
         }
 
         registerButton.setOnClickListener {
@@ -153,14 +166,14 @@ class RegisterUserActivity : AppCompatActivity() {
                         println(response)
                         println("==========================================")
                         if (response["Status"].toString() == "0") {
-//                            val session = Session(this)
-//                            session.saveString("phoneUser", phone.text.toString())
-//                            session.saveString("nameUser", name.text.toString())
-//                            session.saveString("pinUser", password.text.toString())
-//                            session.saveInteger("typeUser", 1)
-//                            val goTo = Intent(this, MainActivity::class.java)
-//                            startActivity(goTo)
-//                            finish()
+                            val session = Session(this)
+                            session.saveString("phoneUser", phone.text.toString())
+                            session.saveString("nameUser", name.text.toString())
+                            session.saveString("pinUser", password.text.toString())
+                            session.saveInteger("typeUser", 1)
+                            val goTo = Intent(this, MainActivity::class.java)
+                            startActivity(goTo)
+                            finish()
                         } else {
                             Toast.makeText(this, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
                         }

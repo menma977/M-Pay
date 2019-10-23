@@ -88,8 +88,9 @@ class EditPasswordActivity : AppCompatActivity() {
     }
 
     private fun validationPassword() {
+        val getPin = intent.getSerializableExtra("pin").toString()
         if (pin.text.length == 6) {
-            if (pin.text == "462066") {
+            if (pin.text == getPin) {
                 val goTo = Intent(this, UpdatePasswordActivity::class.java)
                 startActivity(goTo)
                 finish()

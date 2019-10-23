@@ -99,7 +99,8 @@
             android:textAlignment="center"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
-            android:text="Foto KTP" />
+            android:text="Foto KTP"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/KTP"
@@ -116,7 +117,8 @@
             android:textAlignment="center"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
-            android:text="Foto selfi memegang KTP" />
+            android:text="Foto selfi memegang KTP"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/selfAndKTP"
