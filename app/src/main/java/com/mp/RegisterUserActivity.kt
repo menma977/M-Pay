@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +22,8 @@ import kotlin.concurrent.schedule
 import android.os.Handler
 
 
+
+
 class RegisterUserActivity : AppCompatActivity() {
 
     private var imageSwitcher : Int = 0
@@ -32,6 +34,7 @@ class RegisterUserActivity : AppCompatActivity() {
     private var filePathSelfAndKTP : String = ""
     private var fileNameSelfAndKTP : String = ""
     private var code = ""
+    private var session : Session? = null
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
@@ -42,6 +45,8 @@ class RegisterUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_user)
+
+        session = Session(this)
 
         val loading = ProgressDialog(this)
         loading.setTitle("Loading")
@@ -149,41 +154,62 @@ class RegisterUserActivity : AppCompatActivity() {
                 Toast.makeText(this, "kata sandi yang anda inputkan tidak cocok", Toast.LENGTH_LONG).show()
             } else {
                 loading.show()
-                val statusKTP = uploadImageToServer(filePathKTP)
-                if (statusKTP) {
-                    val statusSelfAndKTP = uploadImageToServer(filePathSelfAndKTP)
-                    if (statusSelfAndKTP) {
-                        val response = RegisterController.RegisterUser(
-                            phone.text.toString(),
-                            email.text.toString(),
-                            name.text.toString(),
-                            password.text.toString(),
-                            fileNameKTP,
-                            fileNameSelfAndKTP
-                        ).execute().get()
-                        println()
-                        println("===============Register===================")
-                        println(response)
-                        println("==========================================")
-                        if (response["Status"].toString() == "0") {
-                            val session = Session(this)
-                            session.saveString("phoneUser", phone.text.toString())
-                            session.saveString("nameUser", name.text.toString())
-                            session.saveString("pinUser", password.text.toString())
-                            session.saveInteger("typeUser", 1)
-                            val goTo = Intent(this, MainActivity::class.java)
-                            startActivity(goTo)
-                            finish()
+                Timer().schedule(object : TimerTask() {
+                    override fun run() {
+                        val statusKTP = uploadImageToServer(filePathKTP)
+                        if (statusKTP) {
+                            val statusSelfAndKTP = uploadImageToServer(filePathSelfAndKTP)
+                            if (statusSelfAndKTP) {
+                                val response = RegisterController.RegisterUser(
+                                    phone.text.toString(),
+                                    email.text.toString(),
+                                    name.text.toString(),
+                                    password.text.toString(),
+                                    fileNameKTP,
+                                    fileNameSelfAndKTP
+                                ).execute().get()
+                                println()
+                                println("===============Register===================")
+                                println(response)
+                                println("==========================================")
+                                if (response["Status"].toString() == "0") {
+                                    session!!.saveString("phoneUser", phone.text.toString())
+                                    session!!.saveString("nameUser", name.text.toString())
+                                    session!!.saveString("pinUser", password.text.toString())
+                                    session!!.saveInteger("typeUser", 1)
+                                    runOnUiThread{
+                                        Handler().postDelayed({
+                                            val goTo = Intent(applicationContext, MainActivity::class.java)
+                                            startActivity(goTo)
+                                            finish()
+                                        }, 1000)
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        Handler().postDelayed({
+                                            Toast.makeText(applicationContext, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
+                                        }, 500)
+                                    }
+                                }
+                            } else {
+                                runOnUiThread {
+                                    Handler().postDelayed({
+                                        Toast.makeText(applicationContext, "Foto Diri dengan KTP bermasalah mohon ulangi lagi", Toast.LENGTH_LONG).show()
+                                    }, 500)
+                                }
+                            }
                         } else {
-                            Toast.makeText(this, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
+                            runOnUiThread {
+                                Handler().postDelayed({
+                                    Toast.makeText(applicationContext, "Foto KTP bermasalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                }, 500)
+                            }
                         }
-                    } else {
-                        Toast.makeText(this, "Foto Diri dengan KTP bermasalah mohon ulangi lagi", Toast.LENGTH_LONG).show()
                     }
-                } else {
-                    Toast.makeText(this, "Foto KTP bermasalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                }, 2000)
+                Timer().schedule(500) {
+                    loading.dismiss()
                 }
-                loading.dismiss()
             }
         } else {
             Toast.makeText(this, "code yang anda masukan tidak cocok", Toast.LENGTH_LONG).show()
@@ -220,11 +246,20 @@ class RegisterUserActivity : AppCompatActivity() {
             camera = findViewById(R.id.KTP)
             if (resultCode == Activity.RESULT_OK) {
                 try {
-                    filePathKTP = getRealPathFromImageURI(imageKTP)
-                    val convertArray = filePathKTP.split("/").toTypedArray()
-                    fileNameKTP = convertArray.last()
-                    val thumbnails = MediaStore.Images.Media.getBitmap(contentResolver, imageKTP)
-                    camera.setImageBitmap(thumbnails)
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            filePathKTP = getRealPathFromImageURI(imageKTP)
+                            val convertArray = filePathKTP.split("/").toTypedArray()
+                            fileNameKTP = convertArray.last()
+                            val thumbnails = MediaStore.Images.Media.getBitmap(contentResolver, imageKTP)
+                            val bitmap = Bitmap.createScaledBitmap(thumbnails, 150, 150, true)
+                            runOnUiThread{
+                                Handler().postDelayed({
+                                    camera.setImageBitmap(bitmap)
+                                }, 1000)
+                            }
+                        }
+                    }, 1000)
                 } catch (ex : Exception) {
                     Toast.makeText(this, "Ada Kesalah saat mengambil gambar", Toast.LENGTH_LONG).show()
                 }
@@ -235,11 +270,20 @@ class RegisterUserActivity : AppCompatActivity() {
             camera = findViewById(R.id.selfAndKTP)
             if (resultCode == Activity.RESULT_OK) {
                 try {
-                    filePathSelfAndKTP = getRealPathFromImageURI(imageSelfAndKTP)
-                    val convertArray = filePathSelfAndKTP.split("/").toTypedArray()
-                    fileNameSelfAndKTP = convertArray.last()
-                    val thumbnails = MediaStore.Images.Media.getBitmap(contentResolver, imageSelfAndKTP)
-                    camera.setImageBitmap(thumbnails)
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            filePathSelfAndKTP = getRealPathFromImageURI(imageSelfAndKTP)
+                            val convertArray = filePathSelfAndKTP.split("/").toTypedArray()
+                            fileNameSelfAndKTP = convertArray.last()
+                            val thumbnails = MediaStore.Images.Media.getBitmap(contentResolver, imageSelfAndKTP)
+                            val bitmap = Bitmap.createScaledBitmap(thumbnails, 150, 150, true)
+                            runOnUiThread{
+                                Handler().postDelayed({
+                                    camera.setImageBitmap(bitmap)
+                                }, 1000)
+                            }
+                        }
+                    }, 1000)
                 } catch (ex : Exception) {
                     ex.printStackTrace()
                     Toast.makeText(this, "Ada Kesalah saat mengambil gambar", Toast.LENGTH_LONG).show()

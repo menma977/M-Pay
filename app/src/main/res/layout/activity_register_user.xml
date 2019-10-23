@@ -29,6 +29,42 @@
             android:textColorHint="@color/colorSecondaryLight"
             tools:ignore="UnusedAttribute" />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/codeValidation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:hint="@string/code_verifikasi_no_telfon"
+                android:backgroundTint="@color/Success"
+                android:drawableTint="@color/Success"
+                android:textColor="@color/Success"
+                android:textColorHint="@color/colorSecondaryLight"
+                tools:ignore="Autofill,LabelFor,UnusedAttribute" />
+
+            <Button
+                android:id="@+id/sendCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_info"
+                android:textColor="@color/textPrimary"
+                android:text="@string/kirim_code" />
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
@@ -128,42 +164,6 @@
             android:layout_marginBottom="20dp"
             android:contentDescription="@string/icon"
             app:srcCompat="@drawable/ic_camera_black_50dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/codeValidation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:hint="@string/code_verifikasi_no_telfon"
-                android:backgroundTint="@color/Success"
-                android:drawableTint="@color/Success"
-                android:textColor="@color/Success"
-                android:textColorHint="@color/colorSecondaryLight"
-                tools:ignore="Autofill,LabelFor,UnusedAttribute" />
-
-            <Button
-                android:id="@+id/sendCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_info"
-                android:textColor="@color/textPrimary"
-                android:text="@string/kirim_code" />
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/registerButton"
