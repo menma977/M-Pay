@@ -8,6 +8,7 @@ public class User {
     private static Integer type;
     private static String image;
     private static Integer balance;
+    private static Integer status;
 
     public static String getPhone() {
         return phone;
@@ -55,5 +56,13 @@ public class User {
 
     public static void setBalance(Integer balance) {
         User.balance = balance;
+    }
+
+    public static Integer getStatus() {
+        return status;
+    }
+
+    public static void setStatus(Integer status) {
+        User.status = status;
     }
 }

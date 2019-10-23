@@ -34,7 +34,7 @@ constructor(context: Context) {
     }
 
     fun getInteger(key: String): Int? {
-        return sharedPreferences.getInt(key, 0)
+        return sharedPreferences.getInt(key, 1)
     }
 
     fun getBoolean(key: String): Boolean {

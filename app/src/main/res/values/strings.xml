@@ -59,4 +59,5 @@
     <string name="password_baru_anda">password baru anda</string>
     <string name="validasi_password_baru_anda">validasi password baru anda</string>
     <string name="history">History</string>
+    <string name="password_6_digit">kata sandi (harus 6 digit)</string>
 </resources>
