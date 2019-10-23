@@ -20,7 +20,7 @@ class HomeMemberActivity : AppCompatActivity() {
             val session = Session(this)
             session.saveString("phoneUser" , "")
             session.saveString("pinUser" , "")
-            session.saveString("typeUser" , "")
+            session.saveInteger("typeUser" , 0)
             User.setPhone("")
             User.setPin("")
             User.setType(0)

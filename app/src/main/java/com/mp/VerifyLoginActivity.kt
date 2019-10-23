@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.member.HomeMemberActivity
 import com.mp.user.merchant.HomeMerchantActivity
@@ -20,6 +21,13 @@ class VerifyLoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_verify_login)
 
         back.setOnClickListener {
+            val session = Session(this)
+            session.saveString("phoneUser" , "")
+            session.saveString("pinUser" , "")
+            session.saveInteger("typeUser" , 0)
+            User.setPhone("")
+            User.setPin("")
+            User.setType(0)
             val goTo = Intent(this, MainActivity::class.java)
             startActivity(goTo)
             finish()

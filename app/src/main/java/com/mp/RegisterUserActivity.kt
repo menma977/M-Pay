@@ -43,35 +43,56 @@ class RegisterUserActivity : AppCompatActivity() {
         loading.setCancelable(false)
 
         KTP.setOnClickListener {
-            imageSwitcher = 0
-            val values  = ContentValues()
-            values.put(MediaStore.Images.Media.TITLE, "KTP")
-            values.put(MediaStore.Images.Media.DESCRIPTION, "Foto KTP")
-            imageKTP = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageKTP)
-            startActivityForResult(callCameraIntent,0)
+            try {
+                imageSwitcher = 0
+                val values  = ContentValues()
+                values.put(MediaStore.Images.Media.TITLE, "KTP")
+                values.put(MediaStore.Images.Media.DESCRIPTION, "Foto KTP")
+                imageKTP = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageKTP)
+                startActivityForResult(callCameraIntent,0)
+            } catch (e : Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi", Toast.LENGTH_LONG).show()
+            }
         }
 
         selfAndKTP.setOnClickListener {
-            imageSwitcher = 1
-            val values  = ContentValues()
-            values.put(MediaStore.Images.Media.TITLE, "Self And KTP")
-            values.put(MediaStore.Images.Media.DESCRIPTION, "Foto Diri dan KTP")
-            imageSelfAndKTP = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-            val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageSelfAndKTP)
-            startActivityForResult(callCameraIntent,0)
+            try {
+                imageSwitcher = 1
+                val values  = ContentValues()
+                values.put(MediaStore.Images.Media.TITLE, "Self And KTP")
+                values.put(MediaStore.Images.Media.DESCRIPTION, "Foto Diri dan KTP")
+                imageSelfAndKTP = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageSelfAndKTP)
+                startActivityForResult(callCameraIntent,0)
+            } catch (e : Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi", Toast.LENGTH_LONG).show()
+            }
         }
 
         sendCode.setOnClickListener {
             loading.show()
             if (phone.text.isNotEmpty()) {
-                val response = RegisterController.VerifiedPhone(phone.text.toString()).execute().get()
-                if (response["Status"].toString() == "0") {
-                    code = response["code_key"].toString()
-                } else {
-                    Toast.makeText(this, "Error : ${response["Pesan"]}", Toast.LENGTH_LONG).show()
+                try {
+                    val response = RegisterController.VerifiedPhone(phone.text.toString()).execute().get()
+                    println()
+                    println("===============Register===================")
+                    println(response)
+                    println("code : $code")
+                    println("==========================================")
+                    if (response["Status"].toString() == "0") {
+                        code = response["code_key"].toString()
+                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, "Error : ${response["Pesan"]}", Toast.LENGTH_LONG).show()
+                    }
+                } catch (e : Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Ada masalah saat pengiriman kode mohon ulangi lagi", Toast.LENGTH_LONG).show()
                 }
             } else {
                 Toast.makeText(this, "Nomor Tlefon tidak boleh kosong", Toast.LENGTH_LONG).show()
@@ -80,68 +101,85 @@ class RegisterUserActivity : AppCompatActivity() {
         }
 
         registerButton.setOnClickListener {
-            loading.show()
-            if (code == codeValidation.text.toString() && code.isNotEmpty()) {
-                if (filePathKTP.isEmpty()) {
-                    Toast.makeText(this, "Foto KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (filePathSelfAndKTP.isEmpty()) {
-                    Toast.makeText(this, "Foto Diri dengan KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (phone.text.isEmpty()) {
-                    Toast.makeText(this, "nomor telfon tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (email.text.isEmpty()) {
-                    Toast.makeText(this, "email tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (name.text.isEmpty()) {
-                    Toast.makeText(this, "nama tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (password.text.isEmpty()) {
-                    Toast.makeText(this, "kata sandi tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (password.text.length < 6) {
-                    Toast.makeText(this, "kata sandi kurang dari 6", Toast.LENGTH_LONG).show()
-                } else if (password.text.length > 6) {
-                    Toast.makeText(this, "kata sandi tidak boleh lebih dari 6", Toast.LENGTH_LONG).show()
-                } else if (passwordValidation.text.isEmpty() && passwordValidation.text.toString() != password.text.toString()) {
-                    Toast.makeText(this, "kata sandi yang anda inputkan tidak cocok", Toast.LENGTH_LONG).show()
-                } else {
-                    val statusKTP = uploadImageToServer(filePathKTP)
-                    if (statusKTP) {
-                        val statusSelfAndKTP = uploadImageToServer(filePathSelfAndKTP)
-                        if (statusSelfAndKTP) {
-                            val response = RegisterController.RegisterUser(
-                                phone.text.toString(),
-                                email.text.toString(),
-                                name.text.toString(),
-                                password.text.toString(),
-                                fileNameKTP,
-                                fileNameSelfAndKTP
-                            ).execute().get()
-                            if (response["Status"].toString() == "0") {
-                                val session = Session(this)
-                                session.saveString("phoneUser", phone.text.toString())
-                                session.saveString("nameUser", name.text.toString())
-                                session.saveString("pinUser", password.text.toString())
-                                session.saveInteger("typeUser", 1)
-                                val goTo = Intent(this, MainActivity::class.java)
-                                startActivity(goTo)
-                                finish()
-                            } else {
-                                Toast.makeText(this, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
-                            }
+            try {
+                sendData()
+            } catch (e : Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Terjadi Kesalahan saat mengirim data coba ulangi lagi", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun sendData() {
+        val loading = ProgressDialog(this)
+        loading.setTitle("Loading")
+        loading.setMessage("Wait while loading...")
+        loading.setCancelable(false)
+        if (code == codeValidation.text.toString() && code.isNotEmpty()) {
+            if (filePathKTP.isEmpty()) {
+                Toast.makeText(this, "Foto KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (filePathSelfAndKTP.isEmpty()) {
+                Toast.makeText(this, "Foto Diri dengan KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (phone.text.isEmpty()) {
+                Toast.makeText(this, "nomor telfon tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (email.text.isEmpty()) {
+                Toast.makeText(this, "email tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (name.text.isEmpty()) {
+                Toast.makeText(this, "nama tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (password.text.isEmpty()) {
+                Toast.makeText(this, "kata sandi tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (password.text.length < 6) {
+                Toast.makeText(this, "kata sandi kurang dari 6", Toast.LENGTH_LONG).show()
+            } else if (password.text.length > 6) {
+                Toast.makeText(this, "kata sandi tidak boleh lebih dari 6", Toast.LENGTH_LONG).show()
+            } else if (passwordValidation.text.isEmpty() && passwordValidation.text.toString() != password.text.toString()) {
+                Toast.makeText(this, "kata sandi yang anda inputkan tidak cocok", Toast.LENGTH_LONG).show()
+            } else {
+                loading.show()
+                val statusKTP = uploadImageToServer(filePathKTP)
+                if (statusKTP) {
+                    val statusSelfAndKTP = uploadImageToServer(filePathSelfAndKTP)
+                    if (statusSelfAndKTP) {
+                        val response = RegisterController.RegisterUser(
+                            phone.text.toString(),
+                            email.text.toString(),
+                            name.text.toString(),
+                            password.text.toString(),
+                            fileNameKTP,
+                            fileNameSelfAndKTP
+                        ).execute().get()
+                        println()
+                        println("===============Register===================")
+                        println(response)
+                        println("==========================================")
+                        if (response["Status"].toString() == "0") {
+//                            val session = Session(this)
+//                            session.saveString("phoneUser", phone.text.toString())
+//                            session.saveString("nameUser", name.text.toString())
+//                            session.saveString("pinUser", password.text.toString())
+//                            session.saveInteger("typeUser", 1)
+//                            val goTo = Intent(this, MainActivity::class.java)
+//                            startActivity(goTo)
+//                            finish()
                         } else {
-                            Toast.makeText(this, "Foto Diri dengan KTP bermasalah mohon ulangi lagi", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
                         }
                     } else {
-                        Toast.makeText(this, "Foto KTP bermasalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Foto Diri dengan KTP bermasalah mohon ulangi lagi", Toast.LENGTH_LONG).show()
                     }
+                } else {
+                    Toast.makeText(this, "Foto KTP bermasalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
                 }
-            } else {
-                Toast.makeText(this, "code yang anda masukan tidak cocok", Toast.LENGTH_LONG).show()
+                loading.dismiss()
             }
-            loading.dismiss()
+        } else {
+            Toast.makeText(this, "code yang anda masukan tidak cocok", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun uploadImageToServer(getFile:String) : Boolean {
         return try {
-            val response = MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
+            MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
                 .addFileToUpload(getFile, "file")
                 //.addParameter("parameter", "content parameter")
                 .setMaxRetries(2)
