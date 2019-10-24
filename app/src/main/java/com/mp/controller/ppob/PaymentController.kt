@@ -1,4 +1,4 @@
-package com.mp.controller
+package com.mp.controller.ppob
 
 import android.os.AsyncTask
 import com.mp.model.User
@@ -7,16 +7,22 @@ import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
 import java.lang.Exception
-import java.net.HttpURLConnection
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
-class RegisterController {
-    class VerifiedPhone(private  val phone : String) : AsyncTask<Void, Void, JSONObject>() {
+class PaymentController {
+    class Request(
+        private val username : String,
+        private val customerID : String,
+        private val phone : String,
+        private val firstBalance : String,
+        private val type : String
+    ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("${User.getUrl()}/register.php")
-                val httpURLConnection = url.openConnection() as HttpURLConnection
+                val url = URL("${User.getUrl()}/payment.php")
+                val httpURLConnection = url.openConnection() as HttpsURLConnection
 
                 //add request header
                 httpURLConnection.requestMethod = "POST"
@@ -24,7 +30,8 @@ class RegisterController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=Register&phone=${phone}"
+                val urlParameters = "a=ReqPayment&username=${username}&idpel=${customerID}&nohp=$phone&saldoawal=$firstBalance&type=$type"
+                println(urlParameters)
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -40,7 +47,6 @@ class RegisterController {
                     )
 
                     val inputData: String = input.readLine()
-                    println(inputData)
                     val response = JSONObject(inputData)
                     input.close()
                     response
@@ -54,19 +60,25 @@ class RegisterController {
         }
     }
 
-    class RegisterUser(
-        private val phone : String,
-        private val email : String,
-        private val name : String,
-        private val password : String,
-        private val ktp : String,
-        private val selfAndKTP : String
+    class Response(
+        private val username : String,
+        private val type : String,
+        private val clientID : String,
+        private val clientName : String,
+        private val price : String,
+        private val admin : String,
+        private val markupAdmin : String,
+        private val totalPrice : String,
+        private val phoneNumber : String,
+        private val remainingBalance : String,
+        private val ref : String,
+        private val periodic : String
     ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("${User.getUrl()}/register.php")
-                val httpURLConnection = url.openConnection() as HttpURLConnection
+                val url = URL("${User.getUrl()}/payment.php")
+                val httpURLConnection = url.openConnection() as HttpsURLConnection
 
                 //add request header
                 httpURLConnection.requestMethod = "POST"
@@ -74,15 +86,12 @@ class RegisterController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=RegisterFinal" +
-                        "&filektp=${ktp}" +
-                        "&filefotonktp=${selfAndKTP}" +
-                        "&email=${email}" +
-                        "&nohp=${phone}" +
-                        "&nama=${name}" +
-                        "&password=${password}" +
-                        "&status=0" +
-                        "&tipeuser=1"
+                val urlParameters = "a=BayarPayment&username=$username" +
+                        "&type=$type&idpel=$clientID&npelanggan=$clientName&jmltagih=$price" +
+                        "&admin=$admin&totaltagih=$totalPrice&hppembeli=$phoneNumber&sisasaldo=$remainingBalance" +
+                        "&markup=$markupAdmin&ref=$ref&periodetagih=$periodic"
+
+                println(urlParameters)
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -109,5 +118,6 @@ class RegisterController {
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }
         }
+
     }
 }

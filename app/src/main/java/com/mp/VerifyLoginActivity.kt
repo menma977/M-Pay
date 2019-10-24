@@ -4,13 +4,16 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
+import com.mp.controller.UserController
 import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.member.HomeMemberActivity
 import com.mp.user.merchant.HomeMerchantActivity
 import kotlinx.android.synthetic.main.activity_verify_login.*
 import java.lang.Exception
+import java.util.*
 
 class VerifyLoginActivity : AppCompatActivity() {
 
@@ -20,15 +23,49 @@ class VerifyLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_login)
+        val session = Session(this)
+
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                if (response["Status"].toString() == "0") {
+                    runOnUiThread{
+                        Handler().postDelayed({
+                            session.saveString("phone", response["hpagen"].toString())
+                            session.saveString("email", response["email"].toString())
+                            session.saveString("name", response["nama"].toString())
+                            session.saveString("pin", response["password"].toString())
+                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger("type", response["tipeuser"].toString().toInt())
+                            session.saveInteger("balance", response["deposit"].toString().toInt())
+
+                            User.setPhone(response["hpagen"].toString())
+                            User.setEmail(response["email"].toString())
+                            User.setName(response["nama"].toString())
+                            User.setPin(response["password"].toString())
+                            User.setType(response["tipeuser"].toString().toInt())
+                            User.setStatus(response["statusmember"].toString().toInt())
+                            User.setBalance(response["deposit"].toString().toInt())
+                        }, 500)
+                    }
+                }
+            }
+        }, 1000)
 
         back.setOnClickListener {
-            val session = Session(this)
-            session.saveString("phoneUser" , "")
-            session.saveString("pinUser" , "")
-            session.saveInteger("typeUser" , 0)
+            session.saveString("phone", "")
+            session.saveString("email", "")
+            session.saveString("name", "")
+            session.saveString("pin", "")
+            session.saveInteger("status", null)
+            session.saveInteger("type", null)
+
             User.setPhone("")
+            User.setEmail("")
+            User.setName("")
             User.setPin("")
-            User.setType(0)
+            User.setType(null)
+            User.setStatus(null)
             val goTo = Intent(this, MainActivity::class.java)
             startActivity(goTo)
             finish()

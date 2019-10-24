@@ -2,7 +2,9 @@ package com.mp.model;
 
 public class User {
 
+    private static String url;
     private static String phone;
+    private static String email;
     private static String pin;
     private static String name;
     private static Integer type;
@@ -10,12 +12,28 @@ public class User {
     private static Integer balance;
     private static Integer status;
 
+    public static String getUrl() {
+        return url;
+    }
+
+    public static void setUrl(String url) {
+        User.url = url;
+    }
+
     public static String getPhone() {
         return phone;
     }
 
     public static void setPhone(String phone) {
         User.phone = phone;
+    }
+
+    public static String getEmail() {
+        return email;
+    }
+
+    public static void setEmail(String email) {
+        User.email = email;
     }
 
     public static String getPin() {

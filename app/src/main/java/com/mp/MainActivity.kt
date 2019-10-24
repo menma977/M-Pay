@@ -31,17 +31,19 @@ class MainActivity : AppCompatActivity() {
         val forgotPassword : Button = findViewById(R.id.forgotPassword)
 
         val session = Session(this)
-        if (session.getString("phoneUser").toString().isNotEmpty()
-            && session.getString("phoneUser") != null
-            && session.getString("pinUser").toString().isNotEmpty()
-            && session.getString("pinUser") != null) {
+        session.saveString("url", "https://multipayment.co/api")
+        User.setUrl(session.getString("url"))
+        if (session.getString("phone").toString().isNotEmpty()
+            && session.getString("phone") != null
+            && session.getString("pin").toString().isNotEmpty()
+            && session.getString("pin") != null) {
             println("==================Login=======================")
-            println(session.getString("phoneUser").toString())
-            println(session.getString("pinUser"))
+            println(session.getString("phone").toString())
+            println(session.getString("pin"))
             println("==============================================")
-            User.setPhone(session.getString("phoneUser"))
-            User.setPin(session.getString("pinUser"))
-            User.setType(session.getInteger("typeUser"))
+            User.setPhone(session.getString("phone"))
+            User.setPin(session.getString("pin"))
+            User.setType(session.getInteger("type"))
             val goTo = Intent(this, VerifyLoginActivity::class.java)
             startActivity(goTo)
             finish()
@@ -58,7 +60,25 @@ class MainActivity : AppCompatActivity() {
                         if (response["Status"].toString() == "0") {
                             runOnUiThread{
                                 Handler().postDelayed({
-                                    Toast.makeText(applicationContext, response.toString(), Toast.LENGTH_LONG).show()
+                                    session.saveString("phone", response["hpagen"].toString())
+                                    session.saveString("email", response["email"].toString())
+                                    session.saveString("name", response["nama"].toString())
+                                    session.saveString("pin", response["password"].toString())
+                                    session.saveInteger("status", response["statusmember"].toString().toInt())
+                                    session.saveInteger("type", response["tipeuser"].toString().toInt())
+                                    session.saveInteger("balance", response["deposit"].toString().toInt())
+
+                                    User.setPhone(response["hpagen"].toString())
+                                    User.setEmail(response["email"].toString())
+                                    User.setName(response["nama"].toString())
+                                    User.setPin(response["password"].toString())
+                                    User.setType(response["tipeuser"].toString().toInt())
+                                    User.setStatus(response["statusmember"].toString().toInt())
+                                    User.setBalance(response["deposit"].toString().toInt())
+                                    doRequestPermission()
+                                    val goTo = Intent(applicationContext, VerifyLoginActivity::class.java)
+                                    startActivity(goTo)
+                                    finish()
                                 }, 500)
                             }
                         } else {
@@ -70,18 +90,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }, 1000)
-//                val pin = "462066"
-//                val typeUser = 1
-//                session.saveString("phoneUser", phoneTemporary)
-//                session.saveString("pinUser", pin)
-//                session.saveInteger("typeUser", typeUser)
-//                User.setPhone(phoneTemporary)
-//                User.setPin(pin)
-//                User.setType(typeUser)
-//                doRequestPermission()
-//                val goTo = Intent(this, VerifyLoginActivity::class.java)
-//                startActivity(goTo)
-//                finish()
             }
         }
 

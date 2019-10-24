@@ -18,12 +18,19 @@ class HomeMemberActivity : AppCompatActivity() {
 
         logout.setOnClickListener {
             val session = Session(this)
-            session.saveString("phoneUser" , "")
-            session.saveString("pinUser" , "")
-            session.saveInteger("typeUser" , 0)
+            session.saveString("phone", "")
+            session.saveString("email", "")
+            session.saveString("name", "")
+            session.saveString("pin", "")
+            session.saveInteger("status", 0)
+            session.saveInteger("type", 0)
+
             User.setPhone("")
+            User.setEmail("")
+            User.setName("")
             User.setPin("")
             User.setType(0)
+            User.setStatus(0)
             val goTo = Intent(this, MainActivity::class.java)
             startActivity(goTo)
             finish()

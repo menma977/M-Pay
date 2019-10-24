@@ -36,25 +36,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/colorPrimaryLight"
-                    android:text="@string/rp"
-                    android:textAlignment="gravity"
-                    android:textStyle="bold" />
-
-                <TextView
+                    android:id="@+id/balance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryLight"
                     android:layout_weight="1"
                     android:text="@string/default_value"
+                    android:textColor="@color/colorPrimaryLight"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/reloadBalance"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@color/Link"
@@ -203,6 +195,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/plnButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
@@ -240,6 +233,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/PostPaidButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
@@ -277,6 +271,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/wifiButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
@@ -314,6 +309,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/PostPaidCreditButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
@@ -362,6 +358,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/GoPayButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
@@ -399,6 +396,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/GrabButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"
@@ -436,6 +434,7 @@
                 tools:ignore="UselessParent">
 
                 <LinearLayout
+                    android:id="@+id/OVOButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/button_ppob"

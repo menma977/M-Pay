@@ -20,8 +20,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
 import android.os.Handler
-
-
+import com.mp.model.User
 
 
 class RegisterUserActivity : AppCompatActivity() {
@@ -173,10 +172,19 @@ class RegisterUserActivity : AppCompatActivity() {
                                 println(response)
                                 println("==========================================")
                                 if (response["Status"].toString() == "0") {
-                                    session!!.saveString("phoneUser", phone.text.toString())
-                                    session!!.saveString("nameUser", name.text.toString())
-                                    session!!.saveString("pinUser", password.text.toString())
-                                    session!!.saveInteger("typeUser", 1)
+                                    session!!.saveString("phone", response["hpagen"].toString())
+                                    session!!.saveString("email", response["email"].toString())
+                                    session!!.saveString("name", response["nama"].toString())
+                                    session!!.saveString("pin", response["password"].toString())
+                                    session!!.saveInteger("status", 0)
+                                    session!!.saveInteger("type", 1)
+
+                                    User.setPhone(response["hpagen"].toString())
+                                    User.setEmail(response["email"].toString())
+                                    User.setName(response["nama"].toString())
+                                    User.setPin(response["password"].toString())
+                                    User.setType(response["tipeuser"].toString().toInt())
+                                    User.setStatus(response["statusmember"].toString().toInt())
                                     runOnUiThread{
                                         Handler().postDelayed({
                                             val goTo = Intent(applicationContext, MainActivity::class.java)

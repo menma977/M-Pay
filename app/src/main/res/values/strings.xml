@@ -60,4 +60,21 @@
     <string name="validasi_password_baru_anda">validasi password baru anda</string>
     <string name="history">History</string>
     <string name="password_6_digit">kata sandi (harus 6 digit)</string>
+    <string name="paket_data">Paket Data</string>
+    <string name="teruskan">Teruskan</string>
+    <string name="kembali">kembali</string>
+    <string name="beli">beli</string>
+    <string name="post_paid_100">100</string>
+    <string name="markup_admin">Markup Admin</string>
+    <string name="sisa_saldo">Sisa Saldo</string>
+    <string name="saldo_awal">Saldo Awal</string>
+    <string name="harga">Harga</string>
+    <string name="konfrimasi_pembayaran">Konfrimasi Pembayaran</string>
+    <string name="id_pelanggan">Id Pelanggan</string>
+    <string name="post_paid_credit_2500">2500</string>
+    <string name="biyaya_admin">Biyaya Admin</string>
+    <string name="periode_tagihan">Periode Tagihan</string>
+    <string name="jenis_pembelian">Jenis Pembelian</string>
+    <string name="nama_pelanggan">Nama Pelanggan</string>
+    <string name="nomor_meter">Nomor Meter</string>
 </resources>

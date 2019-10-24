@@ -14,15 +14,34 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity android:name=".user.ppob.wifi.WifiRequestActivity"></activity>
+        <activity android:name=".user.ppob.tabCashBNI.TabCashBNIActivity" />
+        <activity android:name=".user.ppob.plnCredit.PLNCreditRequestActivity" />
+        <activity android:name=".user.ppob.pdam.PDAMRequestActivity" />
+        <activity android:name=".user.ppob.payment.PaymentRequestActivity" />
+        <activity android:name=".user.ppob.multiFinance.MultiFinanceRequestActivity" />
+        <activity android:name=".user.ppob.insurance.InsuranceRequestActivity" />
+        <activity android:name=".user.ppob.eMoneyMandiri.EMoneyMandiriRequestActivity" />
+        <activity android:name=".user.ppob.ovo.OvoRequestActivity" />
+        <activity android:name=".user.ppob.grap.GrabRequestActivity" />
+        <activity android:name=".user.ppob.goPay.GoPayRequestActivity" />
+        <activity android:name=".user.ppob.dana.DanaRequestActivity" />
+        <activity android:name=".user.ppob.bpjs.BpjsRequestActivity" />
+        <activity android:name=".user.ppob.pln.PlnResponseActivity" />
+        <activity android:name=".user.ppob.pln.PlnRequestActivity" />
+        <activity android:name=".user.ppob.postPaidCredit.PostPaidCreditResponseActivity" />
+        <activity android:name=".user.ppob.postPaidCredit.PostPaidCreditRequestActivity" />
+        <activity android:name=".user.ppob.postPaid.PostPaidResponseActivity" />
+        <activity android:name=".user.ppob.postPaid.PostPaidRequestActivity" />
         <activity
-            android:label="Lupa Kata Sandi"
-            android:name=".password.update.UpdatePasswordActivity">
+            android:name=".password.update.UpdatePasswordActivity"
+            android:label="Lupa Kata Sandi">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

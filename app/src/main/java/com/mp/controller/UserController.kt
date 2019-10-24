@@ -1,6 +1,7 @@
 package com.mp.controller
 
 import android.os.AsyncTask
+import com.mp.model.User
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -14,7 +15,7 @@ class UserController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("https://multipayment.co/api/getuser.php")
+                val url = URL("${User.getUrl()}/getuser.php")
                 val httpURLConnection = url.openConnection() as HttpURLConnection
 
                 //add request header

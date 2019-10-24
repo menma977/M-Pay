@@ -1,6 +1,7 @@
 package com.mp.controller.ppob
 
 import android.os.AsyncTask
+import com.mp.model.User
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -10,7 +11,7 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 class PostPaidController {
-    class Reuqest(
+    class Request(
         private val username : String,
         private val phone : String,
         private val nominal : String,
@@ -19,7 +20,7 @@ class PostPaidController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("https://padippob.com/api/isipulsa.php")
+                val url = URL("${User.getUrl()}/isipulsa.php")
                 val httpURLConnection = url.openConnection() as HttpsURLConnection
 
                 //add request header
@@ -114,9 +115,8 @@ class PostPaidController {
         }
     }
 
-    class Pay(
+    class Response(
         private val username : String,
-        private val code : String,
         private val phone : String,
         private val payCode : String,
         private val nominal : String,
@@ -128,7 +128,7 @@ class PostPaidController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("https://padippob.com/api/isipulsa.php")
+                val url = URL("${User.getUrl()}/isipulsa.php")
                 val httpURLConnection = url.openConnection() as HttpsURLConnection
 
                 //add request header
@@ -137,7 +137,7 @@ class PostPaidController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=PayPulsa&username=$username&idlogin=$code&nohp=$phone" +
+                val urlParameters = "a=PayPulsa&username=$username&nohp=$phone" +
                         "&kode=$payCode&nominal=$nominal&saldoawal=$firstBalance&markup=$markupAdmin" +
                         "&harga=$price&sisasaldo=$remainingBalance"
 
