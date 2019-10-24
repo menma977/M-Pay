@@ -2,6 +2,7 @@ package com.mp.user.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.mp.R
 import com.mp.controller.UserController
+import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.menu.MPayIdActivity
 import com.mp.user.menu.ScanActivity
@@ -43,11 +45,20 @@ class HomeFragment : Fragment() {
         val reloadBalance = root.findViewById<ImageButton>(R.id.reloadBalance)
         balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
 
-        reloadBalance.setOnClickListener {
-            Timer().schedule(object : TimerTask() {
-                override fun run() {
-                    val response = UserController.Get(User.getPhone()).execute().get()
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                try {
+                    val session = Session(root.context)
+                    val response = UserController.Get(session.getString("phone").toString()).execute().get()
                     if (response["Status"].toString() == "0") {
+                        session.saveString("phone", response["hpagen"].toString())
+                        session.saveString("email", response["email"].toString())
+                        session.saveString("name", response["nama"].toString())
+                        session.saveString("pin", response["password"].toString())
+                        session.saveInteger("status", response["statusmember"].toString().toInt())
+                        session.saveInteger("type", response["tipeuser"].toString().toInt())
+                        session.saveInteger("balance", response["deposit"].toString().toInt())
+
                         User.setPhone(response["hpagen"].toString())
                         User.setEmail(response["email"].toString())
                         User.setName(response["nama"].toString())
@@ -56,6 +67,31 @@ class HomeFragment : Fragment() {
                         User.setStatus(response["statusmember"].toString().toInt())
                         User.setBalance(response["deposit"].toString().toInt())
 
+                        balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
+                    }
+                } catch (e : Exception) {
+                    balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
+                }
+            }
+        }, 1000)
+
+        reloadBalance.setOnClickListener {
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    try {
+                        val response = UserController.Get(User.getPhone()).execute().get()
+                        if (response["Status"].toString() == "0") {
+                            User.setPhone(response["hpagen"].toString())
+                            User.setEmail(response["email"].toString())
+                            User.setName(response["nama"].toString())
+                            User.setPin(response["password"].toString())
+                            User.setType(response["tipeuser"].toString().toInt())
+                            User.setStatus(response["statusmember"].toString().toInt())
+                            User.setBalance(response["deposit"].toString().toInt())
+
+                            balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
+                        }
+                    } catch (e : Exception) {
                         balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
                     }
                 }

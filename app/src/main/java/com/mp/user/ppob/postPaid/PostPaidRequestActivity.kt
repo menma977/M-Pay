@@ -73,7 +73,7 @@ class PostPaidRequestActivity : AppCompatActivity() {
 
         PhoneNumberEditText.doOnTextChanged { text, _, _, _ ->
             val arrayResponse = arrayList.find { it["Hlr"].toString() == text.toString()}
-            if (text.toString().length <= 4) {
+            if (text.toString().length <= 4 && !text.isNullOrEmpty()) {
                 operator = arrayResponse?.get("Operator").toString()
                 try {
                     when (operator) {
@@ -89,34 +89,45 @@ class PostPaidRequestActivity : AppCompatActivity() {
                     if (!arrayResponse?.get("Operator")?.toString().isNullOrEmpty() && arrayResponse?.get("Operator")?.toString() != "Default") {
                         if (operator != "Default" && operator.isNotEmpty()) {
                             Timer().schedule(500) {
-                                val arrayProduct = jsonConverterProductName.getJSONArray(operator)
-                                productNameArrayList.clear()
-                                productCodeArrayList.clear()
-                                for (value in 0 until arrayProduct.length() - 1) {
-                                    if (PostPaidButton.isChecked) {
-                                        if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "REGULER") {
-                                            productNameArrayList.add("Rp${arrayProduct.getJSONObject(value).get("code").toString()
-                                                .replace("TELKOMSEL", "")
-                                                .replace("INDOSAT", "")
-                                                .replace("XL", "")
-                                                .replace("AXIS", "")
-                                                .replace("SMART", "")
-                                                .replace("THREE", "")
-                                                .replace("CERIA", "")
-                                            }.000")
-                                            productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
-                                        }
-                                    } else {
-                                        if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "DATA") {
-                                            productNameArrayList.add(arrayProduct.getJSONObject(value).get("name").toString())
-                                            productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                                try {
+                                    val arrayProduct = jsonConverterProductName.getJSONArray(operator)
+                                    productNameArrayList.clear()
+                                    productCodeArrayList.clear()
+                                    for (value in 0 until arrayProduct.length() - 1) {
+                                        if (PostPaidButton.isChecked) {
+                                            if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "REGULER") {
+                                                productNameArrayList.add("Rp${arrayProduct.getJSONObject(value).get("code").toString()
+                                                    .replace("TELKOMSEL", "")
+                                                    .replace("INDOSAT", "")
+                                                    .replace("XL", "")
+                                                    .replace("AXIS", "")
+                                                    .replace("SMART", "")
+                                                    .replace("THREE", "")
+                                                    .replace("CERIA", "")
+                                                }.000")
+                                                productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                                            }
+                                        } else {
+                                            if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "DATA") {
+                                                productNameArrayList.add(arrayProduct.getJSONObject(value).get("name").toString())
+                                                productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                                            }
                                         }
                                     }
-                                }
-                                runOnUiThread{
-                                    spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
-                                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-                                    ProductSpinner.adapter = spinnerAdapter
+                                    runOnUiThread{
+                                        spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
+                                        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+                                        ProductSpinner.adapter = spinnerAdapter
+                                    }
+                                } catch (e : Exception) {
+                                    runOnUiThread {
+                                        productNameArrayList = ArrayList()
+                                        productCodeArrayList = ArrayList()
+                                        productNameArrayList.add("Nomor yang anda inputkan tidak valid")
+                                        spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
+                                        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+                                        ProductSpinner.adapter = spinnerAdapter
+                                    }
                                 }
                             }
                         }
@@ -139,30 +150,39 @@ class PostPaidRequestActivity : AppCompatActivity() {
                 if (operator != "Default" && operator.isNotEmpty()) {
                     if (PostPaidButton.isChecked) {
                         Timer().schedule(500) {
-                            val arrayProduct = jsonConverterProductName.getJSONArray(operator)
-                            productNameArrayList.clear()
-                            productCodeArrayList.clear()
-                            for (value in 0 until arrayProduct.length() - 1) {
-                                if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "REGULER") {
-                                    productNameArrayList.add("Rp${arrayProduct.getJSONObject(value).get("code").toString()
-                                        .replace("TELKOMSEL", "")
-                                        .replace("INDOSAT", "")
-                                        .replace("XL", "")
-                                        .replace("AXIS", "")
-                                        .replace("SMART", "")
-                                        .replace("THREE", "")
-                                        .replace("CERIA", "")
-                                    }.000")
-                                    productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                            try {
+                                val arrayProduct = jsonConverterProductName.getJSONArray(operator)
+                                productNameArrayList.clear()
+                                productCodeArrayList.clear()
+                                for (value in 0 until arrayProduct.length() - 1) {
+                                    if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "REGULER") {
+                                        productNameArrayList.add("Rp${arrayProduct.getJSONObject(value).get("code").toString()
+                                            .replace("TELKOMSEL", "")
+                                            .replace("INDOSAT", "")
+                                            .replace("XL", "")
+                                            .replace("AXIS", "")
+                                            .replace("SMART", "")
+                                            .replace("THREE", "")
+                                            .replace("CERIA", "")
+                                        }.000")
+                                        productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                                    }
                                 }
-                            }
-                            runOnUiThread{
-                                Handler().postDelayed({
+                                runOnUiThread{
                                     type = "PULSA"
                                     spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
                                     spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
                                     ProductSpinner.adapter = spinnerAdapter
-                                }, 1000)
+                                }
+                            } catch (e : Exception) {
+                                runOnUiThread {
+                                    productNameArrayList = ArrayList()
+                                    productCodeArrayList = ArrayList()
+                                    productNameArrayList.add("Nomor yang anda inputkan tidak valid")
+                                    spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
+                                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+                                    ProductSpinner.adapter = spinnerAdapter
+                                }
                             }
                         }
                     }
@@ -185,22 +205,31 @@ class PostPaidRequestActivity : AppCompatActivity() {
                     if (DataButton.isChecked) {
                         Timer().schedule(500) {
                             val arrayProduct = jsonConverterProductName.getJSONArray(operator)
-                            productNameArrayList.clear()
-                            productCodeArrayList.clear()
-                            for (value in 0 until arrayProduct.length() - 1) {
-                                if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "DATA") {
-                                    productNameArrayList.add(arrayProduct.getJSONObject(value).get("name").toString())
-                                    productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                            try {
+                                productNameArrayList.clear()
+                                productCodeArrayList.clear()
+                                for (value in 0 until arrayProduct.length() - 1) {
+                                    if (arrayProduct.getJSONObject(value).get("typeProduct").toString() == "DATA") {
+                                        productNameArrayList.add(arrayProduct.getJSONObject(value).get("name").toString())
+                                        productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                                    }
                                 }
-                            }
-                            runOnUiThread {
-                                Handler().postDelayed({
+                                runOnUiThread {
                                     type = "DATA"
                                     nominal = arrayProduct.getJSONObject(0).get("code").toString()
                                     spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
                                     spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
                                     ProductSpinner.adapter = spinnerAdapter
-                                }, 1000)
+                                }
+                            } catch (e : Exception) {
+                                runOnUiThread {
+                                    productNameArrayList = ArrayList()
+                                    productCodeArrayList = ArrayList()
+                                    productNameArrayList.add("Nomor yang anda inputkan tidak valid")
+                                    spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
+                                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+                                    ProductSpinner.adapter = spinnerAdapter
+                                }
                             }
                         }
                     }
@@ -219,9 +248,13 @@ class PostPaidRequestActivity : AppCompatActivity() {
 
         ProductSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (parent.count > 1) {
-                    nominal = productCodeArrayList[position]
-                    println(productCodeArrayList)
+                try {
+                    if (parent.count > 1) {
+                        nominal = productCodeArrayList[position]
+                        println(productCodeArrayList)
+                    }
+                } catch (e : Exception) {
+                    nominal = ""
                 }
             }
 

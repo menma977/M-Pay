@@ -74,7 +74,7 @@ class GoPayRequestActivity : AppCompatActivity() {
 
         PhoneNumberEditText.doOnTextChanged { text, _, _, _ ->
             val arrayResponse = arrayList.find { it["Hlr"].toString() == text.toString()}
-            if (text.toString().length <= 4) {
+            if (text.toString().length <= 4 && !text.isNullOrEmpty()) {
                 operator = arrayResponse?.get("Operator").toString()
                 try {
                     when (operator) {
@@ -90,19 +90,30 @@ class GoPayRequestActivity : AppCompatActivity() {
                     if (!arrayResponse?.get("Operator")?.toString().isNullOrEmpty() && arrayResponse?.get("Operator")?.toString() != "Default") {
                         if (operator != "Default" && operator.isNotEmpty()) {
                             Timer().schedule(500) {
-                                val arrayProduct = jsonConverterProductName.getJSONArray("GOJEK")
-                                productNameArrayList.clear()
-                                productCodeArrayList.clear()
-                                for (value in 0 until arrayProduct.length() - 1) {
-                                    productNameArrayList.add("Rp${arrayProduct.getJSONObject(value).get("code").toString()
-                                        .replace("GOJEK", "")
-                                    }.000")
-                                    productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
-                                }
-                                runOnUiThread{
-                                    spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
-                                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-                                    ProductSpinner.adapter = spinnerAdapter
+                                try {
+                                    val arrayProduct = jsonConverterProductName.getJSONArray("GOJEK")
+                                    productNameArrayList.clear()
+                                    productCodeArrayList.clear()
+                                    for (value in 0 until arrayProduct.length() - 1) {
+                                        productNameArrayList.add("Rp${arrayProduct.getJSONObject(value).get("code").toString()
+                                            .replace("GOJEK", "")
+                                        }.000")
+                                        productCodeArrayList.add(arrayProduct.getJSONObject(value).get("code").toString())
+                                    }
+                                    runOnUiThread{
+                                        spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
+                                        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+                                        ProductSpinner.adapter = spinnerAdapter
+                                    }
+                                } catch (e : Exception) {
+                                    runOnUiThread {
+                                        productNameArrayList = ArrayList()
+                                        productCodeArrayList = ArrayList()
+                                        productNameArrayList.add("Nomor yang anda inputkan tidak valid")
+                                        spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, productNameArrayList)
+                                        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
+                                        ProductSpinner.adapter = spinnerAdapter
+                                    }
                                 }
                             }
                         }

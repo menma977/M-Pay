@@ -1,14 +1,18 @@
 package com.mp.user.menu
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import com.google.zxing.Result
 import com.mp.R
-import com.mp.model.Scan
+import com.mp.controller.UserController
 import kotlinx.android.synthetic.main.activity_scan.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import java.util.*
+import kotlin.concurrent.schedule
 
 class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
@@ -16,12 +20,37 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     override fun handleResult(responseQR : Result) {
         if (responseQR.text.toString().isNotEmpty()) {
-            val scan = Scan()
-            scan.barcodeQR = responseQR.text.toString()
-            Toast.makeText(this, "Melanjutkan ke nominal yang akan di isi", Toast.LENGTH_LONG).show()
-            val goTo = Intent(this, SetNominalActivity::class.java)
-            startActivity(goTo)
-            finish()
+            val loading = ProgressDialog(this)
+            loading.setTitle("Loading")
+            loading.setMessage("Wait while loading...")
+            loading.setCancelable(false)
+            Handler().postDelayed({
+                loading.show()
+            }, 200)
+            Timer().schedule(1000) {
+                val response = UserController.Get(responseQR.text.toString()).execute().get()
+                if (response["Status"].toString() == "0") {
+                    runOnUiThread {
+                        Handler().postDelayed({
+                            loading.dismiss()
+                        }, 200)
+                        Toast.makeText(applicationContext, "Melanjutkan ke nominal yang akan di isi", Toast.LENGTH_LONG).show()
+                        val goTo = Intent(applicationContext, SetNominalActivity::class.java).putExtra("response", response.toString())
+                        startActivity(goTo)
+                        finish()
+                    }
+                } else {
+                    runOnUiThread {
+                        Handler().postDelayed({
+                            loading.dismiss()
+                        }, 200)
+                        Toast.makeText(applicationContext, "QR belum terdaftar", Toast.LENGTH_LONG).show()
+                        val goTo = Intent(applicationContext, ScanActivity::class.java).putExtra("response", response.toString())
+                        startActivity(goTo)
+                        finish()
+                    }
+                }
+            }
         }
     }
 

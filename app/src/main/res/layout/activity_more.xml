@@ -34,8 +34,8 @@
 
                 <LinearLayout
                     android:id="@+id/plnButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -72,8 +72,8 @@
 
                 <LinearLayout
                     android:id="@+id/PostPaidButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -110,8 +110,8 @@
 
                 <LinearLayout
                     android:id="@+id/wifiButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -148,8 +148,8 @@
 
                 <LinearLayout
                     android:id="@+id/PostPaidCreditButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -197,8 +197,8 @@
 
                 <LinearLayout
                     android:id="@+id/GoPayButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -235,8 +235,8 @@
 
                 <LinearLayout
                     android:id="@+id/GrabButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -273,8 +273,8 @@
 
                 <LinearLayout
                     android:id="@+id/OVOButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -311,8 +311,8 @@
 
                 <LinearLayout
                     android:id="@+id/danaButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -360,8 +360,8 @@
 
                 <LinearLayout
                     android:id="@+id/insuranceButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -398,8 +398,8 @@
 
                 <LinearLayout
                     android:id="@+id/bpjsButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -436,8 +436,8 @@
 
                 <LinearLayout
                     android:id="@+id/financeButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -474,8 +474,8 @@
 
                 <LinearLayout
                     android:id="@+id/paymentButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -523,8 +523,8 @@
 
                 <LinearLayout
                     android:id="@+id/eMandiriButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -561,8 +561,8 @@
 
                 <LinearLayout
                     android:id="@+id/tabCashBNIButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -599,8 +599,8 @@
 
                 <LinearLayout
                     android:id="@+id/pdamButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -637,8 +637,8 @@
 
                 <LinearLayout
                     android:id="@+id/plnCreditButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -686,8 +686,8 @@
 
                 <LinearLayout
                     android:id="@+id/vocerButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_ppob"
                     android:gravity="center"
                     android:orientation="vertical"
