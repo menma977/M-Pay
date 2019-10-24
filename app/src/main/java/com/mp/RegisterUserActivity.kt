@@ -206,7 +206,7 @@ class RegisterUserActivity : AppCompatActivity() {
                             }
                         }
                     }
-                }, 2000)
+                }, 3000)
                 Timer().schedule(500) {
                     loading.dismiss()
                 }
