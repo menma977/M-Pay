@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.google.zxing.Result
 import com.mp.R
 import com.mp.controller.UserController
+import com.mp.model.Session
 import kotlinx.android.synthetic.main.activity_scan.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.util.*
@@ -68,7 +69,13 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
-        initScannerView()
+        val session = Session(this)
+        if (session.getInteger("status") == 1) {
+            initScannerView()
+        } else {
+            Toast.makeText(this, "Nomor Telfon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin", Toast.LENGTH_LONG).show()
+            finish()
+        }
     }
 
     private fun initScannerView() {

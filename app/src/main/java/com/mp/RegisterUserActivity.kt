@@ -20,6 +20,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
 import android.os.Handler
+import androidx.core.text.isDigitsOnly
 import com.mp.model.User
 
 
@@ -137,17 +138,17 @@ class RegisterUserActivity : AppCompatActivity() {
                 Toast.makeText(this, "Foto KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
             } else if (filePathSelfAndKTP.isEmpty()) {
                 Toast.makeText(this, "Foto Diri dengan KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if (phone.text.isEmpty()) {
-                Toast.makeText(this, "nomor telfon tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (phone.text.isEmpty() && !phone.text.isDigitsOnly()) {
+                Toast.makeText(this, "nomor telfon tidak boleh kosong dan hanya boleh angka", Toast.LENGTH_LONG).show()
             } else if (email.text.isEmpty()) {
                 Toast.makeText(this, "email tidak boleh kosong", Toast.LENGTH_LONG).show()
             } else if (name.text.isEmpty()) {
                 Toast.makeText(this, "nama tidak boleh kosong", Toast.LENGTH_LONG).show()
             } else if (password.text.isEmpty()) {
                 Toast.makeText(this, "kata sandi tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if (password.text.length < 6) {
+            } else if (password.text.length < 6  && !password.text.isDigitsOnly()) {
                 Toast.makeText(this, "kata sandi kurang dari 6", Toast.LENGTH_LONG).show()
-            } else if (password.text.length > 6) {
+            } else if (password.text.length > 6  && !password.text.isDigitsOnly()) {
                 Toast.makeText(this, "kata sandi tidak boleh lebih dari 6", Toast.LENGTH_LONG).show()
             } else if (passwordValidation.text.isEmpty() && passwordValidation.text.toString() != password.text.toString()) {
                 Toast.makeText(this, "kata sandi yang anda inputkan tidak cocok", Toast.LENGTH_LONG).show()

@@ -2,11 +2,15 @@ package com.mp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.telephony.TelephonyManager
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -20,9 +24,16 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val loading = ProgressDialog(this)
+        loading.setTitle("Loading")
+        loading.setMessage("Wait while loading...")
+        loading.setCancelable(false)
+        loading.show()
 
         doRequestPermission()
 
@@ -49,41 +60,47 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        loading.dismiss()
+
         loginButton.setOnClickListener {
+            loading.show()
             val phoneTemporary = phoneNumber.text.toString()
             if (phoneTemporary.isEmpty()) {
                 Toast.makeText(this, "Nomor Telfon Anda Tidak boleh kosong", Toast.LENGTH_LONG).show()
+                loading.dismiss()
             } else {
                 Timer().schedule(object : TimerTask() {
                     override fun run() {
                         val response = UserController.Get(phoneTemporary).execute().get()
                         if (response["Status"].toString() == "0") {
                             runOnUiThread{
-                                Handler().postDelayed({
-                                    session.saveString("phone", response["hpagen"].toString())
-                                    session.saveString("email", response["email"].toString())
-                                    session.saveString("name", response["nama"].toString())
-                                    session.saveString("pin", response["password"].toString())
-                                    session.saveInteger("status", response["statusmember"].toString().toInt())
-                                    session.saveInteger("type", response["tipeuser"].toString().toInt())
-                                    session.saveInteger("balance", response["deposit"].toString().toInt())
+                                session.saveString("phone", response["hpagen"].toString())
+                                session.saveString("email", response["email"].toString())
+                                session.saveString("name", response["nama"].toString())
+                                session.saveString("pin", response["password"].toString())
+                                session.saveInteger("status", response["statusmember"].toString().toInt())
+                                session.saveInteger("type", response["tipeuser"].toString().toInt())
+                                session.saveInteger("balance", response["deposit"].toString().toInt())
 
-                                    User.setPhone(response["hpagen"].toString())
-                                    User.setEmail(response["email"].toString())
-                                    User.setName(response["nama"].toString())
-                                    User.setPin(response["password"].toString())
-                                    User.setType(response["tipeuser"].toString().toInt())
-                                    User.setStatus(response["statusmember"].toString().toInt())
-                                    User.setBalance(response["deposit"].toString().toInt())
-                                    doRequestPermission()
+                                User.setPhone(response["hpagen"].toString())
+                                User.setEmail(response["email"].toString())
+                                User.setName(response["nama"].toString())
+                                User.setPin(response["password"].toString())
+                                User.setType(response["tipeuser"].toString().toInt())
+                                User.setStatus(response["statusmember"].toString().toInt())
+                                User.setBalance(response["deposit"].toString().toInt())
+                                doRequestPermission()
+                                Handler().postDelayed({
+                                    loading.dismiss()
                                     val goTo = Intent(applicationContext, VerifyLoginActivity::class.java)
                                     startActivity(goTo)
                                     finish()
-                                }, 500)
+                                }, 1000)
                             }
                         } else {
                             runOnUiThread{
                                 Handler().postDelayed({
+                                    loading.dismiss()
                                     Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
                                 }, 500)
                             }
@@ -138,12 +155,14 @@ class MainActivity : AppCompatActivity() {
             || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(arrayOf(
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.FOREGROUND_SERVICE
+                Manifest.permission.FOREGROUND_SERVICE,
+                Manifest.permission.READ_PHONE_STATE
             ), 100)
         }
     }

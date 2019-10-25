@@ -77,4 +77,14 @@
     <string name="jenis_pembelian">Jenis Pembelian</string>
     <string name="nama_pelanggan">Nama Pelanggan</string>
     <string name="nomor_meter">Nomor Meter</string>
+    <string name="kata_sandi">Kata Sandi</string>
+    <string name="transfer_ke_bank">Transfer Ke BANK</string>
+    <string name="transfer_sesama_m_pay">Transfer Sesama M Pay</string>
+    <string name="keterangan">Keterangan</string>
+    <string name="bank_tujuan">Bank Tujuan</string>
+    <string name="nomor_ponsel_anda">Nomor Ponsel anda</string>
+    <string name="nomor_rekening">Nomor Rekening</string>
+    <string name="nama_sesuai_akun_bank">Nama Sesuai Akun BANK</string>
+    <string name="nama_printer">Nama Printer :</string>
+    <string name="pilih_printer_bluetooth">Pilih Printer bluetooth</string>
 </resources>

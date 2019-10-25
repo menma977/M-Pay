@@ -112,8 +112,27 @@
             android:textColorHint="@color/colorSecondaryLight"
             tools:ignore="Autofill,UnusedAttribute" />
 
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_lock_open_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:inputType="numberPassword|phone"
+            android:hint="@string/kata_sandi"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute"
+            android:autofillHints="" />
+
         <Button
-            android:id="@+id/button"
+            android:id="@+id/transfer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

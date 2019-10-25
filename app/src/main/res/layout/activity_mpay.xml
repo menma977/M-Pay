@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mp.user.menu.mpay.MPayActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/phoneNumberTarget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_phone_android_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/nominal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_fiber_smart_record_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/nominal"
+            android:inputType="numberSigned"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="Autofill,UnusedAttribute" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_lock_open_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:inputType="numberPassword|phone"
+            android:hint="@string/kata_sandi"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="UnusedAttribute"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_description_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:hint="@string/keterangan"
+            android:text="@string/transfer"
+            android:inputType="textPersonName"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            tools:ignore="Autofill,UnusedAttribute" />
+
+        <Button
+            android:id="@+id/transferButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_success"
+            android:textColor="@color/textPrimary"
+            android:text="@string/transfer" />
+
+    </LinearLayout>
+
+</ScrollView>

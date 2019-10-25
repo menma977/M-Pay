@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,25 +21,75 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".user.ppob.wifi.WifiRequestActivity"></activity>
-        <activity android:name=".user.ppob.tabCashBNI.TabCashBNIActivity" />
-        <activity android:name=".user.ppob.plnCredit.PLNCreditRequestActivity" />
-        <activity android:name=".user.ppob.pdam.PDAMRequestActivity" />
-        <activity android:name=".user.ppob.payment.PaymentRequestActivity" />
-        <activity android:name=".user.ppob.multiFinance.MultiFinanceRequestActivity" />
-        <activity android:name=".user.ppob.insurance.InsuranceRequestActivity" />
-        <activity android:name=".user.ppob.eMoneyMandiri.EMoneyMandiriRequestActivity" />
-        <activity android:name=".user.ppob.ovo.OvoRequestActivity" />
-        <activity android:name=".user.ppob.grap.GrabRequestActivity" />
-        <activity android:name=".user.ppob.goPay.GoPayRequestActivity" />
-        <activity android:name=".user.ppob.dana.DanaRequestActivity" />
-        <activity android:name=".user.ppob.bpjs.BpjsRequestActivity" />
-        <activity android:name=".user.ppob.pln.PlnResponseActivity" />
-        <activity android:name=".user.ppob.pln.PlnRequestActivity" />
-        <activity android:name=".user.ppob.postPaidCredit.PostPaidCreditResponseActivity" />
-        <activity android:name=".user.ppob.postPaidCredit.PostPaidCreditRequestActivity" />
-        <activity android:name=".user.ppob.postPaid.PostPaidResponseActivity" />
-        <activity android:name=".user.ppob.postPaid.PostPaidRequestActivity" />
+        <activity
+            android:label="History"
+            android:name=".user.finance.FinanceManagementActivity"/>
+        <activity
+            android:label="Transfer Sesama M Pay"
+            android:name=".user.menu.mpay.MPayActivity" />
+        <activity
+            android:label="Transfer Ke Bank"
+            android:name=".user.menu.bank.BankActivity" />
+        <activity
+            android:label="Menejement Transfer"
+            android:name=".user.menu.TransferManagementActivity" />
+        <activity
+            android:name=".user.ppob.wifi.WifiRequestActivity"
+            android:label="Pembayaran TV Kabel Dan Wifi" />
+        <activity
+            android:name=".user.ppob.tabCashBNI.TabCashBNIActivity"
+            android:label="Tab Cash BNI" />
+        <activity
+            android:name=".user.ppob.plnCredit.PLNCreditRequestActivity"
+            android:label="PLN Pascabayar" />
+        <activity
+            android:name=".user.ppob.pdam.PDAMRequestActivity"
+            android:label="PDAM" />
+        <activity
+            android:name=".user.ppob.payment.PaymentRequestActivity"
+            android:label="Payment" />
+        <activity
+            android:name=".user.ppob.multiFinance.MultiFinanceRequestActivity"
+            android:label="Multi Finance" />
+        <activity
+            android:name=".user.ppob.insurance.InsuranceRequestActivity"
+            android:label="Insurance" />
+        <activity
+            android:name=".user.ppob.eMoneyMandiri.EMoneyMandiriRequestActivity"
+            android:label="E-Monay Manidiri" />
+        <activity
+            android:name=".user.ppob.ovo.OvoRequestActivity"
+            android:label="OVO" />
+        <activity
+            android:name=".user.ppob.grap.GrabRequestActivity"
+            android:label="GRAP" />
+        <activity
+            android:name=".user.ppob.goPay.GoPayRequestActivity"
+            android:label="Go-Pay" />
+        <activity
+            android:name=".user.ppob.dana.DanaRequestActivity"
+            android:label="DANA" />
+        <activity
+            android:name=".user.ppob.bpjs.BpjsRequestActivity"
+            android:label="PBJS" />
+        <activity
+            android:name=".user.ppob.pln.PlnResponseActivity"
+            android:label="Konfirmasi Transaksi" />
+        <activity
+            android:name=".user.ppob.pln.PlnRequestActivity"
+            android:label="PLN" />
+        <activity
+            android:name=".user.ppob.postPaidCredit.PostPaidCreditResponseActivity"
+            android:label="Konfirmasi Transaksi" />
+        <activity
+            android:name=".user.ppob.postPaidCredit.PostPaidCreditRequestActivity"
+            android:label="Pulsa Pascabayar" />
+        <activity
+            android:name=".user.ppob.postPaid.PostPaidResponseActivity"
+            android:label="Konfirmasi Transaksi" />
+        <activity
+            android:name=".user.ppob.postPaid.PostPaidRequestActivity"
+            android:label="Pulsa" />
         <activity
             android:name=".password.update.UpdatePasswordActivity"
             android:label="Lupa Kata Sandi">
