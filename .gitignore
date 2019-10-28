@@ -13,3 +13,7 @@
 /captures
 .externalNativeBuild
 .cxx
+
+keyStore.jks
+
+private_key.pepk

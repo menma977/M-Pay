@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.mp
 
 import android.Manifest
@@ -186,6 +188,20 @@ class VerifyLoginActivity : AppCompatActivity() {
                     password = ""
                     countPasswordWrong += 1
                     if (countPasswordWrong == 3) {
+                        val session = Session(this)
+                        session.saveString("phone", "")
+                        session.saveString("email", "")
+                        session.saveString("name", "")
+                        session.saveString("pin", "")
+                        session.saveInteger("status", 0)
+                        session.saveInteger("type", 0)
+
+                        User.setPhone("")
+                        User.setEmail("")
+                        User.setName("")
+                        User.setPin("")
+                        User.setType(0)
+                        User.setStatus(0)
                         val goTo = Intent(this, MainActivity::class.java)
                         startActivity(goTo)
                         finish()

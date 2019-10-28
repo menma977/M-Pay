@@ -1,26 +1,24 @@
+@file:Suppress("DEPRECATION")
+
 package com.mp.user.ui
 
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.mp.R
 import com.mp.controller.UserController
-import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.menu.MPayIdActivity
 import com.mp.user.menu.ScanActivity
 import com.mp.user.menu.TransferManagementActivity
 import com.mp.user.ppob.MoreActivity
-import com.mp.user.ppob.dana.DanaRequestActivity
 import com.mp.user.ppob.goPay.GoPayRequestActivity
 import com.mp.user.ppob.grap.GrabRequestActivity
 import com.mp.user.ppob.ovo.OvoRequestActivity
@@ -28,7 +26,6 @@ import com.mp.user.ppob.pln.PlnRequestActivity
 import com.mp.user.ppob.postPaid.PostPaidRequestActivity
 import com.mp.user.ppob.postPaidCredit.PostPaidCreditRequestActivity
 import com.mp.user.ppob.wifi.WifiRequestActivity
-import kotlinx.coroutines.awaitAll
 import java.text.NumberFormat
 import java.util.*
 import kotlin.concurrent.schedule

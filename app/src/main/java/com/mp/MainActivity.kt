@@ -1,24 +1,21 @@
+@file:Suppress("DEPRECATION")
+
 package com.mp
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.telephony.TelephonyManager
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.mp.controller.RegisterController
 import com.mp.controller.UserController
 import com.mp.model.Session
 import com.mp.model.User
-import com.mp.password.edit.EditPasswordActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -39,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         val loginButton : Button = findViewById(R.id.login)
         val registerButton : Button = findViewById(R.id.register)
-        val forgotPassword : Button = findViewById(R.id.forgotPassword)
+        //val forgotPassword : Button = findViewById(R.id.forgotPassword)
 
         val session = Session(this)
         session.saveString("url", "https://multipayment.co/api")
@@ -115,36 +112,35 @@ class MainActivity : AppCompatActivity() {
             startActivity(goTo)
         }
 
-        forgotPassword.setOnClickListener {
-            if (phoneNumber.text.isNotEmpty()) {
-                try {
-                    val response = RegisterController.VerifiedPhone(phoneNumber.text.toString()).execute().get()
-                    println()
-                    println("===============Register===================")
-                    println(response)
-                    println("==========================================")
-                    if (response["Status"].toString() == "0") {
-                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
-                        val goTo = Intent(this, EditPasswordActivity::class.java)
-                            .putExtra("pin", response["code_key"].toString())
-                        startActivity(goTo)
-                    } else {
-                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
-                    }
-                } catch (e : Exception) {
-                    e.printStackTrace()
-                    Toast.makeText(this, "Ada masalah saat pengiriman kode mohon ulangi lagi", Toast.LENGTH_LONG).show()
-                }
-            } else {
-                Timer().schedule(object : TimerTask() {
-                    override fun run() {
-                        runOnUiThread{
-                            Toast.makeText(applicationContext, "Nomor Telfon Tidak boleh kosong", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }, 1000)
-            }
-        }
+//        forgotPassword.setOnClickListener {
+//            if (phoneNumber.text.isNotEmpty()) {
+//                try {
+//                    val response = UserController.Get(phoneNumber.text.toString()).execute().get()
+//                    println()
+//                    println("===============Register===================")
+//                    println(response)
+//                    println("==========================================")
+//                    if (response["Status"].toString() == "0") {
+//                        val goTo = Intent(this, EditPasswordActivity::class.java)
+//                            .putExtra("pin", response["password"].toString())
+//                        startActivity(goTo)
+//                    } else {
+//                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
+//                    }
+//                } catch (e : Exception) {
+//                    e.printStackTrace()
+//                    Toast.makeText(this, "Ada masalah saat pengiriman kode mohon ulangi lagi", Toast.LENGTH_LONG).show()
+//                }
+//            } else {
+//                Timer().schedule(object : TimerTask() {
+//                    override fun run() {
+//                        runOnUiThread{
+//                            Toast.makeText(applicationContext, "Nomor Telfon Tidak boleh kosong", Toast.LENGTH_LONG).show()
+//                        }
+//                    }
+//                }, 1000)
+//            }
+//        }
     }
 
     @SuppressLint("NewApi")
