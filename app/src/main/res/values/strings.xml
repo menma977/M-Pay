@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">M Pay</string>
     <string name="logo">Logo</string>
-    <string name="username">username</string>
-    <string name="password">kata sandi</string>
+    <string name="username">Username</string>
+    <string name="password">Kata Sandi</string>
     <string name="login">Login</string>
 
     <string name="validationUsername">Username is not valid</string>
@@ -18,7 +18,7 @@
     <string name="icon">Icon</string>
     <string name="scan">Scan</string>
     <string name="mp_id">M Pay ID</string>
-    <string name="transfer">Transfer</string>
+    <string name="transfer">Berita transfer ato. Pesan transfer </string>
     <string name="top_up">Top Up</string>
     <string name="rp">Rp</string>
     <string name="saldo_cash">SALDO CASH</string>
@@ -41,7 +41,7 @@
     <string name="tiket">Tiket</string>
     <string name="default_value">0</string>
     <string name="member">Member</string>
-    <string name="qr_code">QR Code</string>
+    <string name="qr_code">QR Kode</string>
     <string name="phone_number">Nomor Telfon</string>
     <string name="nominal">Total Nominal Yang Di Transfer</string>
     <string name="register">Register</string>
@@ -50,20 +50,20 @@
     <string name="nama_sesuai_ktp">Nama sesuai KTP</string>
     <string name="password_validation">Ulang kata sandi</string>
     <string name="email_aktif_saat_ini">Email aktif saat ini</string>
-    <string name="kirim_code">Kirim Code</string>
-    <string name="code_verifikasi_no_telfon">code verifikasi no telfon</string>
+    <string name="kirim_code">Kirim Kode</string>
+    <string name="code_verifikasi_no_telfon">Kode verifikasi no telfon</string>
     <string name="daftar">Daftar</string>
     <string name="pin">Pin</string>
     <string name="kirin_pin">Kirin Pin</string>
     <string name="update_password">Update Password</string>
-    <string name="password_baru_anda">password baru anda</string>
-    <string name="validasi_password_baru_anda">validasi password baru anda</string>
+    <string name="password_baru_anda">Password baru anda</string>
+    <string name="validasi_password_baru_anda">Validasi password baru anda</string>
     <string name="history">History</string>
     <string name="password_6_digit">kata sandi (harus 6 digit)</string>
     <string name="paket_data">Paket Data</string>
     <string name="teruskan">Teruskan</string>
-    <string name="kembali">kembali</string>
-    <string name="beli">beli</string>
+    <string name="kembali">Kembali</string>
+    <string name="beli">Beli</string>
     <string name="post_paid_100">100</string>
     <string name="markup_admin">Markup Admin</string>
     <string name="sisa_saldo">Sisa Saldo</string>
@@ -87,4 +87,6 @@
     <string name="nama_sesuai_akun_bank">Nama Sesuai Akun BANK</string>
     <string name="nama_printer">Nama Printer :</string>
     <string name="pilih_printer_bluetooth">Pilih Printer bluetooth</string>
+    <string name="masukkan_kata_sandi">Masukkan Pin/Kata Sandi</string>
+    <string name="transfers">Transfer</string>
 </resources>

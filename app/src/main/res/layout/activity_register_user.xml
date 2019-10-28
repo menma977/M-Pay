@@ -26,7 +26,7 @@
             android:importantForAutofill="no"
             android:inputType="phone"
             android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
+            android:textColorHint="@color/textSecondary"
             tools:ignore="UnusedAttribute" />
 
         <LinearLayout
@@ -48,7 +48,7 @@
                 android:hint="@string/code_verifikasi_no_telfon"
                 android:inputType="numberDecimal"
                 android:textColor="@color/Success"
-                android:textColorHint="@color/colorSecondaryLight"
+                android:textColorHint="@color/textSecondary"
                 tools:ignore="Autofill,LabelFor,UnusedAttribute" />
 
             <Button
@@ -78,7 +78,7 @@
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
+            android:textColorHint="@color/textSecondary"
             tools:ignore="UnusedAttribute" />
 
         <EditText
@@ -94,7 +94,7 @@
             android:importantForAutofill="no"
             android:inputType="textAutoCorrect|text"
             android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
+            android:textColorHint="@color/textSecondary"
             tools:ignore="UnusedAttribute" />
 
         <EditText
@@ -109,7 +109,7 @@
             android:inputType="numberPassword|phone"
             android:hint="@string/password_6_digit"
             android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
+            android:textColorHint="@color/textSecondary"
             tools:ignore="UnusedAttribute"
             android:autofillHints="" />
 
@@ -125,7 +125,7 @@
             android:inputType="numberPassword|phone"
             android:hint="@string/password_validation"
             android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
+            android:textColorHint="@color/textSecondary"
             tools:ignore="UnusedAttribute"
             android:autofillHints="@string/password" />
 

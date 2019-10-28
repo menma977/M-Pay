@@ -110,9 +110,9 @@ class MoreActivity : AppCompatActivity() {
             startActivity(goTo)
         }
 
-        vocerButton.setOnClickListener {
-            Toast.makeText(this, "On Build", Toast.LENGTH_LONG).show()
-        }
+//        vocerButton.setOnClickListener {
+//            Toast.makeText(this, "On Build", Toast.LENGTH_LONG).show()
+//        }
 
     }
 

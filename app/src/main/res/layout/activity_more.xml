@@ -55,7 +55,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pln"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -93,7 +93,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pulsa"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -131,7 +131,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/tv_kabel_dan_speedy"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -169,7 +169,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pulsa_pascabayar"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -218,7 +218,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/go_pay"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -256,7 +256,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/grab"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -294,7 +294,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/ovo"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -332,7 +332,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/dana"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -381,7 +381,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/asuransi"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -419,7 +419,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/bpjs"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -457,7 +457,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/finance"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -495,7 +495,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/payment"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -544,7 +544,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/e_money_mandiri"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -582,7 +582,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/tap_cash_bni"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -620,7 +620,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pdam"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -658,56 +658,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pln_pascabayar"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                tools:ignore="UselessParent">
-
-                <LinearLayout
-                    android:id="@+id/vocerButton"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:background="@drawable/button_ppob"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:contentDescription="@string/icon"
-                        app:srcCompat="@drawable/emoney" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/tiket"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>

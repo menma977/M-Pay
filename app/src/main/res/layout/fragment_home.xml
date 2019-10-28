@@ -98,16 +98,16 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:contentDescription="@string/icon"
-                        android:tint="@color/colorSecondaryLight"
+                        android:tint="@color/colorSecondary"
                         app:srcCompat="@drawable/ic_send_black_24dp" />
 
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/transfer"
+                        android:text="@string/transfers"
                         android:textAlignment="center"
-                        android:textColor="@color/colorSecondaryLight" />
+                        android:textColor="@color/colorSecondary" />
 
                 </LinearLayout>
 
@@ -129,7 +129,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:contentDescription="@string/icon"
-                        android:tint="@color/colorSecondaryLight"
+                        android:tint="@color/colorSecondary"
                         app:srcCompat="@drawable/ic_crop_free_black_24dp" />
 
                     <TextView
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/scan"
                         android:textAlignment="center"
-                        android:textColor="@color/colorSecondaryLight" />
+                        android:textColor="@color/colorSecondary" />
 
                 </LinearLayout>
 
@@ -156,10 +156,10 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="44dp"
+                        android:layout_height="51dp"
                         android:contentDescription="@string/icon"
-                        android:tint="@color/colorSecondaryLight"
+                        android:tint="@color/colorSecondary"
                         app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
                     <TextView
@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/mp_id"
                         android:textAlignment="center"
-                        android:textColor="@color/colorSecondaryLight" />
+                        android:textColor="@color/colorSecondary" />
 
                 </LinearLayout>
 
@@ -218,7 +218,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pln"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -256,7 +256,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pulsa"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -294,7 +294,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/tv_kabel_dan_speedy"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -332,7 +332,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/pulsa_pascabayar"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -381,7 +381,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/go_pay"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -419,7 +419,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/grab"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -457,7 +457,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/ovo"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -495,7 +495,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/more"
                     android:textAlignment="center"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
                     android:textStyle="bold" />
 
             </LinearLayout>

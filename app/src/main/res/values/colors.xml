@@ -5,13 +5,13 @@
     <color name="colorPrimaryDark">#004E00</color>
 
     <color name="colorSecondary">#1E2D3A</color>
-    <color name="colorSecondaryLight">#475664</color>
+    <color name="colorSecondaryLight">#B7929496</color>
     <color name="colorSecondaryDark">#000215</color>
 
     <color name="colorAccent">#055D8C</color>
 
     <color name="textPrimary">#FFFFFF</color>
-    <color name="textSecondary">#141518</color>
+    <color name="textSecondary">#B7929496</color>
     <color name="textList">#33A5DB</color>
 
     <color name="Default">#FDFDFE</color>
