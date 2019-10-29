@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import com.mp.R
+import com.mp.controller.RegisterController
 import com.mp.model.Session
 import com.mp.user.member.HomeMemberActivity
 import com.mp.user.merchant.HomeMerchantActivity
@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_upload_image.*
 import net.gotev.uploadservice.MultipartUploadRequest
 import java.lang.Exception
 import java.util.*
+import kotlin.concurrent.schedule
 
 class UploadImageActivity : AppCompatActivity() {
 
@@ -34,7 +35,6 @@ class UploadImageActivity : AppCompatActivity() {
     private var imageSelfAndKTP : Uri? = null
     private var filePathSelfAndKTP : String = ""
     private var fileNameSelfAndKTP : String = ""
-    private var code = ""
     private var session : Session? = null
 
     override fun onBackPressed() {
@@ -91,6 +91,84 @@ class UploadImageActivity : AppCompatActivity() {
             } catch (e : Exception) {
                 e.printStackTrace()
                 Toast.makeText(this, "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        uploadImage.setOnClickListener {
+            loading.show()
+            when {
+                fileNameKTP.isEmpty() -> {
+                    Toast.makeText(this, "Anda Belum Memfoto KTP", Toast.LENGTH_LONG).show()
+                    loading.dismiss()
+                }
+                fileNameSelfAndKTP.isEmpty() -> {
+                    Toast.makeText(this, "Anda Belum Memfoto KTP dan Diri", Toast.LENGTH_LONG).show()
+                    loading.dismiss()
+                }
+                else -> try {
+                    Timer().schedule(500) {
+                        val statusKTP = uploadImageToServer(filePathKTP)
+                        if (statusKTP) {
+                            runOnUiThread {
+                                try {
+                                    Timer().schedule(500) {
+                                        val statusSelfAndKIP = uploadImageToServer(filePathSelfAndKTP)
+                                        if (statusSelfAndKIP) {
+                                            runOnUiThread {
+                                                Timer().schedule(500) {
+                                                    try {
+                                                        val session = Session(applicationContext)
+                                                        val response = RegisterController.ReUploadImage(session.getString("phone").toString(), fileNameKTP, fileNameSelfAndKTP).execute().get()
+                                                        if (response["Status"].toString() == "0") {
+                                                            runOnUiThread {
+                                                                loading.dismiss()
+                                                                if (session.getInteger("type") == 1) {
+                                                                    val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                                                    startActivity(goTo)
+                                                                    finish()
+                                                                } else {
+                                                                    val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                                                    startActivity(goTo)
+                                                                    finish()
+                                                                }
+                                                            }
+                                                        } else {
+                                                            runOnUiThread {
+                                                                Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                                                loading.dismiss()
+                                                            }
+                                                        }
+                                                    } catch (e : Exception) {
+                                                        runOnUiThread {
+                                                            Toast.makeText(applicationContext, "Update data gagal tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                                            loading.dismiss()
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            runOnUiThread {
+                                                Toast.makeText(applicationContext, "Upload Foto Diri dan KTP gagal tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                                loading.dismiss()
+                                            }
+                                        }
+                                    }
+                                } catch (e : Exception) {
+                                    Toast.makeText(applicationContext, "Upload Foto Diri dan KTP ada masalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                    loading.dismiss()
+                                }
+                            }
+                        } else {
+                            runOnUiThread {
+                                Toast.makeText(applicationContext, "Upload KTP gagal tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                loading.dismiss()
+                            }
+                        }
+                    }
+                } catch (e : Exception) {
+                    Toast.makeText(this, "Upload KTP ada masalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                    loading.dismiss()
+                }
             }
         }
     }

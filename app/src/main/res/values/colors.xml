@@ -15,11 +15,18 @@
     <color name="textList">#33A5DB</color>
 
     <color name="Default">#FDFDFE</color>
+
     <color name="Primary">#3379B7</color>
+    <color name="PrimaryClick">#1F486D</color>
     <color name="Success">#26B89A</color>
+    <color name="SuccessClick">#177260</color>
     <color name="Info">#5ABEDD</color>
+    <color name="InfoClick">#3B7C91</color>
     <color name="Warning">#EEAC4E</color>
+    <color name="WarningClick">#976C2F</color>
     <color name="Danger">#D7524F</color>
+    <color name="DangerClick">#83302E</color>
+
     <color name="Dark">#4A5E71</color>
     <color name="Link">#00FDFDFE</color>
 </resources>
