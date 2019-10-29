@@ -3,12 +3,17 @@ package com.mp.user.member
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.mp.MainActivity
 import com.mp.R
 import com.mp.controller.UserController
 import com.mp.model.Session
 import com.mp.model.User
+import com.mp.user.UploadImageActivity
 import com.mp.user.finance.FinanceManagementActivity
 import kotlinx.android.synthetic.main.activity_home_member.*
 import java.util.*
@@ -18,11 +23,30 @@ class HomeMemberActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_member)
+
+        val session = Session(this)
+
+        if (session.getInteger("status") == 0) {
+            val fromForBtn : LinearLayout = findViewById(R.id.formForButton)
+            fromForBtn.removeAllViews()
+            val optionValue = LinearLayout.LayoutParams(50, 50)
+            val link = ContextCompat.getColor(this, R.color.Link)
+            val imageButton = ImageButton(this)
+            imageButton.layoutParams = optionValue
+            imageButton.setBackgroundColor(link)
+            imageButton.setBackgroundResource(R.drawable.ic_cloud_upload_black_24dp)
+            imageButton.setOnClickListener {
+                val goTo = Intent(this, UploadImageActivity::class.java)
+                startActivity(goTo)
+                finish()
+            }
+            fromForBtn.addView(imageButton)
+        }
+
         val logout : ImageButton = findViewById(R.id.logout)
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                val session = Session(applicationContext)
                 try {
                     val response = UserController.Get(session.getString("phone").toString()).execute().get()
                     if (response["Status"].toString() == "0") {
@@ -90,7 +114,6 @@ class HomeMemberActivity : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            val session = Session(this)
             session.saveString("phone", "")
             session.saveString("email", "")
             session.saveString("name", "")

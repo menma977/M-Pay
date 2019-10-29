@@ -21,18 +21,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
+        <activity android:name=".user.UploadImageActivity"
+            android:label="Uplaod KTP Ulang"/>
         <activity
-            android:label="History"
-            android:name=".user.finance.FinanceManagementActivity"/>
+            android:name=".user.finance.FinanceManagementActivity"
+            android:label="History" />
         <activity
-            android:label="Transfer Sesama M Pay"
-            android:name=".user.menu.mpay.MPayActivity" />
+            android:name=".user.menu.mpay.MPayActivity"
+            android:label="Transfer Sesama M Pay" />
         <activity
-            android:label="Transfer Ke Bank"
-            android:name=".user.menu.bank.BankActivity" />
+            android:name=".user.menu.bank.BankActivity"
+            android:label="Transfer Ke Bank" />
         <activity
-            android:label="Menejement Transfer"
-            android:name=".user.menu.TransferManagementActivity" />
+            android:name=".user.menu.TransferManagementActivity"
+            android:label="Menejement Transfer" />
         <activity
             android:name=".user.ppob.wifi.WifiRequestActivity"
             android:label="Pembayaran TV Kabel Dan Wifi" />

@@ -145,7 +145,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:contentDescription="@string/icon"
-            app:srcCompat="@drawable/ic_camera_black_50dp" />
+            app:srcCompat="@drawable/ktp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -163,7 +163,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:contentDescription="@string/icon"
-            app:srcCompat="@drawable/ic_camera_black_50dp" />
+            app:srcCompat="@drawable/foto_diri_ktp" />
 
         <Button
             android:id="@+id/registerButton"

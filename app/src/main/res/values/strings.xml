@@ -89,4 +89,7 @@
     <string name="pilih_printer_bluetooth">Pilih Printer bluetooth</string>
     <string name="masukkan_kata_sandi">Masukkan Pin/Kata Sandi</string>
     <string name="transfers">Transfer</string>
+    <string name="upload">Upload</string>
+    <string name="foto_ktp_dan_diri_seperti_gambar">Foto KTP Dan Diri Seperti Gambar</string>
+    <string name="foto_ktp">Foto KTP</string>
 </resources>

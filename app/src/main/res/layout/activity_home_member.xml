@@ -34,6 +34,16 @@
             android:textSize="20sp"
             android:textStyle="bold"/>
 
+        <LinearLayout
+            android:id="@+id/formForButton"
+            android:gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
         <ImageButton
             android:id="@+id/history"
             android:layout_width="50dp"
@@ -42,7 +52,8 @@
             android:background="@color/Link"
             android:contentDescription="@string/icon"
             android:tint="@color/textPrimary"
-            app:srcCompat="@drawable/ic_restore_black_24dp" />
+            app:srcCompat="@drawable/ic_restore_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
 
         <ImageButton
             android:id="@+id/logout"
@@ -52,7 +63,8 @@
             android:background="@color/Link"
             android:tint="@color/textPrimary"
             app:srcCompat="@drawable/ic_power_settings_new_black_24dp"
-            android:contentDescription="@string/icon" />
+            android:contentDescription="@string/icon"
+            tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>
 
