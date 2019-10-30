@@ -37,15 +37,19 @@ class VerifyLoginActivity : AppCompatActivity() {
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                val response =
+                    UserController.Get(session.getString("phone").toString()).execute().get()
                 if (response["Status"].toString() == "0") {
-                    runOnUiThread{
+                    runOnUiThread {
                         Handler().postDelayed({
                             session.saveString("phone", response["hpagen"].toString())
                             session.saveString("email", response["email"].toString())
                             session.saveString("name", response["nama"].toString())
                             session.saveString("pin", response["password"].toString())
-                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger(
+                                "status",
+                                response["statusmember"].toString().toInt()
+                            )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
 
@@ -162,11 +166,17 @@ class VerifyLoginActivity : AppCompatActivity() {
                                 Handler().postDelayed({
                                     loading.dismiss()
                                     if (User.getType() == 1) {
-                                        val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                        val goTo = Intent(
+                                            applicationContext,
+                                            HomeMemberActivity::class.java
+                                        )
                                         startActivity(goTo)
                                         finish()
                                     } else {
-                                        val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                        val goTo = Intent(
+                                            applicationContext,
+                                            HomeMerchantActivity::class.java
+                                        )
                                         startActivity(goTo)
                                         finish()
                                     }
@@ -214,19 +224,19 @@ class VerifyLoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTextToInput(value : String) {
+    private fun setTextToInput(value: String) {
         try {
             if (value.isEmpty()) {
                 passwordText.setText("")
             } else {
                 passwordText.setText(value)
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
 
         }
     }
 
-    private fun sendIEMI() : Boolean {
+    private fun sendIEMI(): Boolean {
         return if (User.getPhone().isNotEmpty()) {
             val response = IMEIController.sendIMEI(User.getPhone(), getIEMI()).execute().get()
             println("===============================")
@@ -261,8 +271,12 @@ class VerifyLoginActivity : AppCompatActivity() {
     }
 
     @SuppressLint("NewApi")
-    private fun getIEMI() : String {
-        return if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+    private fun getIEMI(): String {
+        return if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
             val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
             tm.imei

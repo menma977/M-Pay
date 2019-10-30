@@ -24,15 +24,19 @@ class MPayIdActivity : AppCompatActivity() {
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                val response =
+                    UserController.Get(session.getString("phone").toString()).execute().get()
                 if (response["Status"].toString() == "0") {
-                    runOnUiThread{
+                    runOnUiThread {
                         Handler().postDelayed({
                             session.saveString("phone", response["hpagen"].toString())
                             session.saveString("email", response["email"].toString())
                             session.saveString("name", response["nama"].toString())
                             session.saveString("pin", response["password"].toString())
-                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger(
+                                "status",
+                                response["statusmember"].toString().toInt()
+                            )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
 
@@ -60,9 +64,9 @@ class MPayIdActivity : AppCompatActivity() {
         val phoneNumber = User.getPhone()
 
         val qrCode = QRCode(phoneNumber).qrToBitmap()
-        val usernameTextView : TextView = findViewById(R.id.username)
-        val phoneNumberTextView : TextView = findViewById(R.id.phoneNumber)
-        val barcodeQR : ImageView = findViewById(R.id.barcodeQR)
+        val usernameTextView: TextView = findViewById(R.id.username)
+        val phoneNumberTextView: TextView = findViewById(R.id.phoneNumber)
+        val barcodeQR: ImageView = findViewById(R.id.barcodeQR)
 
         usernameTextView.text = name
         phoneNumberTextView.text = phoneNumber

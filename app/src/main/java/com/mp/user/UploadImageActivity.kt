@@ -28,14 +28,14 @@ import kotlin.concurrent.schedule
 
 class UploadImageActivity : AppCompatActivity() {
 
-    private var imageSwitcher : Int = 0
-    private var imageKTP : Uri? = null
-    private var filePathKTP : String = ""
-    private var fileNameKTP : String = ""
-    private var imageSelfAndKTP : Uri? = null
-    private var filePathSelfAndKTP : String = ""
-    private var fileNameSelfAndKTP : String = ""
-    private var session : Session? = null
+    private var imageSwitcher: Int = 0
+    private var imageKTP: Uri? = null
+    private var filePathKTP: String = ""
+    private var fileNameKTP: String = ""
+    private var imageSelfAndKTP: Uri? = null
+    private var filePathSelfAndKTP: String = ""
+    private var fileNameSelfAndKTP: String = ""
+    private var session: Session? = null
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -65,32 +65,42 @@ class UploadImageActivity : AppCompatActivity() {
         ktp.setOnClickListener {
             try {
                 imageSwitcher = 0
-                val values  = ContentValues()
+                val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "KTP")
                 values.put(MediaStore.Images.Media.DESCRIPTION, "Foto KTP")
-                imageKTP = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                imageKTP =
+                    contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageKTP)
-                startActivityForResult(callCameraIntent,0)
-            } catch (e : Exception) {
+                startActivityForResult(callCameraIntent, 0)
+            } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this, "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
         ktpAndUser.setOnClickListener {
             try {
                 imageSwitcher = 1
-                val values  = ContentValues()
+                val values = ContentValues()
                 values.put(MediaStore.Images.Media.TITLE, "Self And KTP")
                 values.put(MediaStore.Images.Media.DESCRIPTION, "Foto Diri dan KTP")
-                imageSelfAndKTP = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                imageSelfAndKTP =
+                    contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                 val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 callCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageSelfAndKTP)
-                startActivityForResult(callCameraIntent,0)
-            } catch (e : Exception) {
+                startActivityForResult(callCameraIntent, 0)
+            } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this, "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Terjadi Kesalahan saatmembuka kemera coba ulangi lagi",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -102,7 +112,8 @@ class UploadImageActivity : AppCompatActivity() {
                     loading.dismiss()
                 }
                 fileNameSelfAndKTP.isEmpty() -> {
-                    Toast.makeText(this, "Anda Belum Memfoto KTP dan Diri", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Anda Belum Memfoto KTP dan Diri", Toast.LENGTH_LONG)
+                        .show()
                     loading.dismiss()
                 }
                 else -> try {
@@ -112,35 +123,55 @@ class UploadImageActivity : AppCompatActivity() {
                             runOnUiThread {
                                 try {
                                     Timer().schedule(5000) {
-                                        val statusSelfAndKIP = uploadImageToServer(filePathSelfAndKTP)
+                                        val statusSelfAndKIP =
+                                            uploadImageToServer(filePathSelfAndKTP)
                                         if (statusSelfAndKIP) {
                                             runOnUiThread {
                                                 Timer().schedule(5000) {
                                                     try {
                                                         val session = Session(applicationContext)
-                                                        val response = RegisterController.ReUploadImage(session.getString("phone").toString(), fileNameKTP, fileNameSelfAndKTP).execute().get()
+                                                        val response =
+                                                            RegisterController.ReUploadImage(
+                                                                session.getString("phone").toString(),
+                                                                fileNameKTP,
+                                                                fileNameSelfAndKTP
+                                                            ).execute().get()
                                                         if (response["Status"].toString() == "0") {
                                                             runOnUiThread {
                                                                 loading.dismiss()
                                                                 if (session.getInteger("type") == 1) {
-                                                                    val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                                                    val goTo = Intent(
+                                                                        applicationContext,
+                                                                        HomeMemberActivity::class.java
+                                                                    )
                                                                     startActivity(goTo)
                                                                     finish()
                                                                 } else {
-                                                                    val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                                                    val goTo = Intent(
+                                                                        applicationContext,
+                                                                        HomeMerchantActivity::class.java
+                                                                    )
                                                                     startActivity(goTo)
                                                                     finish()
                                                                 }
                                                             }
                                                         } else {
                                                             runOnUiThread {
-                                                                Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                                                Toast.makeText(
+                                                                    applicationContext,
+                                                                    response["Pesan"].toString(),
+                                                                    Toast.LENGTH_LONG
+                                                                ).show()
                                                                 loading.dismiss()
                                                             }
                                                         }
-                                                    } catch (e : Exception) {
+                                                    } catch (e: Exception) {
                                                         runOnUiThread {
-                                                            Toast.makeText(applicationContext, "Update data gagal tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                                            Toast.makeText(
+                                                                applicationContext,
+                                                                "Update data gagal tolong ulangi lagi",
+                                                                Toast.LENGTH_LONG
+                                                            ).show()
                                                             loading.dismiss()
                                                         }
                                                     }
@@ -148,32 +179,48 @@ class UploadImageActivity : AppCompatActivity() {
                                             }
                                         } else {
                                             runOnUiThread {
-                                                Toast.makeText(applicationContext, "Upload Foto Diri dan KTP gagal tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(
+                                                    applicationContext,
+                                                    "Upload Foto Diri dan KTP gagal tolong ulangi lagi",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
                                                 loading.dismiss()
                                             }
                                         }
                                     }
-                                } catch (e : Exception) {
-                                    Toast.makeText(applicationContext, "Upload Foto Diri dan KTP ada masalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Upload Foto Diri dan KTP ada masalah tolong ulangi lagi",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                     loading.dismiss()
                                 }
                             }
                         } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, "Upload KTP gagal tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Upload KTP gagal tolong ulangi lagi",
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 loading.dismiss()
                             }
                         }
                     }
-                } catch (e : Exception) {
-                    Toast.makeText(this, "Upload KTP ada masalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this,
+                        "Upload KTP ada masalah tolong ulangi lagi",
+                        Toast.LENGTH_LONG
+                    ).show()
                     loading.dismiss()
                 }
             }
         }
     }
 
-    private fun uploadImageToServer(getFile:String) : Boolean {
+    private fun uploadImageToServer(getFile: String): Boolean {
         return try {
             MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
                 .addFileToUpload(getFile, "file")
@@ -182,14 +229,14 @@ class UploadImageActivity : AppCompatActivity() {
                 .setAutoDeleteFilesAfterSuccessfulUpload(true)
                 .startUpload()
             true
-        }catch (ex : Exception) {
+        } catch (ex: Exception) {
             ex.printStackTrace()
             false
         }
     }
 
-    private fun getRealPathFromImageURI(contentUri : Uri?) : String {
-        val data : Array<String> = Array(100){ MediaStore.Images.Media.DATA}
+    private fun getRealPathFromImageURI(contentUri: Uri?): String {
+        val data: Array<String> = Array(100) { MediaStore.Images.Media.DATA }
         val cursor = managedQuery(contentUri, data, null, null, null)
         val columnIndex = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
         cursor.moveToFirst()
@@ -199,7 +246,7 @@ class UploadImageActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val camera : ImageView
+        val camera: ImageView
         if (imageSwitcher == 0) {
             camera = findViewById(R.id.ktp)
             if (resultCode == Activity.RESULT_OK) {
@@ -209,20 +256,23 @@ class UploadImageActivity : AppCompatActivity() {
                             filePathKTP = getRealPathFromImageURI(imageKTP)
                             val convertArray = filePathKTP.split("/").toTypedArray()
                             fileNameKTP = convertArray.last()
-                            val thumbnails = MediaStore.Images.Media.getBitmap(contentResolver, imageKTP)
+                            val thumbnails =
+                                MediaStore.Images.Media.getBitmap(contentResolver, imageKTP)
                             val bitmap = Bitmap.createScaledBitmap(thumbnails, 150, 150, true)
-                            runOnUiThread{
+                            runOnUiThread {
                                 Handler().postDelayed({
                                     camera.setImageBitmap(bitmap)
                                 }, 1000)
                             }
                         }
                     }, 1000)
-                } catch (ex : Exception) {
-                    Toast.makeText(this, "Ada Kesalah saat mengambil gambar", Toast.LENGTH_LONG).show()
+                } catch (ex: Exception) {
+                    Toast.makeText(this, "Ada Kesalah saat mengambil gambar", Toast.LENGTH_LONG)
+                        .show()
                 }
             } else {
-                Toast.makeText(this, "Anda belum mengisi gambar dokumentasi", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Anda belum mengisi gambar dokumentasi", Toast.LENGTH_LONG)
+                    .show()
             }
         } else {
             camera = findViewById(R.id.ktpAndUser)
@@ -233,21 +283,24 @@ class UploadImageActivity : AppCompatActivity() {
                             filePathSelfAndKTP = getRealPathFromImageURI(imageSelfAndKTP)
                             val convertArray = filePathSelfAndKTP.split("/").toTypedArray()
                             fileNameSelfAndKTP = convertArray.last()
-                            val thumbnails = MediaStore.Images.Media.getBitmap(contentResolver, imageSelfAndKTP)
+                            val thumbnails =
+                                MediaStore.Images.Media.getBitmap(contentResolver, imageSelfAndKTP)
                             val bitmap = Bitmap.createScaledBitmap(thumbnails, 150, 150, true)
-                            runOnUiThread{
+                            runOnUiThread {
                                 Handler().postDelayed({
                                     camera.setImageBitmap(bitmap)
                                 }, 1000)
                             }
                         }
                     }, 1000)
-                } catch (ex : Exception) {
+                } catch (ex: Exception) {
                     ex.printStackTrace()
-                    Toast.makeText(this, "Ada Kesalah saat mengambil gambar", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Ada Kesalah saat mengambil gambar", Toast.LENGTH_LONG)
+                        .show()
                 }
             } else {
-                Toast.makeText(this, "Anda belum mengisi gambar dokumentasi", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Anda belum mengisi gambar dokumentasi", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }

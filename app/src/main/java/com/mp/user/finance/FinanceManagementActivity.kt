@@ -46,7 +46,7 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
         Toast.makeText(this, "Order sent to printer", Toast.LENGTH_LONG).show()
     }
 
-    private var printing : Printing? = null
+    private var printing: Printing? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +62,8 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
         loading.setCancelable(false)
         loading.show()
 
-        val  response = FinanceController.GetAll(session.getString("phone").toString()).execute().get()
+        val response =
+            FinanceController.GetAll(session.getString("phone").toString()).execute().get()
 
         val noteTableLayout = findViewById<TableLayout>(R.id.NoteTableLayout)
         noteTableLayout.removeAllViews()
@@ -113,25 +114,59 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
                     printButton.setBackgroundResource(R.drawable.button_info)
                     printButton.setOnClickListener {
                         if (!Printooth.hasPairedPrinter()) {
-                            startActivityForResult(Intent(this, ScanningActivity::class.java), ScanningActivity.SCANNING_FOR_PRINTER)
+                            startActivityForResult(
+                                Intent(this, ScanningActivity::class.java),
+                                ScanningActivity.SCANNING_FOR_PRINTER
+                            )
                         } else {
-                            val getDataToPrint = FinanceController.getDital(session.getString("phone").toString(), convertToJsonArray.getJSONObject(value)["idtrx"].toString()).execute()
+                            val getDataToPrint = FinanceController.getDital(
+                                session.getString("phone").toString(),
+                                convertToJsonArray.getJSONObject(value)["idtrx"].toString()
+                            ).execute()
                             val responsePLN = getDataToPrint.get().getJSONArray("trx")
                             //println(responsePLN)
                             Printooth.getPairedPrinter()
                             println(responsePLN.getJSONObject(0)["ket"].toString().split(">>"))
                             val date = responsePLN.getJSONObject(0)["tgl"].toString()
                             val type = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[0]
-                            val numberPLN =responsePLN.getJSONObject(0)["ket"].toString().split(">>")[1]
-                            val namePLN = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split("/")[1]
-                            val typePLN = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split("/")[2]
-                            val volt = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split("/")[3]
-                            val countPLN = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split("/")[4]
-                            val token = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split("/")[0]
+                            val numberPLN =
+                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[1]
+                            val namePLN =
+                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                    "/"
+                                )[1]
+                            val typePLN =
+                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                    "/"
+                                )[2]
+                            val volt =
+                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                    "/"
+                                )[3]
+                            val countPLN =
+                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                    "/"
+                                )[4]
+                            val token =
+                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                    "/"
+                                )[0]
                             val price = (
-                                    responsePLN.getJSONObject(0)["markup"].toString().toInt() + responsePLN.getJSONObject(0)["harga"].toString().toInt()
+                                    responsePLN.getJSONObject(0)["markup"].toString().toInt() + responsePLN.getJSONObject(
+                                        0
+                                    )["harga"].toString().toInt()
                                     ).toString()
-                            printPLN(date, type, numberPLN, namePLN, typePLN, volt, countPLN, token, price)
+                            printPLN(
+                                date,
+                                type,
+                                numberPLN,
+                                namePLN,
+                                typePLN,
+                                volt,
+                                countPLN,
+                                token,
+                                price
+                            )
                         }
                     }
                     tableRow.addView(printButton)
@@ -147,17 +182,27 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
                     printButton.setBackgroundResource(R.drawable.button_info)
                     printButton.setOnClickListener {
                         if (!Printooth.hasPairedPrinter()) {
-                            startActivityForResult(Intent(this, ScanningActivity::class.java), ScanningActivity.SCANNING_FOR_PRINTER)
+                            startActivityForResult(
+                                Intent(this, ScanningActivity::class.java),
+                                ScanningActivity.SCANNING_FOR_PRINTER
+                            )
                         } else {
-                            val getDataToPrint = FinanceController.getDital(session.getString("phone").toString(), convertToJsonArray.getJSONObject(value)["idtrx"].toString()).execute()
+                            val getDataToPrint = FinanceController.getDital(
+                                session.getString("phone").toString(),
+                                convertToJsonArray.getJSONObject(value)["idtrx"].toString()
+                            ).execute()
                             val responsePulsa = getDataToPrint.get().getJSONArray("trx")
                             Printooth.getPairedPrinter()
                             val date = responsePulsa.getJSONObject(0)["tgl"].toString()
-                            val type = responsePulsa.getJSONObject(0)["ket"].toString().split(">>")[0]
-                            val phone = responsePulsa.getJSONObject(0)["ket"].toString().split(">>")[3]
+                            val type =
+                                responsePulsa.getJSONObject(0)["ket"].toString().split(">>")[0]
+                            val phone =
+                                responsePulsa.getJSONObject(0)["ket"].toString().split(">>")[3]
                             val sn = responsePulsa.getJSONObject(0)["ket"].toString().split(">>")[1]
                             val price = (
-                                    responsePulsa.getJSONObject(0)["markup"].toString().toInt() + responsePulsa.getJSONObject(0)["harga"].toString().toInt()
+                                    responsePulsa.getJSONObject(0)["markup"].toString().toInt() + responsePulsa.getJSONObject(
+                                        0
+                                    )["harga"].toString().toInt()
                                     ).toString()
                             printPulsa(date, type, phone, sn, price)
                         }
@@ -175,22 +220,43 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
                     printButton.setBackgroundResource(R.drawable.button_info)
                     printButton.setOnClickListener {
                         if (!Printooth.hasPairedPrinter()) {
-                            startActivityForResult(Intent(this, ScanningActivity::class.java), ScanningActivity.SCANNING_FOR_PRINTER)
+                            startActivityForResult(
+                                Intent(this, ScanningActivity::class.java),
+                                ScanningActivity.SCANNING_FOR_PRINTER
+                            )
                         } else {
-                            val getDataToPrint = FinanceController.getDital(session.getString("phone").toString(), convertToJsonArray.getJSONObject(value)["idtrx"].toString()).execute()
+                            val getDataToPrint = FinanceController.getDital(
+                                session.getString("phone").toString(),
+                                convertToJsonArray.getJSONObject(value)["idtrx"].toString()
+                            ).execute()
                             val responsePayment = getDataToPrint.get().getJSONArray("trx")
                             Printooth.getPairedPrinter()
                             println(responsePayment)
                             val date = responsePayment.getJSONObject(0)["tgl"].toString()
-                            val type = responsePayment.getJSONObject(0)["sn"].toString().split("|")[0]
-                            val numberPayment = responsePayment.getJSONObject(0)["sn"].toString().split("|")[1]
-                            val namePayment = responsePayment.getJSONObject(0)["sn"].toString().split("|")[2]
-                            val bill = responsePayment.getJSONObject(0)["sn"].toString().split("|")[3]
-                            val admin = responsePayment.getJSONObject(0)["sn"].toString().split("|")[4]
+                            val type =
+                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[0]
+                            val numberPayment =
+                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[1]
+                            val namePayment =
+                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[2]
+                            val bill =
+                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[3]
+                            val admin =
+                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[4]
                             val totalBill = (
-                                    responsePayment.getJSONObject(0)["markup"].toString().toInt() + responsePayment.getJSONObject(0)["harga"].toString().toInt()
+                                    responsePayment.getJSONObject(0)["markup"].toString().toInt() + responsePayment.getJSONObject(
+                                        0
+                                    )["harga"].toString().toInt()
                                     ).toString()
-                            printPayment(date, type, numberPayment, namePayment, bill, admin, totalBill)
+                            printPayment(
+                                date,
+                                type,
+                                numberPayment,
+                                namePayment,
+                                bill,
+                                admin,
+                                totalBill
+                            )
                         }
                     }
                     tableRow.addView(printButton)
@@ -225,7 +291,10 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
                 changePairAndUnpaired()
             } else {
                 changePairAndUnpaired()
-                startActivityForResult(Intent(this, ScanningActivity::class.java), ScanningActivity.SCANNING_FOR_PRINTER)
+                startActivityForResult(
+                    Intent(this, ScanningActivity::class.java),
+                    ScanningActivity.SCANNING_FOR_PRINTER
+                )
                 changePairAndUnpaired()
             }
         }
@@ -240,7 +309,7 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
         }
     }
 
-    private fun printPulsa(date : String, type : String, phone : String, sn : String, price : String) {
+    private fun printPulsa(date: String, type: String, phone: String, sn: String, price: String) {
         try {
             printing = Printooth.printer()
             val printable = ArrayList<Printable>()
@@ -351,13 +420,27 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
             )
 
             printing!!.print(printable)
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             println(e)
-            Toast.makeText(this, "Proses print gagal di lakukan tolong ulangi lagi", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Proses print gagal di lakukan tolong ulangi lagi",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
-    private fun printPLN(date : String, type : String, numberPLN : String, namePLN : String, typePLN : String, volt : String, countPLN : String, token : String, price : String) {
+    private fun printPLN(
+        date: String,
+        type: String,
+        numberPLN: String,
+        namePLN: String,
+        typePLN: String,
+        volt: String,
+        countPLN: String,
+        token: String,
+        price: String
+    ) {
         try {
             printing = Printooth.printer()
             val printable = ArrayList<Printable>()
@@ -504,13 +587,25 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
             )
 
             printing!!.print(printable)
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             println(e)
-            Toast.makeText(this, "Proses print gagal di lakukan tolong ulangi lagi", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Proses print gagal di lakukan tolong ulangi lagi",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
-    private fun printPayment(date : String, type : String, numberPayment : String, namePayment : String, bill : String, admin : String, totalBill : String) {
+    private fun printPayment(
+        date: String,
+        type: String,
+        numberPayment: String,
+        namePayment: String,
+        bill: String,
+        admin: String,
+        totalBill: String
+    ) {
         try {
             printing = Printooth.printer()
             val printable = ArrayList<Printable>()
@@ -639,9 +734,13 @@ class FinanceManagementActivity : AppCompatActivity(), PrintingCallback {
             )
 
             printing!!.print(printable)
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             println(e)
-            Toast.makeText(this, "Proses print gagal di lakukan tolong ulangi lagi", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Proses print gagal di lakukan tolong ulangi lagi",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

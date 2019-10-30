@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
 
         val balance = root.findViewById<TextView>(R.id.balance)
         val reloadBalance = root.findViewById<ImageButton>(R.id.reloadBalance)
-        balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
+        balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
 
         reloadBalance.setOnClickListener {
             val loading = ProgressDialog(root.context)
@@ -64,17 +64,19 @@ class HomeFragment : Fragment() {
                         User.setStatus(response["statusmember"].toString().toInt())
                         User.setBalance(response["deposit"].toString().toInt())
                         loading.dismiss()
-                        balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
+                        balance.text =
+                            numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
                     }
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     loading.dismiss()
-                    balance.text = numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)
+                    balance.text =
+                        numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
                 }
             }
         }
 
         //menu
-        var goTo : Intent
+        var goTo: Intent
         val mPayId = root.findViewById<LinearLayout>(R.id.mPayId)
         val scan = root.findViewById<LinearLayout>(R.id.scan)
         val transferButton = root.findViewById<LinearLayout>(R.id.transferButton)
@@ -102,13 +104,13 @@ class HomeFragment : Fragment() {
         }
 
         //ppiob
-        val postPaid : LinearLayout = root.findViewById(R.id.PostPaidButton)
-        val postPaidCredit : LinearLayout = root.findViewById(R.id.PostPaidCreditButton)
-        val pln : LinearLayout = root.findViewById(R.id.plnButton)
-        val wifi : LinearLayout = root.findViewById(R.id.wifiButton)
-        val goPay : LinearLayout = root.findViewById(R.id.GoPayButton)
-        val grab : LinearLayout = root.findViewById(R.id.GrabButton)
-        val ovo : LinearLayout = root.findViewById(R.id.OVOButton)
+        val postPaid: LinearLayout = root.findViewById(R.id.PostPaidButton)
+        val postPaidCredit: LinearLayout = root.findViewById(R.id.PostPaidCreditButton)
+        val pln: LinearLayout = root.findViewById(R.id.plnButton)
+        val wifi: LinearLayout = root.findViewById(R.id.wifiButton)
+        val goPay: LinearLayout = root.findViewById(R.id.GoPayButton)
+        val grab: LinearLayout = root.findViewById(R.id.GrabButton)
+        val ovo: LinearLayout = root.findViewById(R.id.OVOButton)
 
         postPaid.setOnClickListener {
             goTo = Intent(root.context, PostPaidRequestActivity::class.java)

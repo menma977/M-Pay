@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         doRequestPermission()
 
-        val loginButton : Button = findViewById(R.id.login)
-        val registerButton : Button = findViewById(R.id.register)
+        val loginButton: Button = findViewById(R.id.login)
+        val registerButton: Button = findViewById(R.id.register)
         //val forgotPassword : Button = findViewById(R.id.forgotPassword)
 
         val session = Session(this)
@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         if (session.getString("phone").toString().isNotEmpty()
             && session.getString("phone") != null
             && session.getString("pin").toString().isNotEmpty()
-            && session.getString("pin") != null) {
+            && session.getString("pin") != null
+        ) {
             println("==================Login=======================")
             println(session.getString("phone").toString())
             println(session.getString("pin"))
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             User.setType(session.getInteger("type"))
             val goTo = Intent(this, VerifyLoginActivity::class.java)
             startActivity(goTo)
+
             finish()
         }
 
@@ -63,21 +65,28 @@ class MainActivity : AppCompatActivity() {
             loading.show()
             val phoneTemporary = phoneNumber.text.toString()
             if (phoneTemporary.isEmpty()) {
-                Toast.makeText(this, "Nomor Telepon Anda Tidak boleh kosong", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Nomor Telepon Anda Tidak boleh kosong", Toast.LENGTH_LONG)
+                    .show()
                 loading.dismiss()
             } else {
                 Timer().schedule(object : TimerTask() {
                     override fun run() {
                         val response = UserController.Get(phoneTemporary).execute().get()
                         if (response["Status"].toString() == "0") {
-                            runOnUiThread{
+                            runOnUiThread {
                                 session.saveString("phone", response["hpagen"].toString())
                                 session.saveString("email", response["email"].toString())
                                 session.saveString("name", response["nama"].toString())
                                 session.saveString("pin", response["password"].toString())
-                                session.saveInteger("status", response["statusmember"].toString().toInt())
+                                session.saveInteger(
+                                    "status",
+                                    response["statusmember"].toString().toInt()
+                                )
                                 session.saveInteger("type", response["tipeuser"].toString().toInt())
-                                session.saveInteger("balance", response["deposit"].toString().toInt())
+                                session.saveInteger(
+                                    "balance",
+                                    response["deposit"].toString().toInt()
+                                )
 
                                 User.setPhone(response["hpagen"].toString())
                                 User.setEmail(response["email"].toString())
@@ -89,16 +98,21 @@ class MainActivity : AppCompatActivity() {
                                 doRequestPermission()
                                 Handler().postDelayed({
                                     loading.dismiss()
-                                    val goTo = Intent(applicationContext, VerifyLoginActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, VerifyLoginActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 }, 1000)
                             }
                         } else {
-                            runOnUiThread{
+                            runOnUiThread {
                                 Handler().postDelayed({
                                     loading.dismiss()
-                                    Toast.makeText(applicationContext, "Nomor Telepon tidak di temukan", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Nomor Telepon tidak di temukan",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }, 500)
                             }
                         }
@@ -146,20 +160,40 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("NewApi")
     private fun doRequestPermission() {
         if (
-            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.FOREGROUND_SERVICE,
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.FOREGROUND_SERVICE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
                 Manifest.permission.READ_PHONE_STATE
-            ), 100)
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.FOREGROUND_SERVICE,
+                    Manifest.permission.READ_PHONE_STATE
+                ), 100
+            )
         }
     }
 }

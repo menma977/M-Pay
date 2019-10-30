@@ -25,7 +25,7 @@ class HomeMemberActivity : AppCompatActivity() {
         val session = Session(this)
 
         if (session.getInteger("status") == 0) {
-            val fromForBtn : LinearLayout = findViewById(R.id.formForButton)
+            val fromForBtn: LinearLayout = findViewById(R.id.formForButton)
             fromForBtn.removeAllViews()
             val optionValue = LinearLayout.LayoutParams(50, 50)
             val link = ContextCompat.getColor(this, R.color.Link)
@@ -41,19 +41,23 @@ class HomeMemberActivity : AppCompatActivity() {
             fromForBtn.addView(imageButton)
         }
 
-        val logout : ImageButton = findViewById(R.id.logout)
+        val logout: ImageButton = findViewById(R.id.logout)
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
                 try {
-                    val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                    val response =
+                        UserController.Get(session.getString("phone").toString()).execute().get()
                     if (response["Status"].toString() == "0") {
                         if (response["emai"].toString() == session.getString("imei")) {
                             session.saveString("phone", response["hpagen"].toString())
                             session.saveString("email", response["email"].toString())
                             session.saveString("name", response["nama"].toString())
                             session.saveString("pin", response["password"].toString())
-                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger(
+                                "status",
+                                response["statusmember"].toString().toInt()
+                            )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
 
@@ -84,7 +88,7 @@ class HomeMemberActivity : AppCompatActivity() {
                             finish()
                         }
                     }
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     session.saveString("phone", "")
                     session.saveString("email", "")
                     session.saveString("name", "")
