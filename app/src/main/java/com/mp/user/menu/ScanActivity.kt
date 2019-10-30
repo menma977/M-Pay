@@ -73,7 +73,7 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
         if (session.getInteger("status") == 1) {
             initScannerView()
         } else {
-            Toast.makeText(this, "Nomor Telfon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Nomor Telepon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin", Toast.LENGTH_LONG).show()
             finish()
         }
     }

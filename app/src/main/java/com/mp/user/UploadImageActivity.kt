@@ -106,16 +106,16 @@ class UploadImageActivity : AppCompatActivity() {
                     loading.dismiss()
                 }
                 else -> try {
-                    Timer().schedule(500) {
+                    Timer().schedule(5000) {
                         val statusKTP = uploadImageToServer(filePathKTP)
                         if (statusKTP) {
                             runOnUiThread {
                                 try {
-                                    Timer().schedule(500) {
+                                    Timer().schedule(5000) {
                                         val statusSelfAndKIP = uploadImageToServer(filePathSelfAndKTP)
                                         if (statusSelfAndKIP) {
                                             runOnUiThread {
-                                                Timer().schedule(500) {
+                                                Timer().schedule(5000) {
                                                     try {
                                                         val session = Session(applicationContext)
                                                         val response = RegisterController.ReUploadImage(session.getString("phone").toString(), fileNameKTP, fileNameSelfAndKTP).execute().get()
@@ -178,7 +178,8 @@ class UploadImageActivity : AppCompatActivity() {
             MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
                 .addFileToUpload(getFile, "file")
                 //.addParameter("parameter", "content parameter")
-                .setMaxRetries(2)
+                .setMaxRetries(0)
+                .setAutoDeleteFilesAfterSuccessfulUpload(true)
                 .startUpload()
             true
         }catch (ex : Exception) {

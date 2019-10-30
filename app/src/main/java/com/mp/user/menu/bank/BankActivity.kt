@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import com.mp.MainActivity
@@ -31,27 +33,43 @@ class BankActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bank)
 
+        val phoneTarget : EditText = findViewById(R.id.phoneNumberTarget)
+        val nominal : EditText = findViewById(R.id.nominal)
+        val password : EditText = findViewById(R.id.password)
+        val description : EditText = findViewById(R.id.description)
+        val transfer : Button = findViewById(R.id.transferButton)
+
         val session = Session(this)
         val loading = ProgressDialog(this)
         loading.setTitle("Loading")
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
 
-        transferButton.setOnClickListener {
-            if (!phoneNumberTarget.text.isDigitsOnly()) {
+        transfer.setOnClickListener {
+            if (phoneTarget.text.toString().isEmpty() || !phoneTarget.text.isDigitsOnly()) {
                 Toast.makeText(this, "nomor telfon hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                phoneTarget.requestFocus()
             } else if (bankTarget.text.isEmpty()){
                 Toast.makeText(this, "Nama BANK tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if (!accountTarget.text.isDigitsOnly()) {
+                bankTarget.requestFocus()
+            } else if (accountTarget.text.isEmpty() || !accountTarget.text.isDigitsOnly()) {
                 Toast.makeText(this, "Nomor rekening hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if(phoneNumberTarget.text.toString() == session.getString("phone")) {
+                accountTarget.requestFocus()
+            } else if (phoneTarget.text.toString() == session.getString("phone")) {
                 Toast.makeText(this, "Anda Tidak bisa topup ke nomor telfon anda sendiri", Toast.LENGTH_LONG).show()
-            } else if (!nominal.text.isDigitsOnly()) {
+                phoneTarget.requestFocus()
+            } else if (nominal.text.isEmpty() || !nominal.text.toString().isDigitsOnly()) {
                 Toast.makeText(this, "nominal hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if (!password.text.isDigitsOnly()) {
-                Toast.makeText(this, "password hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                nominal.requestFocus()
+            } else if (password.text.toString() != session.getString("pin")) {
+                Toast.makeText(this, "password tidak cocok", Toast.LENGTH_LONG).show()
+                password.requestFocus()
+            } else if (description.text.toString().isEmpty()) {
+                Toast.makeText(this, "Deskripsi tidak boleh kosong", Toast.LENGTH_LONG).show()
+                description.requestFocus()
             } else if (name.text.isEmpty()) {
                 Toast.makeText(this, "nama sesuai akun BANK tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    name.requestFocus()
             } else {
                 loading.show()
                 Timer().schedule(1000) {

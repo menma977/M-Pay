@@ -52,7 +52,7 @@ class SetNominalActivity : AppCompatActivity() {
                 when {
                     (nominal.text.toString().isEmpty() && !nominal.text.isDigitsOnly()) -> Toast.makeText(this, "Total Nominal tidak boleh kosong dan hanya angka", Toast.LENGTH_LONG).show()
                     password.text.toString() == session.getString("pin") -> Timer().schedule(1000) {
-                        val description = "Nomor Telfon Anda (${session.getString("phone")} ${session.getString("name")}) telah mentransfer Dari QR Code ke ${phoneNumber.text} dengan nominal ${numberFormat.format(nominal.text.toString().toInt())}/${phoneNumber.text}"
+                        val description = "Nomor Telepon Anda (${session.getString("phone")} ${session.getString("name")}) telah mentransfer Dari QR Code ke ${phoneNumber.text} dengan nominal ${numberFormat.format(nominal.text.toString().toInt())}/${phoneNumber.text}"
                         val response = TransferController.PostMPay(session.getString("phone").toString(), phoneNumber.text.toString(), nominal.text.toString(), description).execute().get()
                         runOnUiThread {
                             if (response["Status"].toString() == "0") {

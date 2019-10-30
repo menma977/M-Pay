@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import com.mp.MainActivity
@@ -15,7 +17,6 @@ import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.member.HomeMemberActivity
 import com.mp.user.merchant.HomeMerchantActivity
-import kotlinx.android.synthetic.main.activity_mpay.*
 import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
@@ -31,22 +32,49 @@ class MPayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mpay)
 
+        val phoneTarget : EditText = findViewById(R.id.phoneNumberTarget)
+        val nominal : EditText = findViewById(R.id.nominal)
+        val password : EditText = findViewById(R.id.password)
+        val description : EditText = findViewById(R.id.description)
+        val transfer : Button = findViewById(R.id.transferButton)
+
         val session = Session(this)
         val loading = ProgressDialog(this)
         loading.setTitle("Loading")
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
 
-        transferButton.setOnClickListener {
-            if (!phoneNumberTarget.text.isDigitsOnly()) {
-                Toast.makeText(this, "nomor telfon hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if(phoneNumberTarget.text.toString() == session.getString("phone")) {
-                Toast.makeText(this, "Anda Tidak bisa topup ke nomor telfon anda sendiri", Toast.LENGTH_LONG).show()
-            } else if (!nominal.text.isDigitsOnly()) {
-                Toast.makeText(this, "nominal hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if (!password.text.isDigitsOnly()) {
-                Toast.makeText(this, "password hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+        transfer.setOnClickListener {
+            if (phoneTarget.text.toString().isEmpty()) {
+                Toast.makeText(applicationContext, "nomor telfon hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                phoneTarget.requestFocus()
+            } else if(!phoneTarget.text.isDigitsOnly()) {
+                Toast.makeText(applicationContext, "nomor telfon hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                phoneTarget.requestFocus()
+            } else if (phoneTarget.text.toString() == session.getString("phone")) {
+                Toast.makeText(applicationContext, "Anda Tidak bisa topup ke nomor telfon anda sendiri", Toast.LENGTH_LONG).show()
+                phoneTarget.requestFocus()
+            } else if (nominal.text.isEmpty()) {
+                Toast.makeText(applicationContext, "nominal hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                nominal.requestFocus()
+            } else if(!nominal.text.toString().isDigitsOnly()) {
+                Toast.makeText(applicationContext, "nominal hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                nominal.requestFocus()
+            } else if (password.text.toString() != session.getString("pin")) {
+                Toast.makeText(applicationContext, "password tidak cocok", Toast.LENGTH_LONG).show()
+                    password.requestFocus()
+            } else if (description.text.toString().isEmpty()) {
+                Toast.makeText(applicationContext, "Deskripsi tidak boleh kosong", Toast.LENGTH_LONG).show()
+                description.requestFocus()
             } else {
+                println("===============================================")
+                println("===============================================")
+                println(phoneTarget.text.toString())
+                println(nominal.text.toString())
+                println(password.text.toString())
+                println(description.text.toString())
+                println("===============================================")
+                println("===============================================")
                 loading.show()
                 Timer().schedule(1000) {
                     try {
@@ -54,7 +82,7 @@ class MPayActivity : AppCompatActivity() {
                         session.saveInteger("balance", userResponse["deposit"].toString().toInt())
                         User.setBalance(userResponse["deposit"].toString().toInt())
                         if (userResponse["Status"].toString() == "0") {
-                            val response = TransferController.PostMPay(session.getString("phone").toString(), phoneNumberTarget.text.toString(), nominal.text.toString(), description.text.toString()).execute().get()
+                            val response = TransferController.PostMPay(session.getString("phone").toString(), phoneTarget.text.toString(), nominal.text.toString(), description.text.toString()).execute().get()
                             runOnUiThread {
                                 if (response["Status"].toString() == "0") {
                                     if (session.getInteger("type") == 1) {

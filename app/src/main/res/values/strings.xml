@@ -42,11 +42,11 @@
     <string name="default_value">0</string>
     <string name="member">Member</string>
     <string name="qr_code">QR Kode</string>
-    <string name="phone_number">Nomor Telfon</string>
+    <string name="phone_number">Nomor Telepon</string>
     <string name="nominal">Total Nominal Yang Di Transfer</string>
     <string name="register">Register</string>
     <string name="lupa_kata_sandi">Lupa Kata Sandi</string>
-    <string name="no_telfon_yang_terpasang_di_hp_anda">No Telfon yang terpasang di Hp anda</string>
+    <string name="no_telfon_yang_terpasang_di_hp_anda">No Telepon yang terpasang di Hp anda</string>
     <string name="nama_sesuai_ktp">Nama sesuai KTP</string>
     <string name="password_validation">Ulang kata sandi</string>
     <string name="email_aktif_saat_ini">Email aktif saat ini</string>

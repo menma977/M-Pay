@@ -154,72 +154,79 @@ class RegisterUserActivity : AppCompatActivity() {
                 Toast.makeText(this, "kata sandi tidak boleh lebih dari 6", Toast.LENGTH_LONG).show()
             } else if (passwordValidation.text.isEmpty() && passwordValidation.text.toString() != password.text.toString()) {
                 Toast.makeText(this, "kata sandi yang anda inputkan tidak cocok", Toast.LENGTH_LONG).show()
+            } else if (fileNameKTP.isEmpty()) {
+                Toast.makeText(this, "Foto KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
+            } else if (fileNameSelfAndKTP.isEmpty()) {
+                Toast.makeText(this, "Foto Diri dan KTP tidak boleh kosong", Toast.LENGTH_LONG).show()
             } else {
                 loading.show()
-                Timer().schedule(object : TimerTask() {
-                    override fun run() {
-                        val statusKTP = uploadImageToServer(filePathKTP)
-                        if (statusKTP) {
-                            val statusSelfAndKTP = uploadImageToServer(filePathSelfAndKTP)
+                Timer().schedule(5000) {
+                    val statusKTP = uploadImageToServer(filePathKTP)
+                    if (statusKTP) {
+                        val statusSelfAndKTP = uploadImageToServer(filePathSelfAndKTP)
+                        Timer().schedule(5000) {
                             if (statusSelfAndKTP) {
-                                val response = RegisterController.RegisterUser(
-                                    phone.text.toString(),
-                                    email.text.toString(),
-                                    name.text.toString(),
-                                    password.text.toString(),
-                                    fileNameKTP,
-                                    fileNameSelfAndKTP
-                                ).execute().get()
-                                println()
-                                println("===============Register===================")
-                                println(response)
-                                println("==========================================")
-                                if (response["Status"].toString() == "0") {
-                                    session!!.saveString("phone", response["hpagen"].toString())
-                                    session!!.saveString("email", response["email"].toString())
-                                    session!!.saveString("name", response["nama"].toString())
-                                    session!!.saveString("pin", response["password"].toString())
-                                    session!!.saveInteger("status", 0)
-                                    session!!.saveInteger("type", 1)
+                                Timer().schedule(5000) {
+                                    val response = RegisterController.RegisterUser(
+                                        phone.text.toString(),
+                                        email.text.toString(),
+                                        name.text.toString(),
+                                        password.text.toString(),
+                                        fileNameKTP,
+                                        fileNameSelfAndKTP
+                                    ).execute().get()
+                                    println()
+                                    println("===============Register===================")
+                                    println(response)
+                                    println("==========================================")
+                                    if (response["Status"].toString() == "0") {
+                                        session!!.saveString("phone", response["nohp"].toString())
+                                        session!!.saveString("email", response["email"].toString())
+                                        session!!.saveString("name", response["nama"].toString())
+                                        session!!.saveString("pin", response["password"].toString())
+                                        session!!.saveInteger("status", 0)
+                                        session!!.saveInteger("type", 1)
 
-                                    User.setPhone(response["hpagen"].toString())
-                                    User.setEmail(response["email"].toString())
-                                    User.setName(response["nama"].toString())
-                                    User.setPin(response["password"].toString())
-                                    User.setType(response["tipeuser"].toString().toInt())
-                                    User.setStatus(response["statusmember"].toString().toInt())
-                                    runOnUiThread{
-                                        Handler().postDelayed({
-                                            val goTo = Intent(applicationContext, MainActivity::class.java)
-                                            startActivity(goTo)
-                                            finish()
-                                        }, 1000)
-                                    }
-                                } else {
-                                    runOnUiThread {
-                                        Handler().postDelayed({
-                                            Toast.makeText(applicationContext, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
-                                        }, 500)
+                                        User.setPhone(response["nohp"].toString())
+                                        User.setEmail(response["email"].toString())
+                                        User.setName(response["nama"].toString())
+                                        User.setPin(response["password"].toString())
+                                        User.setType(1)
+                                        User.setStatus(0)
+                                        runOnUiThread{
+                                            Handler().postDelayed({
+                                                loading.dismiss()
+                                                val goTo = Intent(applicationContext, MainActivity::class.java)
+                                                startActivity(goTo)
+                                                finish()
+                                            }, 5000)
+                                        }
+                                    } else {
+                                        runOnUiThread {
+                                            Handler().postDelayed({
+                                                Toast.makeText(applicationContext, "Pendaftaran Tidak Valid mohon cek data yang anda kirim", Toast.LENGTH_LONG).show()
+                                                loading.dismiss()
+                                            }, 500)
+                                        }
                                     }
                                 }
                             } else {
                                 runOnUiThread {
                                     Handler().postDelayed({
                                         Toast.makeText(applicationContext, "Foto Diri dengan KTP bermasalah mohon ulangi lagi", Toast.LENGTH_LONG).show()
+                                        loading.dismiss()
                                     }, 500)
                                 }
                             }
-                        } else {
-                            runOnUiThread {
-                                Handler().postDelayed({
-                                    Toast.makeText(applicationContext, "Foto KTP bermasalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
-                                }, 500)
-                            }
+                        }
+                    } else {
+                        runOnUiThread {
+                            Handler().postDelayed({
+                                Toast.makeText(applicationContext, "Foto KTP bermasalah tolong ulangi lagi", Toast.LENGTH_LONG).show()
+                                loading.dismiss()
+                            }, 500)
                         }
                     }
-                }, 3000)
-                Timer().schedule(500) {
-                    loading.dismiss()
                 }
             }
         } else {
@@ -229,11 +236,15 @@ class RegisterUserActivity : AppCompatActivity() {
 
     private fun uploadImageToServer(getFile:String) : Boolean {
         return try {
-            MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
+            val image = MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
                 .addFileToUpload(getFile, "file")
                 //.addParameter("parameter", "content parameter")
-                .setMaxRetries(2)
+                .setMaxRetries(0)
+                .setAutoDeleteFilesAfterSuccessfulUpload(true)
                 .startUpload()
+            println("===============Register===================")
+            println(image)
+            println("===============Register===================")
             true
         }catch (ex : Exception) {
             ex.printStackTrace()

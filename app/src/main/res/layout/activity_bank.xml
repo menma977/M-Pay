@@ -133,7 +133,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/button_success"
             android:textColor="@color/textPrimary"
-            android:text="@string/transfer" />
+            android:text="@string/transfers" />
 
     </LinearLayout>
 

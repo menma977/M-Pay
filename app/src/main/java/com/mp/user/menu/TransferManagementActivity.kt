@@ -23,7 +23,7 @@ class TransferManagementActivity : AppCompatActivity() {
 
         val session = Session(this)
         if (session.getInteger("status") == 0) {
-            Toast.makeText(this, "Nomor Telfon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Nomor Telepon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin", Toast.LENGTH_LONG).show()
             finish()
         }
 

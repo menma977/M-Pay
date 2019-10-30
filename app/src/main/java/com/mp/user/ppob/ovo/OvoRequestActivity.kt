@@ -159,7 +159,7 @@ class OvoRequestActivity : AppCompatActivity() {
                     loading.dismiss()
                 }, 1000)
             } else if(phoneNumberEditText.text.length < 10) {
-                Toast.makeText(this, "Nomoar Telfon yang anda inputkan kurang dari 10 digit.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Nomoar Telepon yang anda inputkan kurang dari 10 digit.", Toast.LENGTH_LONG).show()
                 Handler().postDelayed({
                     loading.dismiss()
                 }, 500)
@@ -190,7 +190,7 @@ class OvoRequestActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Produk atau Nomor Telfon tidak valid", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Produk atau Nomor Telepon tidak valid", Toast.LENGTH_LONG).show()
         }
     }
 }

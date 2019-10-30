@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             loading.show()
             val phoneTemporary = phoneNumber.text.toString()
             if (phoneTemporary.isEmpty()) {
-                Toast.makeText(this, "Nomor Telfon Anda Tidak boleh kosong", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Nomor Telepon Anda Tidak boleh kosong", Toast.LENGTH_LONG).show()
                 loading.dismiss()
             } else {
                 Timer().schedule(object : TimerTask() {
@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
 //                Timer().schedule(object : TimerTask() {
 //                    override fun run() {
 //                        runOnUiThread{
-//                            Toast.makeText(applicationContext, "Nomor Telfon Tidak boleh kosong", Toast.LENGTH_LONG).show()
+//                            Toast.makeText(applicationContext, "Nomor Telepon Tidak boleh kosong", Toast.LENGTH_LONG).show()
 //                        }
 //                    }
 //                }, 1000)

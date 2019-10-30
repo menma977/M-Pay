@@ -75,7 +75,7 @@ class PlnRequestActivity : AppCompatActivity() {
             }, 100)
             when {
                 PhoneNumberEditText.text.toString().isEmpty() -> {
-                    Toast.makeText(this, "No Telfon tidak boleh kosong.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "No Telepon tidak boleh kosong.", Toast.LENGTH_LONG).show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
