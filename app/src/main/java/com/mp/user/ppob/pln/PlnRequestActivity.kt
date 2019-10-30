@@ -36,7 +36,8 @@ class PlnRequestActivity : AppCompatActivity() {
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
         loading.show()
-        BalanceTextView.text = "Saldo saat ini : ${numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)}"
+        BalanceTextView.text =
+            "Saldo saat ini : ${numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)}"
 
         val arrayCodeProduct = ArrayList<String>()
         val arrayNameProduct = ArrayList<String>()
@@ -45,11 +46,22 @@ class PlnRequestActivity : AppCompatActivity() {
             val productRequest = ProductController(User.getPhone()).execute().get()
             val arrayProduct = productRequest.getJSONObject(0).getJSONArray("PLN")
             for (value in 0 until arrayProduct.length() - 1) {
-                arrayNameProduct.add(numberFormat.format("${arrayProduct.getJSONObject(value)["code"].toString().replace("PLN", "")}000".toInt()))
+                arrayNameProduct.add(
+                    numberFormat.format(
+                        "${arrayProduct.getJSONObject(value)["code"].toString().replace(
+                            "PLN",
+                            ""
+                        )}000".toInt()
+                    )
+                )
                 arrayCodeProduct.add(arrayProduct.getJSONObject(value)["code"].toString())
             }
             runOnUiThread {
-                val spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, arrayNameProduct)
+                val spinnerAdapter = ArrayAdapter(
+                    applicationContext,
+                    android.R.layout.simple_spinner_item,
+                    arrayNameProduct
+                )
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
                 ProductSpinner.adapter = spinnerAdapter
             }
@@ -60,7 +72,12 @@ class PlnRequestActivity : AppCompatActivity() {
         }, 500)
 
         ProductSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 if (parent.count > 1) {
                     type = arrayCodeProduct[position]
                 }
@@ -89,20 +106,30 @@ class PlnRequestActivity : AppCompatActivity() {
                 else -> {
                     Timer().schedule(1000) {
                         val username = session.getString("phone").toString()
-                        val phone = PhoneNumberEditText.text.toString().replace("-", "").replace("+62", "0").replace(" ", "")
+                        val phone =
+                            PhoneNumberEditText.text.toString().replace("-", "").replace("+62", "0")
+                                .replace(" ", "")
                         val token = TokenNumberEditText.text.toString()
                         println(type)
-                        val postPaidController = TokenController.Request(username, phone, token, type).execute().get()
+                        val postPaidController =
+                            TokenController.Request(username, phone, token, type).execute().get()
                         println(postPaidController)
                         if (postPaidController["Status"].toString() == "0") {
                             runOnUiThread {
                                 loading.dismiss()
-                                val goTo = Intent(applicationContext, PlnResponseActivity::class.java).putExtra("response", postPaidController.toString())
+                                val goTo = Intent(
+                                    applicationContext,
+                                    PlnResponseActivity::class.java
+                                ).putExtra("response", postPaidController.toString())
                                 startActivity(goTo)
                             }
                         } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, postPaidController["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    postPaidController["Pesan"].toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)

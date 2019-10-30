@@ -26,11 +26,11 @@ class MultiFinanceRequestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multi_finance_request)
-        val productSpinner : Spinner = findViewById(R.id.ProductSpinner)
-        val balanceTextView : TextView = findViewById(R.id.BalanceTextView)
-        val continueButton : Button = findViewById(R.id.ContinueButton)
-        val customerID : EditText = findViewById(R.id.CustomerID)
-        val phoneNumberEditText : EditText = findViewById(R.id.PhoneNumberEditText)
+        val productSpinner: Spinner = findViewById(R.id.ProductSpinner)
+        val balanceTextView: TextView = findViewById(R.id.BalanceTextView)
+        val continueButton: Button = findViewById(R.id.ContinueButton)
+        val customerID: EditText = findViewById(R.id.CustomerID)
+        val phoneNumberEditText: EditText = findViewById(R.id.PhoneNumberEditText)
         val loading = ProgressDialog(this)
         val session = Session(this)
         loading.setTitle("Loading")
@@ -38,21 +38,23 @@ class MultiFinanceRequestActivity : AppCompatActivity() {
         loading.setCancelable(false)
         loading.show()
 
-        val jsonArrayConverter = JSONArray("[" +
-                "{ code: 'LSADIRAL;1', name: 'ADIRA ELEKTRONIK' },\n" +
-                "{ code: 'LSADIRA;1', name: 'ADIRA MOTOR' },\n" +
-                "{ code: 'LSBIMA;1', name: 'Bima Finance' },\n" +
-                "{ code: 'LSBAF;1', name: 'Bussan Auto Finance (BAF)' },\n" +
-                "{ code: 'LSCLMB;1', name: 'COLUMBIA' },\n" +
-                "{ code: 'LSFIF;1', name: 'FIF' },\n" +
-                "{ code: 'LSMAF;1', name: 'MEGA AUTO FINANCE' },\n" +
-                "{ code: 'LSMEGA;1', name: 'MEGA CENTRAL FINANCE' },\n" +
-                "{ code: 'LSMPM;1', name: 'MPM Finance' },\n" +
-                "{ code: 'LSOTO;1', name: 'Oto Finance' },\n" +
-                "{ code: 'LSRADA;1', name: 'Radana Finance' },\n" +
-                "{ code: 'LSWKF;1', name: 'WOKA FINANCE' },\n" +
-                "{ code: 'LSWOM;1', name: 'WOM FINANCE' },"+
-                "]")
+        val jsonArrayConverter = JSONArray(
+            "[" +
+                    "{ code: 'LSADIRAL;1', name: 'ADIRA ELEKTRONIK' },\n" +
+                    "{ code: 'LSADIRA;1', name: 'ADIRA MOTOR' },\n" +
+                    "{ code: 'LSBIMA;1', name: 'Bima Finance' },\n" +
+                    "{ code: 'LSBAF;1', name: 'Bussan Auto Finance (BAF)' },\n" +
+                    "{ code: 'LSCLMB;1', name: 'COLUMBIA' },\n" +
+                    "{ code: 'LSFIF;1', name: 'FIF' },\n" +
+                    "{ code: 'LSMAF;1', name: 'MEGA AUTO FINANCE' },\n" +
+                    "{ code: 'LSMEGA;1', name: 'MEGA CENTRAL FINANCE' },\n" +
+                    "{ code: 'LSMPM;1', name: 'MPM Finance' },\n" +
+                    "{ code: 'LSOTO;1', name: 'Oto Finance' },\n" +
+                    "{ code: 'LSRADA;1', name: 'Radana Finance' },\n" +
+                    "{ code: 'LSWKF;1', name: 'WOKA FINANCE' },\n" +
+                    "{ code: 'LSWOM;1', name: 'WOM FINANCE' }," +
+                    "]"
+        )
 
         val arrayListName = ArrayList<String>()
         val arrayCodeName = ArrayList<String>()
@@ -91,17 +93,21 @@ class MultiFinanceRequestActivity : AppCompatActivity() {
             loading.show()
             val username = session.getString("phone").toString()
             val costumerID = customerID.text.toString()
-            val phoneNumber = phoneNumberEditText.text.toString().replace("-", "").replace("+62", "0").replace(" ", "")
+            val phoneNumber =
+                phoneNumberEditText.text.toString().replace("-", "").replace("+62", "0")
+                    .replace(" ", "")
             val balance = session.getInteger("balance").toString()
             when {
                 phoneNumber.isEmpty() -> {
-                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
                 }
                 costumerID.isEmpty() -> {
-                    Toast.makeText(this, "Id pelanggan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Id pelanggan tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
@@ -114,19 +120,32 @@ class MultiFinanceRequestActivity : AppCompatActivity() {
                 }
                 else -> {
                     Timer().schedule(1000) {
-                        val requestPayment = PaymentController.Request(username, costumerID, phoneNumber, balance, type).execute().get()
+                        val requestPayment = PaymentController.Request(
+                            username,
+                            costumerID,
+                            phoneNumber,
+                            balance,
+                            type
+                        ).execute().get()
                         println(requestPayment)
                         if (requestPayment["Status"].toString() == "0") {
                             runOnUiThread {
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)
-                                val goTo = Intent(applicationContext, PostPaidCreditResponseActivity::class.java).putExtra("response", requestPayment.toString())
+                                val goTo = Intent(
+                                    applicationContext,
+                                    PostPaidCreditResponseActivity::class.java
+                                ).putExtra("response", requestPayment.toString())
                                 startActivity(goTo)
                             }
                         } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, requestPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    requestPayment["Pesan"].toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)

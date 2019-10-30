@@ -50,47 +50,79 @@ class SetNominalActivity : AppCompatActivity() {
             loading.show()
             try {
                 when {
-                    (nominal.text.toString().isEmpty() && !nominal.text.isDigitsOnly()) -> Toast.makeText(this, "Total Nominal tidak boleh kosong dan hanya angka", Toast.LENGTH_LONG).show()
+                    (nominal.text.toString().isEmpty() || !nominal.text.isDigitsOnly()) -> Toast.makeText(
+                        this,
+                        "Total Nominal tidak boleh kosong dan hanya angka",
+                        Toast.LENGTH_LONG
+                    ).show()
                     password.text.toString() == session.getString("pin") -> Timer().schedule(1000) {
-                        val description = "Nomor Telepon Anda (${session.getString("phone")} ${session.getString("name")}) telah mentransfer Dari QR Code ke ${phoneNumber.text} dengan nominal ${numberFormat.format(nominal.text.toString().toInt())}/${phoneNumber.text}"
-                        val response = TransferController.PostMPay(session.getString("phone").toString(), phoneNumber.text.toString(), nominal.text.toString(), description).execute().get()
+                        val description =
+                            "Nomor Telepon Anda (${session.getString("phone")} / ${session.getString("name")}) telah mentransfer Dari QR Code ke ${phoneNumber.text} dengan nominal ${numberFormat.format(
+                                nominal.text.toString().toInt()
+                            )}/${phoneNumber.text}"
+                        val response = TransferController.PostMPay(
+                            session.getString("phone").toString(),
+                            phoneNumber.text.toString(),
+                            nominal.text.toString(),
+                            description
+                        ).execute().get()
                         runOnUiThread {
                             if (response["Status"].toString() == "0") {
-                                val gerResponse = UserController.Get(session.getString("phone").toString()).execute().get()
-                                session.saveInteger("balance", gerResponse["deposit"].toString().toInt())
+                                val gerResponse =
+                                    UserController.Get(session.getString("phone").toString())
+                                        .execute().get()
+                                session.saveInteger(
+                                    "balance",
+                                    gerResponse["deposit"].toString().toInt()
+                                )
                                 User.setBalance(gerResponse["deposit"].toString().toInt())
                                 if (session.getInteger("type") == 1) {
                                     Handler().postDelayed({
                                         loading.dismiss()
-                                        Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            applicationContext,
+                                            response["Pesan"].toString(),
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                         finish()
                                     }, 1000)
-                                    val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMemberActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 } else {
                                     Handler().postDelayed({
                                         loading.dismiss()
-                                        Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            applicationContext,
+                                            response["Pesan"].toString(),
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                         finish()
                                     }, 1000)
-                                    val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMerchantActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 }
                             } else {
                                 Handler().postDelayed({
                                     loading.dismiss()
-                                    Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        response["Pesan"].toString(),
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }, 1000)
                             }
                         }
                     }
                     else -> Toast.makeText(this, "password tidak valid", Toast.LENGTH_LONG).show()
                 }
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 try {
-                    val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                    val response =
+                        UserController.Get(session.getString("phone").toString()).execute().get()
                     if (session.getString("imei") != response["emai"].toString()) {
                         session.saveString("phone", "")
                         session.saveString("email", "")
@@ -110,7 +142,7 @@ class SetNominalActivity : AppCompatActivity() {
                         startActivity(goTo)
                         finish()
                     }
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     session.saveString("phone", "")
                     session.saveString("email", "")
                     session.saveString("name", "")

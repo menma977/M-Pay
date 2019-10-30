@@ -33,11 +33,10 @@ class BankActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bank)
 
-        val phoneTarget : EditText = findViewById(R.id.phoneNumberTarget)
-        val nominal : EditText = findViewById(R.id.nominal)
-        val password : EditText = findViewById(R.id.password)
-        val description : EditText = findViewById(R.id.description)
-        val transfer : Button = findViewById(R.id.transferButton)
+        val nominal: EditText = findViewById(R.id.nominal)
+        val password: EditText = findViewById(R.id.password)
+        val description: EditText = findViewById(R.id.description)
+        val transfer: Button = findViewById(R.id.transferButton)
 
         val session = Session(this)
         val loading = ProgressDialog(this)
@@ -46,20 +45,22 @@ class BankActivity : AppCompatActivity() {
         loading.setCancelable(false)
 
         transfer.setOnClickListener {
-            if (phoneTarget.text.toString().isEmpty() || !phoneTarget.text.isDigitsOnly()) {
-                Toast.makeText(this, "nomor telfon hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
-                phoneTarget.requestFocus()
-            } else if (bankTarget.text.isEmpty()){
+            if (bankTarget.text.isEmpty()) {
                 Toast.makeText(this, "Nama BANK tidak boleh kosong", Toast.LENGTH_LONG).show()
                 bankTarget.requestFocus()
             } else if (accountTarget.text.isEmpty() || !accountTarget.text.isDigitsOnly()) {
-                Toast.makeText(this, "Nomor rekening hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Nomor rekening hanya boleh angka dan tidak boleh kosong",
+                    Toast.LENGTH_LONG
+                ).show()
                 accountTarget.requestFocus()
-            } else if (phoneTarget.text.toString() == session.getString("phone")) {
-                Toast.makeText(this, "Anda Tidak bisa topup ke nomor telfon anda sendiri", Toast.LENGTH_LONG).show()
-                phoneTarget.requestFocus()
             } else if (nominal.text.isEmpty() || !nominal.text.toString().isDigitsOnly()) {
-                Toast.makeText(this, "nominal hanya boleh angka dan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "nominal hanya boleh angka dan tidak boleh kosong",
+                    Toast.LENGTH_LONG
+                ).show()
                 nominal.requestFocus()
             } else if (password.text.toString() != session.getString("pin")) {
                 Toast.makeText(this, "password tidak cocok", Toast.LENGTH_LONG).show()
@@ -68,39 +69,66 @@ class BankActivity : AppCompatActivity() {
                 Toast.makeText(this, "Deskripsi tidak boleh kosong", Toast.LENGTH_LONG).show()
                 description.requestFocus()
             } else if (name.text.isEmpty()) {
-                Toast.makeText(this, "nama sesuai akun BANK tidak boleh kosong", Toast.LENGTH_LONG).show()
-                    name.requestFocus()
+                Toast.makeText(this, "nama sesuai akun BANK tidak boleh kosong", Toast.LENGTH_LONG)
+                    .show()
+                name.requestFocus()
             } else {
                 loading.show()
                 Timer().schedule(1000) {
                     try {
-                        val userResponse = UserController.Get(session.getString("phone").toString()).execute().get()
+                        val userResponse =
+                            UserController.Get(session.getString("phone").toString()).execute()
+                                .get()
                         session.saveInteger("balance", userResponse["deposit"].toString().toInt())
                         User.setBalance(userResponse["deposit"].toString().toInt())
                         if (userResponse["Status"].toString() == "0") {
-                            val response = TransferController.PostBank(phoneNumberTarget.text.toString(), bankTarget.text.toString(), accountTarget.text.toString(), name.text.toString(), nominal.text.toString()).execute().get()
+                            val response = TransferController.PostBank(
+                                session.getString("phone").toString(),
+                                bankTarget.text.toString(),
+                                accountTarget.text.toString(),
+                                name.text.toString(),
+                                nominal.text.toString()
+                            ).execute().get()
                             runOnUiThread {
                                 if (response["Status"].toString() == "0") {
                                     if (session.getInteger("type") == 1) {
                                         Handler().postDelayed({
                                             loading.dismiss()
-                                            Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
-                                            val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                            Toast.makeText(
+                                                applicationContext,
+                                                response["Pesan"].toString(),
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            val goTo = Intent(
+                                                applicationContext,
+                                                HomeMemberActivity::class.java
+                                            )
                                             startActivity(goTo)
                                             finish()
                                         }, 1000)
                                     } else {
                                         Handler().postDelayed({
                                             loading.dismiss()
-                                            Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
-                                            val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                            Toast.makeText(
+                                                applicationContext,
+                                                response["Pesan"].toString(),
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            val goTo = Intent(
+                                                applicationContext,
+                                                HomeMerchantActivity::class.java
+                                            )
                                             startActivity(goTo)
                                             finish()
                                         }, 1000)
                                     }
                                 } else {
                                     loading.dismiss()
-                                    Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        response["Pesan"].toString(),
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
                             }
                         } else {
@@ -126,11 +154,15 @@ class BankActivity : AppCompatActivity() {
                                     finish()
                                 } else {
                                     loading.dismiss()
-                                    Toast.makeText(applicationContext, "Internet bermasalah tolong cari lokasi lebih baik untuk mendapatkan sinyal lebih baik", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Internet bermasalah tolong cari lokasi lebih baik untuk mendapatkan sinyal lebih baik",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
                             }
                         }
-                    } catch (e : Exception) {
+                    } catch (e: Exception) {
                         runOnUiThread {
                             loading.dismiss()
                             session.saveString("phone", "")

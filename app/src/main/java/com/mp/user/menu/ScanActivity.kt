@@ -19,7 +19,7 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     private lateinit var mScannerView: ZXingScannerView
 
-    override fun handleResult(responseQR : Result) {
+    override fun handleResult(responseQR: Result) {
         if (responseQR.text.toString().isNotEmpty()) {
             val loading = ProgressDialog(this)
             loading.setTitle("Loading")
@@ -35,8 +35,15 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
                         Handler().postDelayed({
                             loading.dismiss()
                         }, 200)
-                        Toast.makeText(applicationContext, "Melanjutkan ke nominal yang akan di isi", Toast.LENGTH_LONG).show()
-                        val goTo = Intent(applicationContext, SetNominalActivity::class.java).putExtra("response", response.toString())
+                        Toast.makeText(
+                            applicationContext,
+                            "Melanjutkan ke nominal yang akan di isi",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        val goTo = Intent(
+                            applicationContext,
+                            SetNominalActivity::class.java
+                        ).putExtra("response", response.toString())
                         startActivity(goTo)
                         finish()
                     }
@@ -45,8 +52,12 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
                         Handler().postDelayed({
                             loading.dismiss()
                         }, 200)
-                        Toast.makeText(applicationContext, "QR belum terdaftar", Toast.LENGTH_LONG).show()
-                        val goTo = Intent(applicationContext, ScanActivity::class.java).putExtra("response", response.toString())
+                        Toast.makeText(applicationContext, "QR belum terdaftar", Toast.LENGTH_LONG)
+                            .show()
+                        val goTo = Intent(
+                            applicationContext,
+                            ScanActivity::class.java
+                        ).putExtra("response", response.toString())
                         startActivity(goTo)
                         finish()
                     }
@@ -73,7 +84,11 @@ class ScanActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
         if (session.getInteger("status") == 1) {
             initScannerView()
         } else {
-            Toast.makeText(this, "Nomor Telepon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Nomor Telepon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin",
+                Toast.LENGTH_LONG
+            ).show()
             finish()
         }
     }

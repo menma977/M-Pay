@@ -26,11 +26,11 @@ class PLNCreditRequestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plncredit_request)
-        val productSpinner : Spinner = findViewById(R.id.ProductSpinner)
-        val balanceTextView : TextView = findViewById(R.id.BalanceTextView)
-        val continueButton : Button = findViewById(R.id.ContinueButton)
-        val customerID : EditText = findViewById(R.id.CustomerID)
-        val phoneNumberEditText : EditText = findViewById(R.id.PhoneNumberEditText)
+        val productSpinner: Spinner = findViewById(R.id.ProductSpinner)
+        val balanceTextView: TextView = findViewById(R.id.BalanceTextView)
+        val continueButton: Button = findViewById(R.id.ContinueButton)
+        val customerID: EditText = findViewById(R.id.CustomerID)
+        val phoneNumberEditText: EditText = findViewById(R.id.PhoneNumberEditText)
         val loading = ProgressDialog(this)
         val session = Session(this)
         loading.setTitle("Loading")
@@ -38,10 +38,12 @@ class PLNCreditRequestActivity : AppCompatActivity() {
         loading.setCancelable(false)
         loading.show()
 
-        val jsonArrayConverter = JSONArray("[" +
-                "{ code: 'PLNPAC;2', name: 'PLN Pasca Bayar' }," +
-                "{ code: 'PLNNON;2', name: 'PLN Non Taglist' }," +
-                "]")
+        val jsonArrayConverter = JSONArray(
+            "[" +
+                    "{ code: 'PLNPAC;2', name: 'PLN Pasca Bayar' }," +
+                    "{ code: 'PLNNON;2', name: 'PLN Non Taglist' }," +
+                    "]"
+        )
 
         val arrayListName = ArrayList<String>()
         val arrayCodeName = ArrayList<String>()
@@ -80,17 +82,21 @@ class PLNCreditRequestActivity : AppCompatActivity() {
             loading.show()
             val username = session.getString("phone").toString()
             val costumerID = customerID.text.toString()
-            val phoneNumber = phoneNumberEditText.text.toString().replace("-", "").replace("+62", "0").replace(" ", "")
+            val phoneNumber =
+                phoneNumberEditText.text.toString().replace("-", "").replace("+62", "0")
+                    .replace(" ", "")
             val balance = session.getInteger("balance").toString()
             when {
                 phoneNumber.isEmpty() -> {
-                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
                 }
                 costumerID.isEmpty() -> {
-                    Toast.makeText(this, "Id pelanggan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Id pelanggan tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
@@ -103,19 +109,32 @@ class PLNCreditRequestActivity : AppCompatActivity() {
                 }
                 else -> {
                     Timer().schedule(1000) {
-                        val requestPayment = PaymentController.Request(username, costumerID, phoneNumber, balance, type).execute().get()
+                        val requestPayment = PaymentController.Request(
+                            username,
+                            costumerID,
+                            phoneNumber,
+                            balance,
+                            type
+                        ).execute().get()
                         println(requestPayment)
                         if (requestPayment["Status"].toString() == "0") {
                             runOnUiThread {
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)
-                                val goTo = Intent(applicationContext, PostPaidCreditResponseActivity::class.java).putExtra("response", requestPayment.toString())
+                                val goTo = Intent(
+                                    applicationContext,
+                                    PostPaidCreditResponseActivity::class.java
+                                ).putExtra("response", requestPayment.toString())
                                 startActivity(goTo)
                             }
                         } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, requestPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    requestPayment["Pesan"].toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)

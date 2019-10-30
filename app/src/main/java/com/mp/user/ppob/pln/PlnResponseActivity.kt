@@ -59,7 +59,7 @@ class PlnResponseActivity : AppCompatActivity() {
             } else {
                 session.saveInteger("balance", response["deposit"].toString().toInt())
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             session.saveString("phone", "")
             session.saveString("email", "")
             session.saveString("name", "")
@@ -107,21 +107,36 @@ class PlnResponseActivity : AppCompatActivity() {
             val markupAdmin = MarkupAdminEditText.text.toString()
             if (markupAdmin.isNotEmpty()) {
                 Timer().schedule(1000) {
-                    val payPayment = TokenController.Response(username, phone, type, costumerID, firstBalance, markupAdmin, price, remainingBalance).execute().get()
+                    val payPayment = TokenController.Response(
+                        username,
+                        phone,
+                        type,
+                        costumerID,
+                        firstBalance,
+                        markupAdmin,
+                        price,
+                        remainingBalance
+                    ).execute().get()
                     if (payPayment["Status"].toString() == "0") {
                         runOnUiThread {
                             updateBalance()
                             Handler().postDelayed({
                                 loading.dismiss()
                             }, 500)
-                            Toast.makeText(applicationContext, payPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                applicationContext,
+                                payPayment["Pesan"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                             Handler().postDelayed({
                                 if (session.getInteger("type") == 1) {
-                                    val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMemberActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 } else {
-                                    val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMerchantActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 }
@@ -129,7 +144,11 @@ class PlnResponseActivity : AppCompatActivity() {
                         }
                     } else {
                         runOnUiThread {
-                            Toast.makeText(applicationContext, payPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                applicationContext,
+                                payPayment["Pesan"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                             Handler().postDelayed({
                                 loading.dismiss()
                             }, 500)
@@ -149,15 +168,19 @@ class PlnResponseActivity : AppCompatActivity() {
         val session = Session(this)
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                val response =
+                    UserController.Get(session.getString("phone").toString()).execute().get()
                 if (response["Status"].toString() == "0") {
-                    runOnUiThread{
+                    runOnUiThread {
                         Handler().postDelayed({
                             session.saveString("phone", response["hpagen"].toString())
                             session.saveString("email", response["email"].toString())
                             session.saveString("name", response["nama"].toString())
                             session.saveString("pin", response["password"].toString())
-                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger(
+                                "status",
+                                response["statusmember"].toString().toInt()
+                            )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
 

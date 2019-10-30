@@ -59,7 +59,7 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
             } else {
                 session.saveInteger("balance", response["deposit"].toString().toInt())
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             session.saveString("phone", "")
             session.saveString("email", "")
             session.saveString("name", "")
@@ -106,9 +106,13 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
             FirstBalanceTextView.text = numberFormat.format(firstBalance.toInt())
             AdminTextView.text = numberFormat.format(admin.toInt())
             RemainingBalanceTextView.text = numberFormat.format(remainingBalance.toInt())
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(applicationContext, "Terjadi Kesalahan saat membaca data", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                applicationContext,
+                "Terjadi Kesalahan saat membaca data",
+                Toast.LENGTH_LONG
+            ).show()
             finish()
         }
 
@@ -121,7 +125,20 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
             val markupAdmin = MarkupAdminEditText.text.toString()
             if (markupAdmin.isNotEmpty()) {
                 Timer().schedule(1000) {
-                    val payPayment = PaymentController.Response(username, type, clientID, clientName, price, admin, markupAdmin, totalPrice, phoneNumber, remainingBalance, ref, periodic).execute().get()
+                    val payPayment = PaymentController.Response(
+                        username,
+                        type,
+                        clientID,
+                        clientName,
+                        price,
+                        admin,
+                        markupAdmin,
+                        totalPrice,
+                        phoneNumber,
+                        remainingBalance,
+                        ref,
+                        periodic
+                    ).execute().get()
                     println(payPayment)
                     if (payPayment["Status"].toString() == "0") {
                         runOnUiThread {
@@ -129,14 +146,20 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
                             Handler().postDelayed({
                                 loading.dismiss()
                             }, 500)
-                            Toast.makeText(applicationContext, payPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                applicationContext,
+                                payPayment["Pesan"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                             Handler().postDelayed({
                                 if (session.getInteger("type") == 1) {
-                                    val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMemberActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 } else {
-                                    val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMerchantActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 }
@@ -144,7 +167,11 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
                         }
                     } else {
                         runOnUiThread {
-                            Toast.makeText(applicationContext, payPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                applicationContext,
+                                payPayment["Pesan"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                             Handler().postDelayed({
                                 loading.dismiss()
                             }, 500)
@@ -168,15 +195,19 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
         val session = Session(this)
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                val response =
+                    UserController.Get(session.getString("phone").toString()).execute().get()
                 if (response["Status"].toString() == "0") {
-                    runOnUiThread{
+                    runOnUiThread {
                         Handler().postDelayed({
                             session.saveString("phone", response["hpagen"].toString())
                             session.saveString("email", response["email"].toString())
                             session.saveString("name", response["nama"].toString())
                             session.saveString("pin", response["password"].toString())
-                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger(
+                                "status",
+                                response["statusmember"].toString().toInt()
+                            )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
 

@@ -26,11 +26,11 @@ class TabCashBNIActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tab_cash_bni)
-        val balanceTextView : TextView = findViewById(R.id.BalanceTextView)
-        val productSpinner : Spinner = findViewById(R.id.ProductSpinner)
-        val continueButton : Button = findViewById(R.id.ContinueButton)
-        val phoneNumberEditText : EditText = findViewById(R.id.PhoneNumberEditText)
-        val tokenNumberEditText : EditText = findViewById(R.id.TokenNumberEditText)
+        val balanceTextView: TextView = findViewById(R.id.BalanceTextView)
+        val productSpinner: Spinner = findViewById(R.id.ProductSpinner)
+        val continueButton: Button = findViewById(R.id.ContinueButton)
+        val phoneNumberEditText: EditText = findViewById(R.id.PhoneNumberEditText)
+        val tokenNumberEditText: EditText = findViewById(R.id.TokenNumberEditText)
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
         val loading = ProgressDialog(this)
@@ -39,7 +39,8 @@ class TabCashBNIActivity : AppCompatActivity() {
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
         loading.show()
-        balanceTextView.text = "Saldo saat ini : ${numberFormat.format(if(User.getBalance() != null) User.getBalance() else 0)}"
+        balanceTextView.text =
+            "Saldo saat ini : ${numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)}"
 
         val arrayCodeProduct = ArrayList<String>()
         val arrayNameProduct = ArrayList<String>()
@@ -54,7 +55,11 @@ class TabCashBNIActivity : AppCompatActivity() {
                 }
             }
             runOnUiThread {
-                val spinnerAdapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_item, arrayNameProduct)
+                val spinnerAdapter = ArrayAdapter(
+                    applicationContext,
+                    android.R.layout.simple_spinner_item,
+                    arrayNameProduct
+                )
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
                 productSpinner.adapter = spinnerAdapter
             }
@@ -65,7 +70,12 @@ class TabCashBNIActivity : AppCompatActivity() {
         }, 500)
 
         productSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 if (parent.count > 1) {
                     type = arrayCodeProduct[position]
                 }
@@ -94,20 +104,30 @@ class TabCashBNIActivity : AppCompatActivity() {
                 else -> {
                     Timer().schedule(1000) {
                         val username = session.getString("phone").toString()
-                        val phone = phoneNumberEditText.text.toString().replace("-", "").replace("+62", "0").replace(" ", "")
+                        val phone =
+                            phoneNumberEditText.text.toString().replace("-", "").replace("+62", "0")
+                                .replace(" ", "")
                         val token = tokenNumberEditText.text.toString()
                         println(type)
-                        val postPaidController = TokenController.Request(username, phone, token, type).execute().get()
+                        val postPaidController =
+                            TokenController.Request(username, phone, token, type).execute().get()
                         println(postPaidController)
                         if (postPaidController["Status"].toString() == "0") {
                             runOnUiThread {
                                 loading.dismiss()
-                                val goTo = Intent(applicationContext, PlnResponseActivity::class.java).putExtra("response", postPaidController.toString())
+                                val goTo = Intent(
+                                    applicationContext,
+                                    PlnResponseActivity::class.java
+                                ).putExtra("response", postPaidController.toString())
                                 startActivity(goTo)
                             }
                         } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, postPaidController["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    postPaidController["Pesan"].toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)

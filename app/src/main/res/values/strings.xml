@@ -18,7 +18,7 @@
     <string name="icon">Icon</string>
     <string name="scan">Scan</string>
     <string name="mp_id">M Pay ID</string>
-    <string name="transfer">Berita transfer ato. Pesan transfer </string>
+    <string name="transfer">Berita transfer</string>
     <string name="top_up">Top Up</string>
     <string name="rp">Rp</string>
     <string name="saldo_cash">SALDO CASH</string>
@@ -43,7 +43,8 @@
     <string name="member">Member</string>
     <string name="qr_code">QR Kode</string>
     <string name="phone_number">Nomor Telepon</string>
-    <string name="nominal">Total Nominal Yang Di Transfer</string>
+    <string name="nominal">Nominal Transfer</string>
+    <string name="nominalBank">Nominal Withdraw</string>
     <string name="register">Register</string>
     <string name="lupa_kata_sandi">Lupa Kata Sandi</string>
     <string name="no_telfon_yang_terpasang_di_hp_anda">No Telepon yang terpasang di Hp anda</string>
@@ -78,7 +79,7 @@
     <string name="nama_pelanggan">Nama Pelanggan</string>
     <string name="nomor_meter">Nomor Meter</string>
     <string name="kata_sandi">Kata Sandi</string>
-    <string name="transfer_ke_bank">Transfer Ke BANK</string>
+    <string name="transfer_ke_bank">Withdraw ke BANK</string>
     <string name="transfer_sesama_m_pay">Transfer Sesama M Pay</string>
     <string name="keterangan">Keterangan</string>
     <string name="bank_tujuan">Bank Tujuan</string>
@@ -89,6 +90,7 @@
     <string name="pilih_printer_bluetooth">Pilih Printer bluetooth</string>
     <string name="masukkan_kata_sandi">Masukkan Pin/Kata Sandi</string>
     <string name="transfers">Transfer</string>
+    <string name="transfersBank">Withdraw</string>
     <string name="upload">Upload</string>
     <string name="foto_ktp_dan_diri_seperti_gambar">Foto KTP Dan Diri Seperti Gambar</string>
     <string name="foto_ktp">Foto KTP</string>

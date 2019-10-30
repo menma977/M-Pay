@@ -59,7 +59,7 @@ class PostPaidResponseActivity : AppCompatActivity() {
             } else {
                 session.saveInteger("balance", response["deposit"].toString().toInt())
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             session.saveString("phone", "")
             session.saveString("email", "")
             session.saveString("name", "")
@@ -87,11 +87,17 @@ class PostPaidResponseActivity : AppCompatActivity() {
         try {
             PhoneNumberTextView.text = compriseJson["NoHP"].toString()
             PriceTextView.text = numberFormat.format(compriseJson["Harga"].toString().toInt())
-            FirstBalanceTextView.text = numberFormat.format(compriseJson["SaldoAwal"].toString().toInt())
-            RemainingBalanceTextView.text = numberFormat.format(compriseJson["SisaSaldo"].toString().toInt())
-        } catch (e : Exception) {
+            FirstBalanceTextView.text =
+                numberFormat.format(compriseJson["SaldoAwal"].toString().toInt())
+            RemainingBalanceTextView.text =
+                numberFormat.format(compriseJson["SisaSaldo"].toString().toInt())
+        } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(applicationContext, "Terjadi Kesalahan saat membaca data", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                applicationContext,
+                "Terjadi Kesalahan saat membaca data",
+                Toast.LENGTH_LONG
+            ).show()
             finish()
         }
 
@@ -111,21 +117,36 @@ class PostPaidResponseActivity : AppCompatActivity() {
                 val price = compriseJson["Harga"].toString()
                 val remainingBalance = compriseJson["SisaSaldo"].toString()
                 Timer().schedule(1000) {
-                    val payPostPaidResponse = PostPaidController.Response(username, phone, payCode, nominal, firstBalance, markupAdmin, price, remainingBalance).execute().get()
+                    val payPostPaidResponse = PostPaidController.Response(
+                        username,
+                        phone,
+                        payCode,
+                        nominal,
+                        firstBalance,
+                        markupAdmin,
+                        price,
+                        remainingBalance
+                    ).execute().get()
                     if (payPostPaidResponse["Status"].toString() == "0") {
-                        runOnUiThread{
+                        runOnUiThread {
                             Handler().postDelayed({
                                 updateBalance()
                                 loading.dismiss()
                             }, 1000)
-                            Toast.makeText(applicationContext, payPostPaidResponse["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                applicationContext,
+                                payPostPaidResponse["Pesan"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                             Handler().postDelayed({
                                 if (session.getInteger("type") == 1) {
-                                    val goTo = Intent(applicationContext, HomeMemberActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMemberActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 } else {
-                                    val goTo = Intent(applicationContext, HomeMerchantActivity::class.java)
+                                    val goTo =
+                                        Intent(applicationContext, HomeMerchantActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 }
@@ -135,7 +156,11 @@ class PostPaidResponseActivity : AppCompatActivity() {
                         runOnUiThread {
                             Handler().postDelayed({
                                 loading.dismiss()
-                                Toast.makeText(applicationContext, payPostPaidResponse["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    payPostPaidResponse["Pesan"].toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }, 1000)
                         }
                     }
@@ -154,15 +179,19 @@ class PostPaidResponseActivity : AppCompatActivity() {
         val session = Session(this)
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                val response = UserController.Get(session.getString("phone").toString()).execute().get()
+                val response =
+                    UserController.Get(session.getString("phone").toString()).execute().get()
                 if (response["Status"].toString() == "0") {
-                    runOnUiThread{
+                    runOnUiThread {
                         Handler().postDelayed({
                             session.saveString("phone", response["hpagen"].toString())
                             session.saveString("email", response["email"].toString())
                             session.saveString("name", response["nama"].toString())
                             session.saveString("pin", response["password"].toString())
-                            session.saveInteger("status", response["statusmember"].toString().toInt())
+                            session.saveInteger(
+                                "status",
+                                response["statusmember"].toString().toInt()
+                            )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
 

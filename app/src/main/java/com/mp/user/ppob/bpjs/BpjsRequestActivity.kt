@@ -37,20 +37,22 @@ class BpjsRequestActivity : AppCompatActivity() {
         loading.setCancelable(false)
         loading.show()
 
-        val jsonArrayConverter = JSONArray("[" +
-                "{ code: 'ASBPJSKS;3;1', name: 'BPJS KESEHATAN 1 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;2', name: 'BPJS KESEHATAN 2 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;3', name: 'BPJS KESEHATAN 3 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;4', name: 'BPJS KESEHATAN 4 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;5', name: 'BPJS KESEHATAN 5 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;6', name: 'BPJS KESEHATAN 6 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;7', name: 'BPJS KESEHATAN 7 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;8', name: 'BPJS KESEHATAN 8 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;9', name: 'BPJS KESEHATAN 9 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;10', name: 'BPJS KESEHATAN 10 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;11', name: 'BPJS KESEHATAN 11 BULAN' },\n" +
-                "{ code: 'ASBPJSKS;3;12', name: 'BPJS KESEHATAN 12 BULAN' },"+
-                "]")
+        val jsonArrayConverter = JSONArray(
+            "[" +
+                    "{ code: 'ASBPJSKS;3;1', name: 'BPJS KESEHATAN 1 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;2', name: 'BPJS KESEHATAN 2 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;3', name: 'BPJS KESEHATAN 3 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;4', name: 'BPJS KESEHATAN 4 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;5', name: 'BPJS KESEHATAN 5 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;6', name: 'BPJS KESEHATAN 6 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;7', name: 'BPJS KESEHATAN 7 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;8', name: 'BPJS KESEHATAN 8 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;9', name: 'BPJS KESEHATAN 9 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;10', name: 'BPJS KESEHATAN 10 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;11', name: 'BPJS KESEHATAN 11 BULAN' },\n" +
+                    "{ code: 'ASBPJSKS;3;12', name: 'BPJS KESEHATAN 12 BULAN' }," +
+                    "]"
+        )
 
         val arrayListName = ArrayList<String>()
         val arrayCodeName = ArrayList<String>()
@@ -89,17 +91,21 @@ class BpjsRequestActivity : AppCompatActivity() {
             loading.show()
             val username = session.getString("phone").toString()
             val costumerID = CustomerID.text.toString()
-            val phoneNumber = PhoneNumberEditText.text.toString().replace("-", "").replace("+62", "0").replace(" ", "")
+            val phoneNumber =
+                PhoneNumberEditText.text.toString().replace("-", "").replace("+62", "0")
+                    .replace(" ", "")
             val balance = session.getInteger("balance").toString()
             when {
                 phoneNumber.isEmpty() -> {
-                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
                 }
                 costumerID.isEmpty() -> {
-                    Toast.makeText(this, "Id pelanggan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Id pelanggan tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)
@@ -112,19 +118,32 @@ class BpjsRequestActivity : AppCompatActivity() {
                 }
                 else -> {
                     Timer().schedule(1000) {
-                        val requestPayment = PaymentController.Request(username, costumerID, phoneNumber, balance, type).execute().get()
+                        val requestPayment = PaymentController.Request(
+                            username,
+                            costumerID,
+                            phoneNumber,
+                            balance,
+                            type
+                        ).execute().get()
                         println(requestPayment)
                         if (requestPayment["Status"].toString() == "0") {
                             runOnUiThread {
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)
-                                val goTo = Intent(applicationContext, PostPaidCreditResponseActivity::class.java).putExtra("response", requestPayment.toString())
+                                val goTo = Intent(
+                                    applicationContext,
+                                    PostPaidCreditResponseActivity::class.java
+                                ).putExtra("response", requestPayment.toString())
                                 startActivity(goTo)
                             }
                         } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext, requestPayment["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    requestPayment["Pesan"].toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 Handler().postDelayed({
                                     loading.dismiss()
                                 }, 500)

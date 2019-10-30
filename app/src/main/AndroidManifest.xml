@@ -31,7 +31,7 @@
             android:label="Transfer Sesama M Pay" />
         <activity
             android:name=".user.menu.bank.BankActivity"
-            android:label="Transfer Ke Bank" />
+            android:label="Withdraw ke BANK" />
         <activity
             android:name=".user.menu.TransferManagementActivity"
             android:label="Menejement Transfer" />
@@ -115,7 +115,7 @@
         </activity>
         <activity
             android:name=".user.menu.SetNominalActivity"
-            android:label="@string/transfer">
+            android:label="Transfer Antara Mpay">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".user.menu.ScanActivity" />
