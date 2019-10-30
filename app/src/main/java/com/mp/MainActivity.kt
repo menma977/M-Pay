@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                             runOnUiThread{
                                 Handler().postDelayed({
                                     loading.dismiss()
-                                    Toast.makeText(applicationContext, response["Pesan"].toString(), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(applicationContext, "Nomor Telepon tidak di temukan", Toast.LENGTH_LONG).show()
                                 }, 500)
                             }
                         }
