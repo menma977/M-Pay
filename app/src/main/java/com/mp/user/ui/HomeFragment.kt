@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
-        val balance : TextView = root.findViewById(R.id.balance)
+        val balance: TextView = root.findViewById(R.id.balance)
         val reloadBalance = root.findViewById<ImageButton>(R.id.reloadBalance)
         balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
 
