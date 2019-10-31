@@ -1,5 +1,6 @@
 package com.mp.user.menu.bank
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import com.mp.user.member.HomeMemberActivity
 import com.mp.user.merchant.HomeMerchantActivity
 import kotlinx.android.synthetic.main.activity_bank.*
 import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -29,6 +31,7 @@ class BankActivity : AppCompatActivity() {
         return true
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bank)
@@ -44,6 +47,13 @@ class BankActivity : AppCompatActivity() {
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
 
+        val sdf = SimpleDateFormat("hh")
+        val currentDate = sdf.format(Date())
+        if (currentDate.toInt() < 8 || currentDate.toInt() > 3) {
+            Toast.makeText(this, "Transaksi hanya bisa di lakukan dari jam 08:00 sampai 15:00", Toast.LENGTH_LONG).show()
+            finish()
+        }
+
         transfer.setOnClickListener {
             if (bankTarget.text.isEmpty()) {
                 Toast.makeText(this, "Nama BANK tidak boleh kosong", Toast.LENGTH_LONG).show()
@@ -55,10 +65,10 @@ class BankActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 accountTarget.requestFocus()
-            } else if (nominal.text.isEmpty() || !nominal.text.toString().isDigitsOnly()) {
+            } else if (nominal.text.isEmpty() || !nominal.text.toString().isDigitsOnly() || nominal.text.toString().toInt() >= 2000000) {
                 Toast.makeText(
                     this,
-                    "nominal hanya boleh angka dan tidak boleh kosong",
+                    "nominal hanya boleh angka, tidak boleh kosong dan maksimum withdraw adalah 2juta rupiah",
                     Toast.LENGTH_LONG
                 ).show()
                 nominal.requestFocus()

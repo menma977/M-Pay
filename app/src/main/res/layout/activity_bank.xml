@@ -62,7 +62,9 @@
             android:id="@+id/nominal"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/Success"
             android:drawableStart="@drawable/ic_fiber_smart_record_black_24dp"
             android:drawableTint="@color/Success"
@@ -75,6 +77,13 @@
             android:textSize="20sp"
             android:textStyle="bold"
             tools:ignore="Autofill,UnusedAttribute" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="maksimum withdraw adalah 2juta rupiah"
+            android:textAlignment="center" />
 
         <EditText
             android:id="@+id/password"
