@@ -12,10 +12,10 @@ import java.net.URL
 
 class TransferController {
     class PostMPay(
-        private val userPhone : String,
-        private val targetPhone : String,
-        private val total : String,
-        private val description : String
+        private val userPhone: String,
+        private val targetPhone: String,
+        private val total: String,
+        private val description: String
     ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
@@ -29,7 +29,8 @@ class TransferController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=TransferMember&dari=$userPhone&ke=$targetPhone&ket=$description&nominal=$total"
+                val urlParameters =
+                    "a=TransferMember&dari=$userPhone&ke=$targetPhone&ket=$description&nominal=$total"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -52,7 +53,7 @@ class TransferController {
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }
@@ -60,11 +61,11 @@ class TransferController {
     }
 
     class PostBank(
-        private val userPhone : String,
-        private val bank : String,
-        private val account : String,
-        private val name : String,
-        private val total : String
+        private val userPhone: String,
+        private val bank: String,
+        private val account: String,
+        private val name: String,
+        private val total: String
     ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
@@ -78,7 +79,8 @@ class TransferController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=WdCash&nohp=$userPhone&bank=$bank&norek=$account&namarek=$name&nominal=$total"
+                val urlParameters =
+                    "a=WdCash&nohp=$userPhone&bank=$bank&norek=$account&namarek=$name&nominal=$total"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -101,7 +103,7 @@ class TransferController {
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }

@@ -116,6 +116,15 @@ class MPayActivity : AppCompatActivity() {
                             ).execute().get()
                             runOnUiThread {
                                 if (response["Status"].toString() == "0") {
+                                    val userResponses =
+                                        UserController.Get(session.getString("phone").toString())
+                                            .execute()
+                                            .get()
+                                    session.saveInteger(
+                                        "balance",
+                                        userResponses["deposit"].toString().toInt()
+                                    )
+                                    User.setBalance(userResponses["deposit"].toString().toInt())
                                     if (session.getInteger("type") == 1) {
                                         Handler().postDelayed({
                                             loading.dismiss()

@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        doRequestPermission()
+
         val loading = ProgressDialog(this)
         loading.setTitle("Loading")
         loading.setMessage("Wait while loading...")
@@ -40,11 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         val session = Session(this)
         session.saveString("url", "https://multipayment.co/api")
-        User.setUrl(session.getString("url"))
         if (session.getString("phone").toString().isNotEmpty()
-                && session.getString("phone") != null
-                && session.getString("pin").toString().isNotEmpty()
-                && session.getString("pin") != null
+            && session.getString("phone") != null
+            && session.getString("pin").toString().isNotEmpty()
+            && session.getString("pin") != null
         ) {
             println("==================Login=======================")
             println(session.getString("phone").toString())
@@ -62,11 +63,12 @@ class MainActivity : AppCompatActivity() {
         loading.dismiss()
 
         loginButton.setOnClickListener {
+            doRequestPermission()
             loading.show()
             val phoneTemporary = phoneNumber.text.toString()
             if (phoneTemporary.isEmpty()) {
                 Toast.makeText(this, "Nomor Telepon Anda Tidak boleh kosong", Toast.LENGTH_LONG)
-                        .show()
+                    .show()
                 loading.dismiss()
             } else {
                 Timer().schedule(object : TimerTask() {
@@ -79,13 +81,13 @@ class MainActivity : AppCompatActivity() {
                                 session.saveString("name", response["nama"].toString())
                                 session.saveString("pin", response["password"].toString())
                                 session.saveInteger(
-                                        "status",
-                                        response["statusmember"].toString().toInt()
+                                    "status",
+                                    response["statusmember"].toString().toInt()
                                 )
                                 session.saveInteger("type", response["tipeuser"].toString().toInt())
                                 session.saveInteger(
-                                        "balance",
-                                        response["deposit"].toString().toInt()
+                                    "balance",
+                                    response["deposit"].toString().toInt()
                                 )
 
                                 User.setPhone(response["hpagen"].toString())
@@ -99,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                                 Handler().postDelayed({
                                     loading.dismiss()
                                     val goTo =
-                                            Intent(applicationContext, VerifyLoginActivity::class.java)
+                                        Intent(applicationContext, VerifyLoginActivity::class.java)
                                     startActivity(goTo)
                                     finish()
                                 }, 1000)
@@ -109,9 +111,9 @@ class MainActivity : AppCompatActivity() {
                                 Handler().postDelayed({
                                     loading.dismiss()
                                     Toast.makeText(
-                                            applicationContext,
-                                            "Nomor Telepon tidak di temukan",
-                                            Toast.LENGTH_LONG
+                                        applicationContext,
+                                        "Nomor Telepon tidak di temukan",
+                                        Toast.LENGTH_LONG
                                     ).show()
                                 }, 500)
                             }
@@ -160,39 +162,39 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("NewApi")
     private fun doRequestPermission() {
         if (
-                ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.CAMERA
-                ) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.FOREGROUND_SERVICE
-                ) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.READ_PHONE_STATE
-                ) != PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.FOREGROUND_SERVICE
+            ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
-                    arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.FOREGROUND_SERVICE,
-                            Manifest.permission.READ_PHONE_STATE
-                    ), 100
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.FOREGROUND_SERVICE,
+                    Manifest.permission.READ_PHONE_STATE
+                ), 100
             )
         }
     }

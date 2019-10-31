@@ -226,15 +226,15 @@ class RegisterUserActivity : AppCompatActivity() {
                                         User.setType(1)
                                         User.setStatus(0)
                                         runOnUiThread {
+                                            loading.dismiss()
                                             Handler().postDelayed({
-                                                loading.dismiss()
                                                 val goTo = Intent(
                                                     applicationContext,
                                                     MainActivity::class.java
                                                 )
                                                 startActivity(goTo)
                                                 finish()
-                                            }, 5000)
+                                            }, 2000)
                                         }
                                     } else {
                                         runOnUiThread {

@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.mp.R
 import com.mp.controller.UserController
+import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.menu.MPayIdActivity
 import com.mp.user.menu.ScanActivity
@@ -42,9 +43,23 @@ class HomeFragment : Fragment() {
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
-        val balance = root.findViewById<TextView>(R.id.balance)
+        val balance : TextView = root.findViewById(R.id.balance)
         val reloadBalance = root.findViewById<ImageButton>(R.id.reloadBalance)
         balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
+
+        Timer().schedule(5000, 10000) {
+            val response = UserController.Get(User.getPhone()).execute().get()
+            if (response["Status"].toString() == "0") {
+                val session = Session(root.context)
+                session.saveInteger(
+                    "balance",
+                    response["deposit"].toString().toInt()
+                )
+                User.setBalance(response["deposit"].toString().toInt())
+                balance.text =
+                    numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
+            }
+        }
 
         reloadBalance.setOnClickListener {
             val loading = ProgressDialog(root.context)

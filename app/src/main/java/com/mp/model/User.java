@@ -2,7 +2,6 @@ package com.mp.model;
 
 public class User {
 
-    private static String url;
     private static String phone;
     private static String email;
     private static String pin;
@@ -13,11 +12,7 @@ public class User {
     private static Integer status;
 
     public static String getUrl() {
-        return url;
-    }
-
-    public static void setUrl(String url) {
-        User.url = url;
+        return "https://multipayment.co/api";
     }
 
     public static String getPhone() {
