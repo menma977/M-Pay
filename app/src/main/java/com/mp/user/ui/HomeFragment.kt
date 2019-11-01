@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
                     "balance",
                     response["deposit"].toString().toInt()
                 )
+                session.saveString("support", response["hpkomplen"].toString())
                 User.setBalance(response["deposit"].toString().toInt())
                 balance.text =
                     numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)

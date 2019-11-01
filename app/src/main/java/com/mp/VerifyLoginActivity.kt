@@ -52,6 +52,7 @@ class VerifyLoginActivity : AppCompatActivity() {
                             )
                             session.saveInteger("type", response["tipeuser"].toString().toInt())
                             session.saveInteger("balance", response["deposit"].toString().toInt())
+                            session.saveString("support", response["hpkomplen"].toString())
 
                             User.setPhone(response["hpagen"].toString())
                             User.setEmail(response["email"].toString())

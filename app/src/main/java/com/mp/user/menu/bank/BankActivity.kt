@@ -47,10 +47,14 @@ class BankActivity : AppCompatActivity() {
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
 
-        val sdf = SimpleDateFormat("hh")
+        val sdf = SimpleDateFormat("H")
         val currentDate = sdf.format(Date())
-        if (currentDate.toInt() < 8 || currentDate.toInt() > 3) {
-            Toast.makeText(this, "Transaksi hanya bisa di lakukan dari jam 08:00 sampai 15:00", Toast.LENGTH_LONG).show()
+        if (currentDate.toInt() < 8 || currentDate.toInt() > 15) {
+            Toast.makeText(
+                this,
+                "Transaksi hanya bisa di lakukan dari jam 08:00 sampai 15:00",
+                Toast.LENGTH_LONG
+            ).show()
             finish()
         }
 

@@ -1,10 +1,11 @@
 package com.mp.user.ppob
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.mp.R
+import com.mp.model.Session
 import com.mp.user.ppob.bpjs.BpjsRequestActivity
 import com.mp.user.ppob.dana.DanaRequestActivity
 import com.mp.user.ppob.eMoneyMandiri.EMoneyMandiriRequestActivity
@@ -22,6 +23,7 @@ import com.mp.user.ppob.postPaidCredit.PostPaidCreditRequestActivity
 import com.mp.user.ppob.tabCashBNI.TabCashBNIActivity
 import com.mp.user.ppob.wifi.WifiRequestActivity
 import kotlinx.android.synthetic.main.activity_more.*
+
 
 class MoreActivity : AppCompatActivity() {
 
@@ -108,6 +110,15 @@ class MoreActivity : AppCompatActivity() {
         plnCreditButton.setOnClickListener {
             goTo = Intent(this, PLNCreditRequestActivity::class.java)
             startActivity(goTo)
+        }
+
+        supportButton.setOnClickListener {
+            val session = Session(this)
+            val phone = session.getString("support").toString()
+            val url = "https://api.whatsapp.com/send?phone=$phone"
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
         }
 
 //        vocerButton.setOnClickListener {

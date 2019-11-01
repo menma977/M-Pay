@@ -10,7 +10,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class FinanceController {
-    class GetAll(private val phone : String) : AsyncTask<Void, Void, JSONObject>() {
+    class GetAll(private val phone: String) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
@@ -45,18 +45,19 @@ class FinanceController {
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }
         }
     }
 
-    class getDital(private val phone : String, private val trx : String) : AsyncTask<Void, Void, JSONObject>() {
+    class GetDetail(private val phone: String, private val trx: String) :
+        AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("http://152601272282.ip-dynamic.com/trxpadi/apidephis.php")
+                val url = URL("http://152601282294.ip-dynamic.com/mpmdp/apidephis.php")
                 val httpURLConnection = url.openConnection() as HttpURLConnection
 
                 //add request header
@@ -75,21 +76,23 @@ class FinanceController {
                 write.close()
 
                 val responseCode = httpURLConnection.responseCode
+                println(responseCode)
                 return if (responseCode == 200) {
                     val input = BufferedReader(
                         InputStreamReader(httpURLConnection.inputStream)
                     )
 
                     val inputData: String = input.readLine()
+
                     val response = JSONObject(inputData)
                     input.close()
                     response
                 } else {
-                    JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
+                    JSONObject("{trx : {Status: 1, Pesan: 'internet tidak setabil'}}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
-                return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
+                return JSONObject("{trx : {Status: 1, Pesan: 'internet tidak setabil'}}")
             }
         }
 

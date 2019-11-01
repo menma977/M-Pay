@@ -2,11 +2,13 @@
   <dictionary name="ecs">
     <words>
       <w>bpjs</w>
+      <w>hpkomplen</w>
       <w>iemi</w>
       <w>imei</w>
       <w>mandiri</w>
       <w>pesan</w>
       <w>ppob</w>
+      <w>pulsa</w>
     </words>
   </dictionary>
 </component>
