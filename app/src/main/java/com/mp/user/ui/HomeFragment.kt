@@ -44,7 +44,8 @@ class HomeFragment : Fragment() {
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
         val balance: TextView = root.findViewById(R.id.balance)
-        val reloadBalance = root.findViewById<ImageButton>(R.id.reloadBalance)
+        val reloadBalance: ImageButton = root.findViewById(R.id.reloadBalance)
+        val nameUser: TextView = root.findViewById(R.id.name_user)
         balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
 
         Timer().schedule(5000, 10000) {
@@ -61,6 +62,8 @@ class HomeFragment : Fragment() {
                     numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
             }
         }
+
+        nameUser.text = Session(root.context).getString("name")
 
         reloadBalance.setOnClickListener {
             val loading = ProgressDialog(root.context)

@@ -69,7 +69,7 @@ class BankActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 accountTarget.requestFocus()
-            } else if (nominal.text.isEmpty() || !nominal.text.toString().isDigitsOnly() || nominal.text.toString().toInt() >= 2000000) {
+            } else if (nominal.text.isEmpty() || !nominal.text.toString().isDigitsOnly() || nominal.text.toString().toInt() > 2000000) {
                 Toast.makeText(
                     this,
                     "nominal hanya boleh angka, tidak boleh kosong dan maksimum withdraw adalah 2juta rupiah",
