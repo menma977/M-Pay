@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,9 +7,9 @@
     tools:context="com.mp.user.menu.MPayIdActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,23 +18,23 @@
             android:orientation="vertical">
 
             <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:columnCount="2"
                 android:rowCount="3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 tools:ignore="UselessParent">
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_rowSpan="3"
-                    android:layout_columnSpan="1"
-                    android:layout_column="0"
                     android:layout_row="0"
+                    android:layout_rowSpan="3"
+                    android:layout_column="0"
+                    android:layout_columnSpan="1"
                     android:background="@mipmap/ic_launcher_background"
-                    app:srcCompat="@mipmap/ic_launcher_foreground"
-                    android:contentDescription="@string/logo" />
+                    android:contentDescription="@string/logo"
+                    app:srcCompat="@mipmap/ic_launcher_foreground" />
 
                 <TextView
                     android:id="@+id/username"
@@ -90,9 +89,9 @@
             tools:ignore="UseCompoundDrawables">
 
             <TextView
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="@string/qr_code"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -109,6 +108,19 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/editPasswordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_info"
+            android:padding="15dp"
+            android:text="@string/update_password"
+            android:textColor="@color/textPrimary" />
 
     </LinearLayout>
 

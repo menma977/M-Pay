@@ -69,13 +69,7 @@ class HomeMemberActivity : AppCompatActivity() {
                             User.setStatus(response["statusmember"].toString().toInt())
                             User.setBalance(response["deposit"].toString().toInt())
                         } else {
-                            session.saveString("phone", "")
-                            session.saveString("email", "")
-                            session.saveString("name", "")
-                            session.saveString("pin", "")
-                            session.saveInteger("status", 0)
-                            session.saveInteger("type", 0)
-                            session.saveString("imei", "")
+                            session.clear()
 
                             User.setPhone("")
                             User.setEmail("")
@@ -89,13 +83,7 @@ class HomeMemberActivity : AppCompatActivity() {
                         }
                     }
                 } catch (e: Exception) {
-                    session.saveString("phone", "")
-                    session.saveString("email", "")
-                    session.saveString("name", "")
-                    session.saveString("pin", "")
-                    session.saveInteger("status", 0)
-                    session.saveInteger("type", 0)
-                    session.saveString("imei", "")
+                    session.clear()
 
                     User.setPhone("")
                     User.setEmail("")
@@ -116,12 +104,7 @@ class HomeMemberActivity : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            session.saveString("phone", "")
-            session.saveString("email", "")
-            session.saveString("name", "")
-            session.saveString("pin", "")
-            session.saveInteger("status", 0)
-            session.saveInteger("type", 0)
+            session.clear()
 
             User.setPhone("")
             User.setEmail("")

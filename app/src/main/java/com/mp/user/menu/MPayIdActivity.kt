@@ -1,15 +1,18 @@
 package com.mp.user.menu
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.mp.R
 import com.mp.controller.UserController
 import com.mp.model.Session
 import com.mp.model.User
+import com.mp.password.edit.EditPasswordActivity
 import com.mp.qr.QRCode
 import java.util.*
 
@@ -21,6 +24,7 @@ class MPayIdActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mpay_id)
 
         val session = Session(this)
+        val editPassword: Button = findViewById(R.id.editPasswordButton)
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
@@ -72,6 +76,11 @@ class MPayIdActivity : AppCompatActivity() {
         phoneNumberTextView.text = phoneNumber
 
         barcodeQR.setImageBitmap(qrCode)
+
+        editPassword.setOnClickListener {
+            val gotTo = Intent(this, EditPasswordActivity::class.java)
+            startActivity(gotTo)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

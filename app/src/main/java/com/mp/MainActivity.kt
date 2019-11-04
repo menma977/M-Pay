@@ -15,11 +15,13 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.mp.controller.PasswordController
 import com.mp.controller.UserController
 import com.mp.model.Session
 import com.mp.model.User
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
 
@@ -129,35 +131,62 @@ class MainActivity : AppCompatActivity() {
             startActivity(goTo)
         }
 
-//        forgotPassword.setOnClickListener {
-//            if (phoneNumber.text.isNotEmpty()) {
-//                try {
-//                    val response = UserController.Get(phoneNumber.text.toString()).execute().get()
-//                    println()
-//                    println("===============Register===================")
-//                    println(response)
-//                    println("==========================================")
-//                    if (response["Status"].toString() == "0") {
-//                        val goTo = Intent(this, EditPasswordActivity::class.java)
-//                            .putExtra("pin", response["password"].toString())
-//                        startActivity(goTo)
-//                    } else {
-//                        Toast.makeText(this, "${response["Pesan"]}", Toast.LENGTH_LONG).show()
-//                    }
-//                } catch (e : Exception) {
-//                    e.printStackTrace()
-//                    Toast.makeText(this, "Ada masalah saat pengiriman kode mohon ulangi lagi", Toast.LENGTH_LONG).show()
-//                }
-//            } else {
-//                Timer().schedule(object : TimerTask() {
-//                    override fun run() {
-//                        runOnUiThread{
-//                            Toast.makeText(applicationContext, "Nomor Telepon Tidak boleh kosong", Toast.LENGTH_LONG).show()
-//                        }
-//                    }
-//                }, 1000)
-//            }
-//        }
+        forgotPassword.setOnClickListener {
+            loading.show()
+            if (phoneNumber.text.isNotEmpty()) {
+                Timer().schedule(1000) {
+                    try {
+                        val response =
+                            UserController.Get(phoneNumber.text.toString()).execute().get()
+                        println()
+                        println("===============Register===================")
+                        println(response)
+                        println("==========================================")
+                        if (response["Status"].toString() == "0") {
+                            PasswordController.SendPassword(
+                                response["hpagen"].toString(),
+                                response["password"].toString()
+                            ).execute().get()
+                            runOnUiThread {
+                                loading.dismiss()
+                            }
+                        } else {
+                            runOnUiThread {
+                                loading.dismiss()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "${response["Pesan"]}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        runOnUiThread {
+                            loading.dismiss()
+                            Toast.makeText(
+                                applicationContext,
+                                "Ada masalah saat pengiriman password mohon ulangi lagi",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            } else {
+                Timer().schedule(object : TimerTask() {
+                    override fun run() {
+                        runOnUiThread {
+                            loading.dismiss()
+                            Toast.makeText(
+                                applicationContext,
+                                "Nomor Telepon Tidak boleh kosong",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }, 1000)
+            }
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.P)

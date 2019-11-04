@@ -41,6 +41,11 @@ constructor(context: Context) {
         return sharedPreferences.getBoolean(key, false)
     }
 
+    fun clear() {
+        sharedPreferences.edit().clear().apply()
+        sharedPreferencesEditor.clear()
+    }
+
     companion object {
         private const val userData = "userData"
     }

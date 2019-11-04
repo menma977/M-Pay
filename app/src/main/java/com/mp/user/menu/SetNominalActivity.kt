@@ -124,13 +124,7 @@ class SetNominalActivity : AppCompatActivity() {
                     val response =
                         UserController.Get(session.getString("phone").toString()).execute().get()
                     if (session.getString("imei") != response["emai"].toString()) {
-                        session.saveString("phone", "")
-                        session.saveString("email", "")
-                        session.saveString("name", "")
-                        session.saveString("pin", "")
-                        session.saveInteger("status", 0)
-                        session.saveInteger("type", 0)
-                        session.saveString("imei", "")
+                        session.clear()
 
                         User.setPhone("")
                         User.setEmail("")
@@ -143,13 +137,7 @@ class SetNominalActivity : AppCompatActivity() {
                         finish()
                     }
                 } catch (e: Exception) {
-                    session.saveString("phone", "")
-                    session.saveString("email", "")
-                    session.saveString("name", "")
-                    session.saveString("pin", "")
-                    session.saveInteger("status", 0)
-                    session.saveInteger("type", 0)
-                    session.saveString("imei", "")
+                    session.clear()
 
                     User.setPhone("")
                     User.setEmail("")

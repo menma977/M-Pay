@@ -1,7 +1,6 @@
 package com.mp.user.finance
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,27 +9,15 @@ import android.os.Handler
 import android.view.Gravity
 import android.widget.*
 import androidx.core.content.ContextCompat
-import com.mazenrashed.printooth.Printooth
-import com.mazenrashed.printooth.data.printable.Printable
-import com.mazenrashed.printooth.data.printable.RawPrintable
-import com.mazenrashed.printooth.data.printable.TextPrintable
-import com.mazenrashed.printooth.data.printer.DefaultPrinter
-import com.mazenrashed.printooth.ui.ScanningActivity
-import com.mazenrashed.printooth.utilities.Printing
-import com.mazenrashed.printooth.utilities.PrintingCallback
 import com.mp.R
 import com.mp.controller.FinanceController
 import com.mp.model.Session
-import kotlinx.android.synthetic.main.activity_finance_management.*
 import org.json.JSONArray
-import java.lang.Exception
 
 class FinanceManagementActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Printooth.init(this)
 
         setContentView(R.layout.activity_finance_management)
         val session = Session(this)
@@ -100,81 +87,70 @@ class FinanceManagementActivity : AppCompatActivity() {
                     printButton.layoutParams = button
                     printButton.setBackgroundResource(R.drawable.button_info)
                     printButton.setOnClickListener {
-                        if (!Printooth.hasPairedPrinter()) {
-                            startActivityForResult(
-                                Intent(this, ScanningActivity::class.java),
-                                ScanningActivity.SCANNING_FOR_PRINTER
-                            )
-                        } else {
-                            val getDataToPrint = FinanceController.GetDetail(
-                                session.getString("phone").toString(),
-                                convertToJsonArray.getJSONObject(value)["idtrx"].toString()
-                            ).execute()
-                            val responsePLN = getDataToPrint.get().getJSONArray("trx")
-                            //println(responsePLN)
-                            Printooth.getPairedPrinter()
-                            println(responsePLN.getJSONObject(0)["ket"].toString().split(">>"))
-                            val date = responsePLN.getJSONObject(0)["tgl"].toString()
-                            val type = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[0]
-                            val numberPLN =
-                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[1]
-                            val namePLN =
-                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
-                                    "/"
-                                )[1]
-                            val typePLN =
-                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
-                                    "/"
-                                )[2]
-                            val volt =
-                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
-                                    "/"
-                                )[3]
-                            val countPLN =
-                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
-                                    "/"
-                                )[4]
-                            val token =
-                                responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
-                                    "/"
-                                )[0]
-                            val price = (
-                                    responsePLN.getJSONObject(0)["markup"].toString().toInt() + responsePLN.getJSONObject(
-                                        0
-                                    )["harga"].toString().toInt()
-                                    ).toString()
+                        val getDataToPrint = FinanceController.GetDetail(
+                            session.getString("phone").toString(),
+                            convertToJsonArray.getJSONObject(value)["idtrx"].toString()
+                        ).execute()
+                        val responsePLN = getDataToPrint.get().getJSONArray("trx")
+                        println(responsePLN.getJSONObject(0)["ket"].toString().split(">>"))
+                        val date = responsePLN.getJSONObject(0)["tgl"].toString()
+                        val type = responsePLN.getJSONObject(0)["ket"].toString().split(">>")[0]
+                        val numberPLN =
+                            responsePLN.getJSONObject(0)["ket"].toString().split(">>")[1]
+                        val namePLN =
+                            responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                "/"
+                            )[1]
+                        val typePLN =
+                            responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                "/"
+                            )[2]
+                        val volt =
+                            responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                "/"
+                            )[3]
+                        val countPLN =
+                            responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                "/"
+                            )[4]
+                        val token =
+                            responsePLN.getJSONObject(0)["ket"].toString().split(">>")[2].split(
+                                "/"
+                            )[0]
+                        val price = (
+                                responsePLN.getJSONObject(0)["markup"].toString().toInt() + responsePLN.getJSONObject(
+                                    0
+                                )["harga"].toString().toInt()
+                                ).toString()
 
-                            val indexArray = ArrayList<String>()
-                            indexArray.add("Tanggal")
-                            indexArray.add("Type")
-                            indexArray.add("NNomor Pelanggan")
-                            indexArray.add("Nomor Nama")
-                            indexArray.add("Type")
-                            indexArray.add("Voltase")
-                            indexArray.add("Jumlah Token")
-                            indexArray.add("Jumlah Token")
-                            indexArray.add("Harga")
+                        val indexArray = ArrayList<String>()
+                        indexArray.add("Tanggal")
+                        indexArray.add("Type")
+                        indexArray.add("NNomor Pelanggan")
+                        indexArray.add("Nomor Nama")
+                        indexArray.add("Type")
+                        indexArray.add("Voltase")
+                        indexArray.add("Jumlah Token")
+                        indexArray.add("Jumlah Token")
+                        indexArray.add("Harga")
 
-                            val valueArray = ArrayList<String>()
-                            valueArray.add(date)
-                            valueArray.add(type)
-                            valueArray.add(numberPLN)
-                            valueArray.add(namePLN)
-                            valueArray.add(typePLN)
-                            valueArray.add(volt)
-                            valueArray.add(countPLN)
-                            valueArray.add(token)
-                            valueArray.add(price)
+                        val valueArray = ArrayList<String>()
+                        valueArray.add(date)
+                        valueArray.add(type)
+                        valueArray.add(numberPLN)
+                        valueArray.add(namePLN)
+                        valueArray.add(typePLN)
+                        valueArray.add(volt)
+                        valueArray.add(countPLN)
+                        valueArray.add(token)
+                        valueArray.add(price)
 
-                            val goTo = Intent(
-                                this,
-                                DetailFinanceActivity::class.java
-                            ).putExtra("indexArray", indexArray).putExtra("valueArray", valueArray)
-                                .putExtra("title", "Token Listrik").putExtra("type", 1)
-                            startActivity(goTo)
-
-                            //printPLN(date, type, numberPLN, namePLN, typePLN, volt, countPLN, token, price)
-                        }
+                        val goTo = Intent(
+                            this,
+                            DetailFinanceActivity::class.java
+                        ).putExtra("indexArray", indexArray).putExtra("valueArray", valueArray)
+                            .putExtra("title", "Token Listrik").putExtra("type", 1)
+                        startActivity(goTo)
                     }
                     tableRow.addView(printButton)
                 }
@@ -188,47 +164,38 @@ class FinanceManagementActivity : AppCompatActivity() {
                     printButton.layoutParams = button
                     printButton.setBackgroundResource(R.drawable.button_info)
                     printButton.setOnClickListener {
-                        if (!Printooth.hasPairedPrinter()) {
-                            startActivityForResult(
-                                Intent(this, ScanningActivity::class.java),
-                                ScanningActivity.SCANNING_FOR_PRINTER
-                            )
-                        } else {
-                            val getDataToPrint = FinanceController.GetDetail(
-                                session.getString("phone").toString(),
-                                convertToJsonArray.getJSONObject(value)["idtrx"].toString()
-                            ).execute()
-                            val responseP =
-                                getDataToPrint.get().getJSONArray("trx").getJSONObject(0)
-                            Printooth.getPairedPrinter()
-                            val date = responseP["tgl"].toString()
-                            val type = responseP["ket"].toString().split(">>")[0]
-                            val phone = responseP["ket"].toString().split(">>")[3]
-                            val sn = responseP["ket"].toString().split(">>")[1]
-                            val price =
-                                (responseP["markup"].toString().toInt() + responseP["harga"].toString().toInt()).toString()
+                        val getDataToPrint = FinanceController.GetDetail(
+                            session.getString("phone").toString(),
+                            convertToJsonArray.getJSONObject(value)["idtrx"].toString()
+                        ).execute()
+                        val responseP =
+                            getDataToPrint.get().getJSONArray("trx").getJSONObject(0)
+                        val date = responseP["tgl"].toString()
+                        val type = responseP["ket"].toString().split(">>")[0]
+                        val phone = responseP["ket"].toString().split(">>")[3]
+                        val sn = responseP["ket"].toString().split(">>")[1]
+                        val price =
+                            (responseP["markup"].toString().toInt() + responseP["harga"].toString().toInt()).toString()
 
-                            val indexArray = ArrayList<String>()
-                            indexArray.add("Tanggal")
-                            indexArray.add("Type")
-                            indexArray.add("Nomor HP")
-                            indexArray.add("Nomor S/N")
-                            indexArray.add("Harga")
+                        val indexArray = ArrayList<String>()
+                        indexArray.add("Tanggal")
+                        indexArray.add("Type")
+                        indexArray.add("Nomor HP")
+                        indexArray.add("Nomor S/N")
+                        indexArray.add("Harga")
 
-                            val valueArray = ArrayList<String>()
-                            valueArray.add(date)
-                            valueArray.add(type)
-                            valueArray.add(phone)
-                            valueArray.add(sn)
-                            valueArray.add(price)
-                            val goTo = Intent(
-                                this,
-                                DetailFinanceActivity::class.java
-                            ).putExtra("indexArray", indexArray).putExtra("valueArray", valueArray)
-                                .putExtra("title", "Pulsa Dan Top Up").putExtra("type", 0)
-                            startActivity(goTo)
-                            //printPulsa(date, type, phone, sn, price)
-                        }
+                        val valueArray = ArrayList<String>()
+                        valueArray.add(date)
+                        valueArray.add(type)
+                        valueArray.add(phone)
+                        valueArray.add(sn)
+                        valueArray.add(price)
+                        val goTo = Intent(
+                            this,
+                            DetailFinanceActivity::class.java
+                        ).putExtra("indexArray", indexArray).putExtra("valueArray", valueArray)
+                            .putExtra("title", "Pulsa Dan Top Up").putExtra("type", 0)
+                        startActivity(goTo)
                     }
                     tableRow.addView(printButton)
                 }
@@ -242,61 +209,52 @@ class FinanceManagementActivity : AppCompatActivity() {
                     printButton.layoutParams = button
                     printButton.setBackgroundResource(R.drawable.button_info)
                     printButton.setOnClickListener {
-                        if (!Printooth.hasPairedPrinter()) {
-                            startActivityForResult(
-                                Intent(this, ScanningActivity::class.java),
-                                ScanningActivity.SCANNING_FOR_PRINTER
-                            )
-                        } else {
-                            val getDataToPrint = FinanceController.GetDetail(
-                                session.getString("phone").toString(),
-                                convertToJsonArray.getJSONObject(value)["idtrx"].toString()
-                            ).execute()
-                            val responsePayment = getDataToPrint.get().getJSONArray("trx")
-                            Printooth.getPairedPrinter()
-                            println(responsePayment)
-                            val date = responsePayment.getJSONObject(0)["tgl"].toString()
-                            val type =
-                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[0]
-                            val numberPayment =
-                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[1]
-                            val namePayment =
-                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[2]
-                            val bill =
-                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[3]
-                            val admin =
-                                responsePayment.getJSONObject(0)["sn"].toString().split("|")[4]
-                            val totalBill = (
-                                    responsePayment.getJSONObject(0)["markup"].toString().toInt() + responsePayment.getJSONObject(
-                                        0
-                                    )["harga"].toString().toInt()
-                                    ).toString()
+                        val getDataToPrint = FinanceController.GetDetail(
+                            session.getString("phone").toString(),
+                            convertToJsonArray.getJSONObject(value)["idtrx"].toString()
+                        ).execute()
+                        val responsePayment = getDataToPrint.get().getJSONArray("trx")
+                        println(responsePayment)
+                        val date = responsePayment.getJSONObject(0)["tgl"].toString()
+                        val type =
+                            responsePayment.getJSONObject(0)["sn"].toString().split("|")[0]
+                        val numberPayment =
+                            responsePayment.getJSONObject(0)["sn"].toString().split("|")[1]
+                        val namePayment =
+                            responsePayment.getJSONObject(0)["sn"].toString().split("|")[2]
+                        val bill =
+                            responsePayment.getJSONObject(0)["sn"].toString().split("|")[3]
+                        val admin =
+                            responsePayment.getJSONObject(0)["sn"].toString().split("|")[4]
+                        val totalBill = (
+                                responsePayment.getJSONObject(0)["markup"].toString().toInt() + responsePayment.getJSONObject(
+                                    0
+                                )["harga"].toString().toInt()
+                                ).toString()
 
-                            val indexArray = ArrayList<String>()
-                            indexArray.add("Tanggal")
-                            indexArray.add("Type")
-                            indexArray.add("Nomor Pelanggan")
-                            indexArray.add("Nama Pelanggan")
-                            indexArray.add("Tagihan")
-                            indexArray.add("Admin")
-                            indexArray.add("Total Bayar")
+                        val indexArray = ArrayList<String>()
+                        indexArray.add("Tanggal")
+                        indexArray.add("Type")
+                        indexArray.add("Nomor Pelanggan")
+                        indexArray.add("Nama Pelanggan")
+                        indexArray.add("Tagihan")
+                        indexArray.add("Admin")
+                        indexArray.add("Total Bayar")
 
-                            val valueArray = ArrayList<String>()
-                            valueArray.add(date)
-                            valueArray.add(type)
-                            valueArray.add(numberPayment)
-                            valueArray.add(namePayment)
-                            valueArray.add(bill)
-                            valueArray.add(admin)
-                            valueArray.add(totalBill)
-                            val goTo = Intent(
-                                this,
-                                DetailFinanceActivity::class.java
-                            ).putExtra("indexArray", indexArray).putExtra("valueArray", valueArray)
-                                .putExtra("title", "Pembayaran").putExtra("type", 3)
-                            startActivity(goTo)
-                            //printPayment(date, type, numberPayment, namePayment, bill, admin, totalBill)
-                        }
+                        val valueArray = ArrayList<String>()
+                        valueArray.add(date)
+                        valueArray.add(type)
+                        valueArray.add(numberPayment)
+                        valueArray.add(namePayment)
+                        valueArray.add(bill)
+                        valueArray.add(admin)
+                        valueArray.add(totalBill)
+                        val goTo = Intent(
+                            this,
+                            DetailFinanceActivity::class.java
+                        ).putExtra("indexArray", indexArray).putExtra("valueArray", valueArray)
+                            .putExtra("title", "Pembayaran").putExtra("type", 3)
+                        startActivity(goTo)
                     }
                     tableRow.addView(printButton)
                 }

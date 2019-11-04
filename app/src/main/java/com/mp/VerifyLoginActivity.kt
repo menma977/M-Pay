@@ -15,6 +15,7 @@ import android.telephony.TelephonyManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.mp.controller.IMEIController
+import com.mp.controller.PlayStoreController
 import com.mp.controller.UserController
 import com.mp.model.Session
 import com.mp.model.User
@@ -24,9 +25,11 @@ import kotlinx.android.synthetic.main.activity_verify_login.*
 import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
+import android.net.Uri
 
 class VerifyLoginActivity : AppCompatActivity() {
 
+    private var statusUpdate = true
     private var countPasswordWrong = 0
     private var password = ""
 
@@ -34,6 +37,41 @@ class VerifyLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_login)
         val session = Session(this)
+
+        Timer().schedule(1000) {
+            val responseCodePlayStore =
+                PlayStoreController.GetVersion(BuildConfig.APPLICATION_ID).execute().get()
+            println("${responseCodePlayStore["Version"]} != ${BuildConfig.VERSION_NAME}")
+            if (responseCodePlayStore["Status"].toString() == "0") {
+                statusUpdate = true
+                if (responseCodePlayStore["Version"].toString() != BuildConfig.VERSION_NAME) {
+                    try {
+                        runOnUiThread {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
+                                )
+                            )
+                        }
+                    } catch (anfe: android.content.ActivityNotFoundException) {
+                        runOnUiThread {
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
+                                )
+                            )
+                        }
+                    }
+                } else {
+                    statusUpdate = false
+                }
+            } else {
+                statusUpdate = true
+                finishAffinity()
+            }
+        }
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
@@ -68,12 +106,7 @@ class VerifyLoginActivity : AppCompatActivity() {
         }, 1000)
 
         back.setOnClickListener {
-            session.saveString("phone", "")
-            session.saveString("email", "")
-            session.saveString("name", "")
-            session.saveString("pin", "")
-            session.saveInteger("status", 0)
-            session.saveInteger("type", 0)
+            session.clear()
 
             User.setPhone("")
             User.setEmail("")
@@ -161,36 +194,40 @@ class VerifyLoginActivity : AppCompatActivity() {
                     loading.setMessage("Wait while loading...")
                     loading.setCancelable(false)
                     loading.show()
-                    Timer().schedule(1000) {
-                        if (sendIEMI()) {
-                            runOnUiThread {
-                                Handler().postDelayed({
-                                    loading.dismiss()
-                                    if (User.getType() == 1) {
-                                        val goTo = Intent(
-                                            applicationContext,
-                                            HomeMemberActivity::class.java
-                                        )
+                    when {
+                        statusUpdate -> finishAffinity()
+                        else -> Timer().schedule(1000) {
+                            if (sendIEMI()) {
+                                runOnUiThread {
+                                    Handler().postDelayed({
+                                        loading.dismiss()
+                                        if (User.getType() == 1) {
+                                            val goTo = Intent(
+                                                applicationContext,
+                                                HomeMemberActivity::class.java
+                                            )
+                                            startActivity(goTo)
+                                            finish()
+                                        } else {
+                                            val goTo = Intent(
+                                                applicationContext,
+                                                HomeMerchantActivity::class.java
+                                            )
+                                            startActivity(goTo)
+                                            finish()
+                                        }
+                                    }, 1000)
+                                }
+                            } else {
+                                runOnUiThread {
+                                    Handler().postDelayed({
+                                        loading.dismiss()
+                                        val goTo =
+                                            Intent(applicationContext, MainActivity::class.java)
                                         startActivity(goTo)
                                         finish()
-                                    } else {
-                                        val goTo = Intent(
-                                            applicationContext,
-                                            HomeMerchantActivity::class.java
-                                        )
-                                        startActivity(goTo)
-                                        finish()
-                                    }
-                                }, 1000)
-                            }
-                        } else {
-                            runOnUiThread {
-                                Handler().postDelayed({
-                                    loading.dismiss()
-                                    val goTo = Intent(applicationContext, MainActivity::class.java)
-                                    startActivity(goTo)
-                                    finish()
-                                }, 1000)
+                                    }, 1000)
+                                }
                             }
                         }
                     }
@@ -200,12 +237,7 @@ class VerifyLoginActivity : AppCompatActivity() {
                     countPasswordWrong += 1
                     if (countPasswordWrong == 3) {
                         val session = Session(this)
-                        session.saveString("phone", "")
-                        session.saveString("email", "")
-                        session.saveString("name", "")
-                        session.saveString("pin", "")
-                        session.saveInteger("status", 0)
-                        session.saveInteger("type", 0)
+                        session.clear()
 
                         User.setPhone("")
                         User.setEmail("")
@@ -246,13 +278,7 @@ class VerifyLoginActivity : AppCompatActivity() {
             println("===============================")
             return if (response["Status"].toString() == "1") {
                 val session = Session(this)
-                session.saveString("phone", "")
-                session.saveString("email", "")
-                session.saveString("name", "")
-                session.saveString("pin", "")
-                session.saveInteger("status", 0)
-                session.saveInteger("type", 0)
-                session.saveString("imei", "")
+                session.clear()
 
                 User.setPhone("")
                 User.setEmail("")

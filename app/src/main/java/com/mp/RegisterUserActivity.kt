@@ -43,6 +43,11 @@ class RegisterUserActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     @SuppressLint("ShowToast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

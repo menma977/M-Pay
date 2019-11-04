@@ -38,14 +38,7 @@ class PlnResponseActivity : AppCompatActivity() {
         try {
             val response = UserController.Get(session.getString("phone").toString()).execute().get()
             if (session.getString("imei") != response["emai"].toString()) {
-                session.saveString("phone", "")
-                session.saveString("email", "")
-                session.saveString("name", "")
-                session.saveString("pin", "")
-                session.saveInteger("status", 0)
-                session.saveInteger("type", 0)
-                session.saveInteger("balance", 0)
-                session.saveString("imei", "")
+                session.clear()
 
                 User.setPhone("")
                 User.setEmail("")
@@ -60,14 +53,7 @@ class PlnResponseActivity : AppCompatActivity() {
                 session.saveInteger("balance", response["deposit"].toString().toInt())
             }
         } catch (e: Exception) {
-            session.saveString("phone", "")
-            session.saveString("email", "")
-            session.saveString("name", "")
-            session.saveString("pin", "")
-            session.saveInteger("status", 0)
-            session.saveInteger("type", 0)
-            session.saveInteger("balance", 0)
-            session.saveString("imei", "")
+            session.clear()
 
             User.setPhone("")
             User.setEmail("")

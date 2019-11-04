@@ -159,13 +159,7 @@ class BankActivity : AppCompatActivity() {
                             runOnUiThread {
                                 loading.dismiss()
                                 if (session.getString("imei") != userResponse["emai"].toString()) {
-                                    session.saveString("phone", "")
-                                    session.saveString("email", "")
-                                    session.saveString("name", "")
-                                    session.saveString("pin", "")
-                                    session.saveInteger("status", 0)
-                                    session.saveInteger("type", 0)
-                                    session.saveString("imei", "")
+                                    session.clear()
 
                                     User.setPhone("")
                                     User.setEmail("")
@@ -189,13 +183,7 @@ class BankActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         runOnUiThread {
                             loading.dismiss()
-                            session.saveString("phone", "")
-                            session.saveString("email", "")
-                            session.saveString("name", "")
-                            session.saveString("pin", "")
-                            session.saveInteger("status", 0)
-                            session.saveInteger("type", 0)
-                            session.saveString("imei", "")
+                            session.clear()
 
                             User.setPhone("")
                             User.setEmail("")

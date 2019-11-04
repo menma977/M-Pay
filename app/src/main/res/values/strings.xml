@@ -56,7 +56,7 @@
     <string name="daftar">Daftar</string>
     <string name="pin">Pin</string>
     <string name="kirin_pin">Kirin Pin</string>
-    <string name="update_password">Update Password</string>
+    <string name="update_password">Ubah kata Sandi</string>
     <string name="password_baru_anda">Password baru anda</string>
     <string name="validasi_password_baru_anda">Validasi password baru anda</string>
     <string name="history">History</string>
@@ -94,5 +94,5 @@
     <string name="upload">Upload</string>
     <string name="foto_ktp_dan_diri_seperti_gambar">Foto KTP Dan Diri Seperti Gambar</string>
     <string name="foto_ktp">Foto KTP</string>
-    <string name="support">Support</string>
+    <string name="support">Support Transaksi PPOB</string>
 </resources>
