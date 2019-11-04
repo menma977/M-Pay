@@ -96,7 +96,7 @@ class TabCashBNIActivity : AppCompatActivity() {
                         loading.dismiss()
                     }, 500)
                 }
-                phoneNumberEditText.text.toString().isDigitsOnly() -> {
+                !phoneNumberEditText.text.isDigitsOnly() -> {
                     Toast.makeText(this, "Nomor telfon hanya boleh angka", Toast.LENGTH_LONG)
                         .show()
                     Handler().postDelayed({

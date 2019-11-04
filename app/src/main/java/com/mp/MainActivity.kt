@@ -51,10 +51,6 @@ class MainActivity : AppCompatActivity() {
             && session.getString("pin").toString().isNotEmpty()
             && session.getString("pin") != null
         ) {
-            println("==================Login=======================")
-            println(session.getString("phone").toString())
-            println(session.getString("pin"))
-            println("==============================================")
             User.setPhone(session.getString("phone"))
             User.setPin(session.getString("pin"))
             User.setType(session.getInteger("type"))
@@ -143,10 +139,6 @@ class MainActivity : AppCompatActivity() {
                     try {
                         val response =
                             UserController.Get(phoneNumber.text.toString()).execute().get()
-                        println()
-                        println("===============Register===================")
-                        println(response)
-                        println("==========================================")
                         if (response["Status"].toString() == "0") {
                             PasswordController.SendPassword(
                                 response["hpagen"].toString(),

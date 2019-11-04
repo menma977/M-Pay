@@ -167,7 +167,7 @@ class PDAMRequestActivity : AppCompatActivity() {
                         loading.dismiss()
                     }, 500)
                 }
-                phoneNumber.isDigitsOnly() -> {
+                !phoneNumber.isDigitsOnly() -> {
                     Toast.makeText(this, "Nomor telfon Hanya boleh nakga", Toast.LENGTH_LONG)
                         .show()
                     Handler().postDelayed({

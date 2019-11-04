@@ -11,7 +11,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class UserController {
-    class Get(private val phone : String) : AsyncTask<Void, Void, JSONObject>() {
+    class Get(private val phone: String) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
@@ -40,14 +40,13 @@ class UserController {
                     )
 
                     val inputData: String = input.readLine()
-                    println(inputData)
                     val response = JSONObject(inputData)
                     input.close()
                     response
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }

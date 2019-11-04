@@ -86,7 +86,7 @@ class EMoneyMandiriRequestActivity : AppCompatActivity() {
                         loading.dismiss()
                     }, 500)
                 }
-                phoneNumberEditText.text.toString().isDigitsOnly() -> {
+                !phoneNumberEditText.text.isDigitsOnly() -> {
                     Toast.makeText(this, "No Telepon hanya angka.", Toast.LENGTH_LONG).show()
                     Handler().postDelayed({
                         loading.dismiss()

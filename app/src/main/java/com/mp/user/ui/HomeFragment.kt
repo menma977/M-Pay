@@ -45,13 +45,13 @@ class HomeFragment : Fragment() {
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
-        val topUpButton : Button = root.findViewById(R.id.topUp)
+        val topUpButton: Button = root.findViewById(R.id.topUp)
         val balance: TextView = root.findViewById(R.id.balance)
         val reloadBalance: ImageButton = root.findViewById(R.id.reloadBalance)
         val nameUser: TextView = root.findViewById(R.id.name_user)
         balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
 
-        Timer().schedule(1000, 20000) {
+        Timer().schedule(1000, 60000) {
             try {
                 val response = UserController.Get(User.getPhone()).execute().get()
                 if (response["Status"].toString() == "0") {

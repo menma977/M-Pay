@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import com.mp.R
 import com.mp.controller.ppob.ProductController
 import com.mp.controller.ppob.TokenController
@@ -97,8 +98,20 @@ class PlnRequestActivity : AppCompatActivity() {
                         loading.dismiss()
                     }, 500)
                 }
+                !PhoneNumberEditText.text.isDigitsOnly() -> {
+                    Toast.makeText(this, "No Telepon tidak boleh kosong.", Toast.LENGTH_LONG).show()
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 500)
+                }
                 TokenNumberEditText.text.toString().isEmpty() -> {
                     Toast.makeText(this, "Token tidak boleh kosong.", Toast.LENGTH_LONG).show()
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 500)
+                }
+                !TokenNumberEditText.text.isDigitsOnly() -> {
+                    Toast.makeText(this, "No Telepon tidak boleh kosong.", Toast.LENGTH_LONG).show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)

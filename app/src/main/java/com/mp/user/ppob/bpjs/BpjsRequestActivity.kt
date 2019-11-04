@@ -104,7 +104,7 @@ class BpjsRequestActivity : AppCompatActivity() {
                         loading.dismiss()
                     }, 500)
                 }
-                phoneNumber.isDigitsOnly() -> {
+                !phoneNumber.isDigitsOnly() -> {
                     Toast.makeText(this, "Nomor telfon hanya boleh angka", Toast.LENGTH_LONG)
                         .show()
                     Handler().postDelayed({

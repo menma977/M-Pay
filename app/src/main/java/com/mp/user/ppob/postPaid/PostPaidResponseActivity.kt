@@ -23,6 +23,11 @@ import kotlin.concurrent.schedule
 
 class PostPaidResponseActivity : AppCompatActivity() {
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_paid_response)

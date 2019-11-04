@@ -212,10 +212,6 @@ class RegisterUserActivity : AppCompatActivity() {
                                         fileNameKTP,
                                         fileNameSelfAndKTP
                                     ).execute().get()
-                                    println()
-                                    println("===============Register===================")
-                                    println(response)
-                                    println("==========================================")
                                     if (response["Status"].toString() == "0") {
                                         session!!.saveString("phone", response["nohp"].toString())
                                         session!!.saveString("email", response["email"].toString())
@@ -295,9 +291,6 @@ class RegisterUserActivity : AppCompatActivity() {
                     .setMaxRetries(0)
                     .setAutoDeleteFilesAfterSuccessfulUpload(true)
                     .startUpload()
-            println("===============Register===================")
-            println(image)
-            println("===============Register===================")
             true
         } catch (ex: Exception) {
             ex.printStackTrace()

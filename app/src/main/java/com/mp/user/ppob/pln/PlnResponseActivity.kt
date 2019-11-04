@@ -148,6 +148,10 @@ class PlnResponseActivity : AppCompatActivity() {
                 }, 500)
             }
         }
+
+        BackButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun updateBalance() {

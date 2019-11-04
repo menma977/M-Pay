@@ -317,7 +317,6 @@ class PostPaidRequestActivity : AppCompatActivity() {
                 try {
                     if (parent.count > 1) {
                         nominal = productCodeArrayList[position]
-                        println(productCodeArrayList)
                     }
                 } catch (e: Exception) {
                     nominal = ""
@@ -384,8 +383,6 @@ class PostPaidRequestActivity : AppCompatActivity() {
             Timer().schedule(1000) {
                 val postPaidResponse =
                     PostPaidController.Request(username, phone, nominal, type).execute().get()
-                println("$username, $phone, $nominal, $type")
-                println(postPaidResponse)
                 runOnUiThread {
                     if (postPaidResponse["Status"].toString() == "1") {
                         Toast.makeText(

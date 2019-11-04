@@ -41,7 +41,6 @@ class VerifyLoginActivity : AppCompatActivity() {
         Timer().schedule(1000) {
             val responseCodePlayStore =
                 PlayStoreController.GetVersion(BuildConfig.APPLICATION_ID).execute().get()
-            println("${responseCodePlayStore["Version"]} != ${BuildConfig.VERSION_NAME}")
             if (responseCodePlayStore["Status"].toString() == "0") {
                 statusUpdate = true
                 if (responseCodePlayStore["Version"].toString() != BuildConfig.VERSION_NAME) {
@@ -279,10 +278,6 @@ class VerifyLoginActivity : AppCompatActivity() {
     private fun sendIEMI(): Boolean {
         return if (User.getPhone().isNotEmpty()) {
             val response = IMEIController.sendIMEI(User.getPhone(), getIEMI()).execute().get()
-            println("===============================")
-            println("${User.getPhone()} ${getIEMI()}")
-            println(response)
-            println("===============================")
             return if (response["Status"].toString() == "1") {
                 val session = Session(this)
                 session.clear()
