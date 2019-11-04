@@ -82,9 +82,12 @@ class PostPaidCreditResponseActivity : AppCompatActivity() {
 
         val dataResponse = intent.getSerializableExtra("response").toString()
         val compriseJson = JSONObject(dataResponse)
+        println("==============================")
+        println(compriseJson)
+        println("==============================")
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
-        val username = session.getString("username").toString()
+        val username = compriseJson["Username"].toString()
         val firstBalance = session.getInteger("balance").toString()
         val type = compriseJson["Type"].toString()
         val clientID = compriseJson["IdPel"].toString()

@@ -95,6 +95,5 @@ class FinanceController {
                 return JSONObject("{trx : {Status: 1, Pesan: 'internet tidak setabil'}}")
             }
         }
-
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -18,6 +19,7 @@ import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.menu.MPayIdActivity
 import com.mp.user.menu.ScanActivity
+import com.mp.user.menu.TopUpActivity
 import com.mp.user.menu.TransferManagementActivity
 import com.mp.user.ppob.MoreActivity
 import com.mp.user.ppob.goPay.GoPayRequestActivity
@@ -43,6 +45,7 @@ class HomeFragment : Fragment() {
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
 
+        val topUpButton : Button = root.findViewById(R.id.topUp)
         val balance: TextView = root.findViewById(R.id.balance)
         val reloadBalance: ImageButton = root.findViewById(R.id.reloadBalance)
         val nameUser: TextView = root.findViewById(R.id.name_user)
@@ -64,6 +67,11 @@ class HomeFragment : Fragment() {
         }
 
         nameUser.text = Session(root.context).getString("name")
+
+        topUpButton.setOnClickListener {
+            val goTo = Intent(root.context, TopUpActivity::class.java)
+            startActivity(goTo)
+        }
 
         reloadBalance.setOnClickListener {
             val loading = ProgressDialog(root.context)

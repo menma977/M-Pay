@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mp.user.menu.TopUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/nominal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/Success"
+            android:drawableStart="@drawable/ic_fiber_smart_record_black_24dp"
+            android:drawableTint="@color/Success"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/nominal"
+            android:inputType="numberSigned"
+            android:textColor="@color/Success"
+            android:textColorHint="@color/colorSecondaryLight"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="Autofill,UnusedAttribute" />
+
+        <Button
+            android:id="@+id/topUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_success"
+            android:text="@string/top_up"
+            android:textColor="@color/textPrimary" />
+
+    </LinearLayout>
+
+</ScrollView>

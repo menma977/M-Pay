@@ -21,7 +21,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".user.finance.DetailFinanceActivity"></activity>
+        <activity
+            android:name=".user.menu.TopUpActivity"
+            android:label="TopUp" />
+        <activity
+            android:name=".user.finance.DetailFinanceActivity"
+            android:label="Detail Financial" />
         <activity
             android:name=".user.UploadImageActivity"
             android:label="Uplaod KTP Ulang" />
