@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.doOnTextChanged
 import com.mp.R
 import com.mp.controller.ppob.HlrController
@@ -78,16 +79,6 @@ class PostPaidRequestActivity : AppCompatActivity() {
             if (text.toString().length <= 4 && !text.isNullOrEmpty()) {
                 operator = arrayResponse?.get("Operator").toString()
                 try {
-                    when (operator) {
-                        "TELKOMSEL" -> LogoImageView.setImageResource(R.drawable.telkomsel)
-                        "INDOSAT" -> LogoImageView.setImageResource(R.drawable.indosat)
-                        "XL" -> LogoImageView.setImageResource(R.drawable.xl)
-                        "AXIS" -> LogoImageView.setImageResource(R.drawable.axis)
-                        "SMART" -> LogoImageView.setImageResource(R.drawable.smart)
-                        "THREE" -> LogoImageView.setImageResource(R.drawable.three)
-                        else -> LogoImageView.setImageResource(R.mipmap.ic_launcher_foreground)
-                    }
-
                     if (!arrayResponse?.get("Operator")?.toString().isNullOrEmpty() && arrayResponse?.get(
                             "Operator"
                         )?.toString() != "Default"
@@ -340,30 +331,47 @@ class PostPaidRequestActivity : AppCompatActivity() {
 
         ContinueButton.setOnClickListener {
             loading.show()
-            if (PhoneNumberEditText.text.length >= 10 && nominal.isNotEmpty()) {
-                onRequestPayment(
-                    session.getString("phone").toString(),
-                    PhoneNumberEditText.text.toString().replace("-", "").replace(
-                        "+62",
-                        "0"
-                    ).replace(" ", ""),
-                    nominal,
-                    type
-                )
-                Handler().postDelayed({
-                    loading.dismiss()
-                }, 1000)
-            } else if (PhoneNumberEditText.text.length < 10) {
+            try {
+                if (PhoneNumberEditText.text.length >= 10 && PhoneNumberEditText.text.toString().isDigitsOnly() && nominal.isNotEmpty()) {
+                    onRequestPayment(
+                        session.getString("phone").toString(),
+                        PhoneNumberEditText.text.toString()
+                            .replace("-", "")
+                            .replace("+62", "0")
+                            .replace(" ", "")
+                            .replace(".", ""),
+                        nominal,
+                        type
+                    )
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 1000)
+                } else if (PhoneNumberEditText.text.length < 10) {
+                    Toast.makeText(
+                        this,
+                        "Nomoar Telepon yang anda inputkan kurang dari 10 digit.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 500)
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 500)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
                 Toast.makeText(
                     this,
-                    "Nomoar Telepon yang anda inputkan kurang dari 10 digit.",
+                    "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.",
                     Toast.LENGTH_LONG
                 ).show()
-                Handler().postDelayed({
-                    loading.dismiss()
-                }, 500)
-            } else {
-                Toast.makeText(this, "Provider tidak di temukan.", Toast.LENGTH_LONG).show()
                 Handler().postDelayed({
                     loading.dismiss()
                 }, 500)

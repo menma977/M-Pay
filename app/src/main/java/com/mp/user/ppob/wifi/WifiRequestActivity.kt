@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
+import androidx.core.text.isDigitsOnly
 import com.mp.R
 import com.mp.controller.ppob.PaymentController
 import com.mp.model.Session
@@ -124,8 +125,12 @@ class WifiRequestActivity : AppCompatActivity() {
                     .replace(" ", "")
             val balance = session.getInteger("balance").toString()
             when {
-                phoneNumber.isEmpty() -> {
-                    Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG)
+                phoneNumber.isEmpty() && !phoneNumber.isDigitsOnly() -> {
+                    Toast.makeText(
+                        this,
+                        "Nomor telfon tidak boleh kosong & hanya boleh angka",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                     Handler().postDelayed({
                         loading.dismiss()

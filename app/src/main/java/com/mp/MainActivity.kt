@@ -15,6 +15,7 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import com.mp.controller.PasswordController
 import com.mp.controller.UserController
 import com.mp.model.Session
@@ -71,6 +72,10 @@ class MainActivity : AppCompatActivity() {
             val phoneTemporary = phoneNumber.text.toString()
             if (phoneTemporary.isEmpty()) {
                 Toast.makeText(this, "Nomor Telepon Anda Tidak boleh kosong", Toast.LENGTH_LONG)
+                    .show()
+                loading.dismiss()
+            } else if (!phoneTemporary.isDigitsOnly()) {
+                Toast.makeText(this, "Nomor Telepon Hanya Angka", Toast.LENGTH_LONG)
                     .show()
                 loading.dismiss()
             } else {

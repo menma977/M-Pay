@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
+import androidx.core.text.isDigitsOnly
 import com.mp.R
 import com.mp.controller.ppob.ProductController
 import com.mp.controller.ppob.TokenController
@@ -91,6 +92,13 @@ class TabCashBNIActivity : AppCompatActivity() {
             when {
                 phoneNumberEditText.text.toString().isEmpty() -> {
                     Toast.makeText(this, "No Telepon tidak boleh kosong.", Toast.LENGTH_LONG).show()
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 500)
+                }
+                phoneNumberEditText.text.toString().isDigitsOnly() -> {
+                    Toast.makeText(this, "Nomor telfon hanya boleh angka", Toast.LENGTH_LONG)
+                        .show()
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 500)

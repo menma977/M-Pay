@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import com.mp.R
 import com.mp.controller.ppob.PaymentController
 import com.mp.model.Session
@@ -90,6 +91,13 @@ class PostPaidCreditRequestActivity : AppCompatActivity() {
             when {
                 phoneNumber.isEmpty() -> {
                     Toast.makeText(this, "Nomor telfon tidak boleh kosong", Toast.LENGTH_LONG)
+                        .show()
+                    Handler().postDelayed({
+                        loading.dismiss()
+                    }, 500)
+                }
+                phoneNumber.isDigitsOnly() -> {
+                    Toast.makeText(this, "Nomor telfon hanya boleh angka", Toast.LENGTH_LONG)
                         .show()
                     Handler().postDelayed({
                         loading.dismiss()

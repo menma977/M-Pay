@@ -22,9 +22,9 @@ class HomeMemberActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_member)
 
-        val session = Session(this)
+        var session: Session? = Session(this)
 
-        if (session.getInteger("status") == 0) {
+        if (session!!.getInteger("status") == 0) {
             val fromForBtn: LinearLayout = findViewById(R.id.formForButton)
             fromForBtn.removeAllViews()
             val optionValue = LinearLayout.LayoutParams(50, 50)
@@ -37,6 +37,7 @@ class HomeMemberActivity : AppCompatActivity() {
                 val goTo = Intent(this, UploadImageActivity::class.java)
                 startActivity(goTo)
                 finish()
+                session = null
             }
             fromForBtn.addView(imageButton)
         }
@@ -47,19 +48,19 @@ class HomeMemberActivity : AppCompatActivity() {
             override fun run() {
                 try {
                     val response =
-                        UserController.Get(session.getString("phone").toString()).execute().get()
+                        UserController.Get(session!!.getString("phone").toString()).execute().get()
                     if (response["Status"].toString() == "0") {
-                        if (response["emai"].toString() == session.getString("imei")) {
-                            session.saveString("phone", response["hpagen"].toString())
-                            session.saveString("email", response["email"].toString())
-                            session.saveString("name", response["nama"].toString())
-                            session.saveString("pin", response["password"].toString())
-                            session.saveInteger(
+                        if (response["emai"].toString() == session!!.getString("imei")) {
+                            session!!.saveString("phone", response["hpagen"].toString())
+                            session!!.saveString("email", response["email"].toString())
+                            session!!.saveString("name", response["nama"].toString())
+                            session!!.saveString("pin", response["password"].toString())
+                            session!!.saveInteger(
                                 "status",
                                 response["statusmember"].toString().toInt()
                             )
-                            session.saveInteger("type", response["tipeuser"].toString().toInt())
-                            session.saveInteger("balance", response["deposit"].toString().toInt())
+                            session!!.saveInteger("type", response["tipeuser"].toString().toInt())
+                            session!!.saveInteger("balance", response["deposit"].toString().toInt())
 
                             User.setPhone(response["hpagen"].toString())
                             User.setEmail(response["email"].toString())
@@ -69,7 +70,7 @@ class HomeMemberActivity : AppCompatActivity() {
                             User.setStatus(response["statusmember"].toString().toInt())
                             User.setBalance(response["deposit"].toString().toInt())
                         } else {
-                            session.clear()
+                            session!!.clear()
 
                             User.setPhone("")
                             User.setEmail("")
@@ -83,7 +84,7 @@ class HomeMemberActivity : AppCompatActivity() {
                         }
                     }
                 } catch (e: Exception) {
-                    session.clear()
+                    session!!.clear()
 
                     User.setPhone("")
                     User.setEmail("")
@@ -104,7 +105,7 @@ class HomeMemberActivity : AppCompatActivity() {
         }
 
         logout.setOnClickListener {
-            session.clear()
+            session!!.clear()
 
             User.setPhone("")
             User.setEmail("")

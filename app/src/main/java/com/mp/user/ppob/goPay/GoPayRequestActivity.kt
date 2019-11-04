@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.doOnTextChanged
 import com.mp.R
 import com.mp.controller.ppob.HlrController
@@ -79,16 +80,6 @@ class GoPayRequestActivity : AppCompatActivity() {
             if (text.toString().length <= 4 && !text.isNullOrEmpty()) {
                 operator = arrayResponse?.get("Operator").toString()
                 try {
-                    when (operator) {
-                        "TELKOMSEL" -> LogoImageView.setImageResource(R.drawable.telkomsel)
-                        "INDOSAT" -> LogoImageView.setImageResource(R.drawable.indosat)
-                        "XL" -> LogoImageView.setImageResource(R.drawable.xl)
-                        "AXIS" -> LogoImageView.setImageResource(R.drawable.axis)
-                        "SMART" -> LogoImageView.setImageResource(R.drawable.smart)
-                        "THREE" -> LogoImageView.setImageResource(R.drawable.three)
-                        else -> LogoImageView.setImageResource(R.mipmap.ic_launcher_foreground)
-                    }
-
                     if (!arrayResponse?.get("Operator")?.toString().isNullOrEmpty() && arrayResponse?.get(
                             "Operator"
                         )?.toString() != "Default"
@@ -175,7 +166,7 @@ class GoPayRequestActivity : AppCompatActivity() {
 
         ContinueButton.setOnClickListener {
             loading.show()
-            if (PhoneNumberEditText.text.length >= 10 && nominal.isNotEmpty()) {
+            if (PhoneNumberEditText.text.length >= 10 && PhoneNumberEditText.text.isDigitsOnly() && nominal.isNotEmpty()) {
                 onRequestPayment(
                     session.getString("phone").toString(),
                     PhoneNumberEditText.text.toString().replace("-", "").replace(
@@ -198,7 +189,7 @@ class GoPayRequestActivity : AppCompatActivity() {
                     loading.dismiss()
                 }, 500)
             } else {
-                Toast.makeText(this, "Provider tidak di temukan.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.", Toast.LENGTH_LONG).show()
                 Handler().postDelayed({
                     loading.dismiss()
                 }, 500)

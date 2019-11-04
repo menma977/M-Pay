@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.doOnTextChanged
 import com.mp.R
 import com.mp.controller.ppob.HlrController
@@ -31,7 +32,6 @@ class OvoRequestActivity : AppCompatActivity() {
         val balanceTextView: TextView = findViewById(R.id.BalanceTextView)
         val productSpinner: Spinner = findViewById(R.id.ProductSpinner)
         val phoneNumberEditText: EditText = findViewById(R.id.PhoneNumberEditText)
-        val logoImageView: ImageView = findViewById(R.id.LogoImageView)
         val continueButton: Button = findViewById(R.id.ContinueButton)
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
@@ -81,16 +81,6 @@ class OvoRequestActivity : AppCompatActivity() {
             if (text.toString().length <= 4 && !text.isNullOrEmpty()) {
                 operator = arrayResponse?.get("Operator").toString()
                 try {
-                    when (operator) {
-                        "TELKOMSEL" -> logoImageView.setImageResource(R.drawable.telkomsel)
-                        "INDOSAT" -> logoImageView.setImageResource(R.drawable.indosat)
-                        "XL" -> logoImageView.setImageResource(R.drawable.xl)
-                        "AXIS" -> logoImageView.setImageResource(R.drawable.axis)
-                        "SMART" -> logoImageView.setImageResource(R.drawable.smart)
-                        "THREE" -> logoImageView.setImageResource(R.drawable.three)
-                        else -> logoImageView.setImageResource(R.mipmap.ic_launcher_foreground)
-                    }
-
                     if (!arrayResponse?.get("Operator")?.toString().isNullOrEmpty() && arrayResponse?.get(
                             "Operator"
                         )?.toString() != "Default"
@@ -176,7 +166,7 @@ class OvoRequestActivity : AppCompatActivity() {
 
         continueButton.setOnClickListener {
             loading.show()
-            if (phoneNumberEditText.text.length >= 10 && nominal.isNotEmpty()) {
+            if (phoneNumberEditText.text.length >= 10 && phoneNumberEditText.text.isDigitsOnly() && nominal.isNotEmpty()) {
                 onRequestPayment(
                     session.getString("phone").toString(),
                     phoneNumberEditText.text.toString().replace("-", "").replace(
@@ -199,7 +189,7 @@ class OvoRequestActivity : AppCompatActivity() {
                     loading.dismiss()
                 }, 500)
             } else {
-                Toast.makeText(this, "Provider tidak di temukan.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.", Toast.LENGTH_LONG).show()
                 Handler().postDelayed({
                     loading.dismiss()
                 }, 500)

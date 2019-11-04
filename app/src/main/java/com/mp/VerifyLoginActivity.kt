@@ -54,7 +54,7 @@ class VerifyLoginActivity : AppCompatActivity() {
                                 )
                             )
                         }
-                    } catch (anfe: android.content.ActivityNotFoundException) {
+                    } catch (e: Exception) {
                         runOnUiThread {
                             startActivity(
                                 Intent(
@@ -193,40 +193,47 @@ class VerifyLoginActivity : AppCompatActivity() {
                     loading.setTitle("Loading")
                     loading.setMessage("Wait while loading...")
                     loading.setCancelable(false)
-                    loading.show()
-                    when {
-                        statusUpdate -> finishAffinity()
-                        else -> Timer().schedule(1000) {
-                            if (sendIEMI()) {
-                                runOnUiThread {
-                                    Handler().postDelayed({
-                                        loading.dismiss()
-                                        if (User.getType() == 1) {
-                                            val goTo = Intent(
-                                                applicationContext,
-                                                HomeMemberActivity::class.java
-                                            )
+                    Timer().schedule(1000) {
+                        runOnUiThread {
+                            loading.show()
+                        }
+                        when {
+                            statusUpdate -> runOnUiThread {
+                                loading.dismiss()
+                                finishAffinity()
+                            }
+                            else -> Timer().schedule(1000) {
+                                if (sendIEMI()) {
+                                    runOnUiThread {
+                                        Handler().postDelayed({
+                                            loading.dismiss()
+                                            if (User.getType() == 1) {
+                                                val goTo = Intent(
+                                                    applicationContext,
+                                                    HomeMemberActivity::class.java
+                                                )
+                                                startActivity(goTo)
+                                                finish()
+                                            } else {
+                                                val goTo = Intent(
+                                                    applicationContext,
+                                                    HomeMerchantActivity::class.java
+                                                )
+                                                startActivity(goTo)
+                                                finish()
+                                            }
+                                        }, 1000)
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        Handler().postDelayed({
+                                            loading.dismiss()
+                                            val goTo =
+                                                Intent(applicationContext, MainActivity::class.java)
                                             startActivity(goTo)
                                             finish()
-                                        } else {
-                                            val goTo = Intent(
-                                                applicationContext,
-                                                HomeMerchantActivity::class.java
-                                            )
-                                            startActivity(goTo)
-                                            finish()
-                                        }
-                                    }, 1000)
-                                }
-                            } else {
-                                runOnUiThread {
-                                    Handler().postDelayed({
-                                        loading.dismiss()
-                                        val goTo =
-                                            Intent(applicationContext, MainActivity::class.java)
-                                        startActivity(goTo)
-                                        finish()
-                                    }, 1000)
+                                        }, 1000)
+                                    }
                                 }
                             }
                         }

@@ -23,84 +23,138 @@
         tools:targetApi="n">
         <activity
             android:name=".user.menu.TopUpActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="TopUp" />
         <activity
             android:name=".user.finance.DetailFinanceActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Detail Financial" />
         <activity
             android:name=".user.UploadImageActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Uplaod KTP Ulang" />
         <activity
             android:name=".user.finance.FinanceManagementActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="History" />
         <activity
             android:name=".user.menu.mpay.MPayActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Transfer Sesama M Pay" />
         <activity
             android:name=".user.menu.bank.BankActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Withdraw ke BANK" />
         <activity
             android:name=".user.menu.TransferManagementActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Menejement Transfer" />
         <activity
             android:name=".user.ppob.wifi.WifiRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Pembayaran TV Kabel Dan Wifi" />
         <activity
             android:name=".user.ppob.tabCashBNI.TabCashBNIActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Tab Cash BNI" />
         <activity
             android:name=".user.ppob.plnCredit.PLNCreditRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="PLN Pascabayar" />
         <activity
             android:name=".user.ppob.pdam.PDAMRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="PDAM" />
         <activity
             android:name=".user.ppob.payment.PaymentRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Payment" />
         <activity
             android:name=".user.ppob.multiFinance.MultiFinanceRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Multi Finance" />
         <activity
             android:name=".user.ppob.insurance.InsuranceRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Insurance" />
         <activity
             android:name=".user.ppob.eMoneyMandiri.EMoneyMandiriRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="E-Monay Manidiri" />
         <activity
             android:name=".user.ppob.ovo.OvoRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="OVO" />
         <activity
             android:name=".user.ppob.grap.GrabRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="GRAP" />
         <activity
             android:name=".user.ppob.goPay.GoPayRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Go-Pay" />
         <activity
             android:name=".user.ppob.dana.DanaRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="DANA" />
         <activity
             android:name=".user.ppob.bpjs.BpjsRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="PBJS" />
         <activity
             android:name=".user.ppob.pln.PlnResponseActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Konfirmasi Transaksi" />
         <activity
             android:name=".user.ppob.pln.PlnRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="PLN" />
         <activity
             android:name=".user.ppob.postPaidCredit.PostPaidCreditResponseActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Konfirmasi Transaksi" />
         <activity
             android:name=".user.ppob.postPaidCredit.PostPaidCreditRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Pulsa Pascabayar" />
         <activity
             android:name=".user.ppob.postPaid.PostPaidResponseActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Konfirmasi Transaksi" />
         <activity
             android:name=".user.ppob.postPaid.PostPaidRequestActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Pulsa" />
         <activity
             android:name=".password.update.UpdatePasswordActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Lupa Kata Sandi">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -108,6 +162,8 @@
         </activity>
         <activity
             android:name=".password.edit.EditPasswordActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Lupa Kata Sandi">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -115,6 +171,8 @@
         </activity>
         <activity
             android:name=".RegisterUserActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Pendaftaran">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -122,6 +180,8 @@
         </activity>
         <activity
             android:name=".user.menu.SetNominalActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="Transfer Antara Mpay">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -129,26 +189,40 @@
         </activity>
         <activity
             android:name=".user.menu.ScanActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".user.menu.MPayIdActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="@string/mp_id"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".user.ppob.MoreActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:label="@string/more"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".user.member.HomeMemberActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".VerifyLoginActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".user.merchant.HomeMerchantActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".MainActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
             android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

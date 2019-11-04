@@ -51,18 +51,24 @@ class HomeFragment : Fragment() {
         val nameUser: TextView = root.findViewById(R.id.name_user)
         balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
 
-        Timer().schedule(5000, 10000) {
-            val response = UserController.Get(User.getPhone()).execute().get()
-            if (response["Status"].toString() == "0") {
-                val session = Session(root.context)
-                session.saveInteger(
-                    "balance",
-                    response["deposit"].toString().toInt()
-                )
-                session.saveString("support", response["hpkomplen"].toString())
-                User.setBalance(response["deposit"].toString().toInt())
-                balance.text =
-                    numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
+        Timer().schedule(1000, 20000) {
+            try {
+                val response = UserController.Get(User.getPhone()).execute().get()
+                if (response["Status"].toString() == "0") {
+                    var session: Session?
+                    session = Session(root.context)
+                    session.saveInteger(
+                        "balance",
+                        response["deposit"].toString().toInt()
+                    )
+                    session.saveString("support", response["hpkomplen"].toString())
+                    User.setBalance(response["deposit"].toString().toInt())
+                    balance.text =
+                        numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
+                    session = null
+                }
+            } catch (e: java.lang.Exception) {
+
             }
         }
 
