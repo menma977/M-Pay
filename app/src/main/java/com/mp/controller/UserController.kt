@@ -24,7 +24,7 @@ class UserController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=GetUser&phone=${phone}"
+                val urlParameters = "a=GetUser&phone=${phone}&imei=${User.getImei()}"
 
                 // Send post request
                 httpURLConnection.doOutput = true

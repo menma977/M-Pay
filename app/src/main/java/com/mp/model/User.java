@@ -10,6 +10,15 @@ public class User {
     private static String image;
     private static Integer balance;
     private static Integer status;
+    private static String imei;
+
+    public static String getImei() {
+        return imei;
+    }
+
+    public static void setImei(String imei) {
+        User.imei = imei;
+    }
 
     public static String getUrl() {
         return "https://multipayment.co/api";

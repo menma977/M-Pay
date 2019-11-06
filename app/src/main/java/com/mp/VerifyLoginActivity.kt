@@ -4,6 +4,7 @@ package com.mp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -26,6 +27,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.schedule
 import android.net.Uri
+import android.os.Build
 
 class VerifyLoginActivity : AppCompatActivity() {
 
@@ -192,10 +194,8 @@ class VerifyLoginActivity : AppCompatActivity() {
                     loading.setTitle("Loading")
                     loading.setMessage("Wait while loading...")
                     loading.setCancelable(false)
+                    loading.show()
                     Timer().schedule(1000) {
-                        runOnUiThread {
-                            loading.show()
-                        }
                         when {
                             statusUpdate -> runOnUiThread {
                                 loading.dismiss()
@@ -299,20 +299,28 @@ class VerifyLoginActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("NewApi")
+    @TargetApi(Build.VERSION_CODES.M)
     private fun getIEMI(): String {
         return if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_PHONE_STATE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
-            val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            tm.imei
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
+                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                tm.imei
+            } else {
+                User.getPhone()
+            }
         } else {
-            requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
-            val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            tm.imei
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
+                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                tm.imei
+            } else {
+                User.getPhone()
+            }
         }
     }
 }

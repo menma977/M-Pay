@@ -1,8 +1,15 @@
 package com.mp.user.member
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.telephony.TelephonyManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -18,11 +25,14 @@ import java.util.*
 
 class HomeMemberActivity : AppCompatActivity() {
 
+    @TargetApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_member)
 
         var session: Session? = Session(this)
+
+        User.setImei(getIEMI())
 
         if (session!!.getInteger("status") == 0) {
             val fromForBtn: LinearLayout = findViewById(R.id.formForButton)
@@ -116,6 +126,31 @@ class HomeMemberActivity : AppCompatActivity() {
             val goTo = Intent(this, MainActivity::class.java)
             startActivity(goTo)
             finish()
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private fun getIEMI(): String {
+        return if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
+                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                tm.imei
+            } else {
+                User.getPhone()
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
+                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                tm.imei
+            } else {
+                User.getPhone()
+            }
         }
     }
 }

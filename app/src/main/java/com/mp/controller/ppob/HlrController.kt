@@ -1,6 +1,14 @@
 package com.mp.controller.ppob
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.AsyncTask
+import android.telephony.TelephonyManager
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.mp.model.User
 import org.json.JSONArray
 import java.io.BufferedReader
@@ -33,7 +41,7 @@ class HlrController(private val phone : String) : AsyncTask<Void, Void, JSONArra
             write.close()
 
             val responseCode = httpURLConnection.responseCode
-            if (responseCode == 200) {
+            return if (responseCode == 200) {
                 val input = BufferedReader(
                     InputStreamReader(httpURLConnection.inputStream)
                 )
@@ -41,14 +49,13 @@ class HlrController(private val phone : String) : AsyncTask<Void, Void, JSONArra
                 val inputData: String = input.readLine()
                 val response = JSONArray(inputData)
                 input.close()
-                return response
+                response
             } else {
-                return JSONArray("[{Status: 1, Pesan: 'internet tidak setabil'}, {Status: 1, Pesan: 'internet tidak setabil'}]")
+                JSONArray("[{Status: 1, Pesan: 'internet tidak setabil'}, {Status: 1, Pesan: 'internet tidak setabil'}]")
             }
         }catch (e : Exception) {
             e.printStackTrace()
             return JSONArray("[{Status: 1, Pesan: 'internet tidak setabil'}, {Status: 1, Pesan: 'internet tidak setabil'}]")
         }
     }
-
 }

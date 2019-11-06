@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.mp.MainActivity
 import com.mp.R
 import com.mp.controller.UserController
 import com.mp.model.Session
@@ -33,6 +34,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
+
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
@@ -51,24 +53,72 @@ class HomeFragment : Fragment() {
         val nameUser: TextView = root.findViewById(R.id.name_user)
         balance.text = numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
 
-        Timer().schedule(1000, 60000) {
+        Timer().schedule(1000, 5000) {
             try {
                 val response = UserController.Get(User.getPhone()).execute().get()
+                println(response)
                 if (response["Status"].toString() == "0") {
-                    var session: Session?
-                    session = Session(root.context)
-                    session.saveInteger(
-                        "balance",
-                        response["deposit"].toString().toInt()
-                    )
-                    session.saveString("support", response["hpkomplen"].toString())
-                    User.setBalance(response["deposit"].toString().toInt())
-                    balance.text =
-                        numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
-                    session = null
+                    if (response["emai"].toString() == User.getImei()) {
+                        val session: Session?
+                        session = Session(root.context)
+                        session.saveInteger(
+                            "balance",
+                            response["deposit"].toString().toInt()
+                        )
+                        session.saveString("support", response["hpkomplen"].toString())
+                        User.setBalance(response["deposit"].toString().toInt())
+                        activity?.runOnUiThread {
+                            balance.text =
+                                numberFormat.format(if (User.getBalance() != null) User.getBalance() else 0)
+                        }
+                    } else {
+                        val session = Session(root.context)
+                        session.clear()
+                        User.setPhone("")
+                        User.setEmail("")
+                        User.setName("")
+                        User.setPin("")
+                        User.setType(0)
+                        User.setStatus(0)
+                        activity?.runOnUiThread {
+                            val goTo = Intent(root.context, MainActivity::class.java)
+                            startActivity(goTo)
+                            this.cancel()
+                            activity?.finish()
+                        }
+                    }
+                } else {
+                    val session = Session(root.context)
+                    session.clear()
+                    User.setPhone("")
+                    User.setEmail("")
+                    User.setName("")
+                    User.setPin("")
+                    User.setType(0)
+                    User.setStatus(0)
+                    activity?.runOnUiThread {
+                        val goTo = Intent(root.context, MainActivity::class.java)
+                        startActivity(goTo)
+                        this.cancel()
+                        activity?.finish()
+                    }
                 }
             } catch (e: java.lang.Exception) {
-
+                e.printStackTrace()
+                val session = Session(root.context)
+                session.clear()
+                User.setPhone("")
+                User.setEmail("")
+                User.setName("")
+                User.setPin("")
+                User.setType(0)
+                User.setStatus(0)
+                activity?.runOnUiThread {
+                    val goTo = Intent(root.context, MainActivity::class.java)
+                    startActivity(goTo)
+                    this.cancel()
+                    activity?.finish()
+                }
             }
         }
 

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             && session.getString("pin").toString().isNotEmpty()
             && session.getString("pin") != null
         ) {
+            doRequestPermission()
             User.setPhone(session.getString("phone"))
             User.setPin(session.getString("pin"))
             User.setType(session.getInteger("type"))
@@ -195,7 +196,7 @@ class MainActivity : AppCompatActivity() {
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
                 this,
