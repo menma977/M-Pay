@@ -187,7 +187,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.P)
     private fun doRequestPermission() {
         if (
             ContextCompat.checkSelfPermission(
@@ -221,10 +220,16 @@ class MainActivity : AppCompatActivity() {
                         Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.FOREGROUND_SERVICE,
                         Manifest.permission.READ_PHONE_STATE
                     ), 100
                 )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.FOREGROUND_SERVICE
+                        ), 100
+                    )
+                }
             }
         }
     }

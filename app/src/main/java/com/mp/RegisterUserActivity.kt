@@ -182,9 +182,11 @@ class RegisterUserActivity : AppCompatActivity() {
                 Toast.makeText(this, "nama tidak boleh kosong", Toast.LENGTH_LONG).show()
             } else if (password.text.isEmpty()) {
                 Toast.makeText(this, "kata sandi tidak boleh kosong", Toast.LENGTH_LONG).show()
-            } else if (password.text.length < 6 && !password.text.isDigitsOnly()) {
+            } else if (!password.text.isDigitsOnly()) {
+                Toast.makeText(this, "kata sandi hanya boleh angka", Toast.LENGTH_LONG).show()
+            } else if (password.text.length < 6) {
                 Toast.makeText(this, "kata sandi kurang dari 6", Toast.LENGTH_LONG).show()
-            } else if (password.text.length > 6 && !password.text.isDigitsOnly()) {
+            } else if (password.text.length > 6) {
                 Toast.makeText(this, "kata sandi tidak boleh lebih dari 6", Toast.LENGTH_LONG)
                     .show()
             } else if (passwordValidation.text.isEmpty() && passwordValidation.text.toString() != password.text.toString()) {
