@@ -12,11 +12,11 @@ import javax.net.ssl.HttpsURLConnection
 
 class PaymentController {
     class Request(
-        private val username : String,
-        private val customerID : String,
-        private val phone : String,
-        private val firstBalance : String,
-        private val type : String
+        private val username: String,
+        private val customerID: String,
+        private val phone: String,
+        private val firstBalance: String,
+        private val type: String
     ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
@@ -30,7 +30,8 @@ class PaymentController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=ReqPayment&username=${username}&idpel=${customerID}&nohp=$phone&saldoawal=$firstBalance&type=$type"
+                val urlParameters =
+                    "a=ReqPayment&username=${username}&idpel=${customerID}&nohp=$phone&saldoawal=$firstBalance&type=$type"
                 println(urlParameters)
 
                 // Send post request
@@ -53,7 +54,7 @@ class PaymentController {
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }
@@ -61,18 +62,18 @@ class PaymentController {
     }
 
     class Response(
-        private val username : String,
-        private val type : String,
-        private val clientID : String,
-        private val clientName : String,
-        private val price : String,
-        private val admin : String,
-        private val markupAdmin : String,
-        private val totalPrice : String,
-        private val phoneNumber : String,
-        private val remainingBalance : String,
-        private val ref : String,
-        private val periodic : String
+        private val username: String,
+        private val type: String,
+        private val clientID: String,
+        private val clientName: String,
+        private val price: String,
+        private val admin: String,
+        private val markupAdmin: String,
+        private val totalPrice: String,
+        private val phoneNumber: String,
+        private val remainingBalance: String,
+        private val ref: String,
+        private val periodic: String
     ) : AsyncTask<Void, Void, JSONObject>() {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
@@ -113,7 +114,7 @@ class PaymentController {
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
                 }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 e.printStackTrace()
                 return JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
             }
