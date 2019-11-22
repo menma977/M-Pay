@@ -17,16 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/Success"
             android:drawableStart="@drawable/ic_phone_android_black_24dp"
-            android:drawableTint="@color/Success"
             android:ems="10"
             android:hint="@string/no_telfon_yang_terpasang_di_hp_anda"
             android:importantForAutofill="no"
             android:inputType="phone"
             android:textColor="@color/Success"
-            android:textColorHint="@color/textSecondary"
-            tools:ignore="UnusedAttribute" />
+            android:textColorHint="@color/textSecondary" />
 
         <LinearLayout
             android:layout_width="match_parent"

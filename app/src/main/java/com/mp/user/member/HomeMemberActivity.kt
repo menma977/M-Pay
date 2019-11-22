@@ -144,13 +144,7 @@ class HomeMemberActivity : AppCompatActivity() {
                 User.getPhone()
             }
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE), 2)
-                val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                tm.imei
-            } else {
-                User.getPhone()
-            }
+            User.getPhone()
         }
     }
 }

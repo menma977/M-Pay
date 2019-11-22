@@ -172,7 +172,7 @@
         <activity
             android:name=".RegisterUserActivity"
             android:autoRemoveFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
+            android:finishOnCloseSystemDialogs="false"
             android:label="Pendaftaran">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -212,7 +212,7 @@
         <activity
             android:name=".VerifyLoginActivity"
             android:autoRemoveFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
+            android:finishOnCloseSystemDialogs="false"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".user.merchant.HomeMerchantActivity"
@@ -222,7 +222,7 @@
         <activity
             android:name=".MainActivity"
             android:autoRemoveFromRecents="true"
-            android:finishOnCloseSystemDialogs="true"
+            android:finishOnCloseSystemDialogs="false"
             android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

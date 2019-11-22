@@ -3,8 +3,6 @@
 package com.mp
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -38,8 +36,6 @@ class MainActivity : AppCompatActivity() {
         loading.setCancelable(false)
         loading.show()
 
-        doRequestPermission()
-
         val loginButton: Button = findViewById(R.id.login)
         val registerButton: Button = findViewById(R.id.register)
         //val forgotPassword : Button = findViewById(R.id.forgotPassword)
@@ -51,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             && session.getString("pin").toString().isNotEmpty()
             && session.getString("pin") != null
         ) {
-            doRequestPermission()
             User.setPhone(session.getString("phone"))
             User.setPin(session.getString("pin"))
             User.setType(session.getInteger("type"))
@@ -64,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         loading.dismiss()
 
         loginButton.setOnClickListener {
-            doRequestPermission()
             loading.show()
             val phoneTemporary = phoneNumber.text.toString()
             if (phoneTemporary.isEmpty()) {
@@ -102,7 +96,6 @@ class MainActivity : AppCompatActivity() {
                                 User.setType(response["tipeuser"].toString().toInt())
                                 User.setStatus(response["statusmember"].toString().toInt())
                                 User.setBalance(response["deposit"].toString().toInt())
-                                doRequestPermission()
                                 Handler().postDelayed({
                                     loading.dismiss()
                                     val goTo =
@@ -207,10 +200,6 @@ class MainActivity : AppCompatActivity() {
             ) != PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.FOREGROUND_SERVICE
-            ) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(
-                this,
                 Manifest.permission.READ_PHONE_STATE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -223,13 +212,6 @@ class MainActivity : AppCompatActivity() {
                         Manifest.permission.READ_PHONE_STATE
                     ), 100
                 )
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    requestPermissions(
-                        arrayOf(
-                            Manifest.permission.FOREGROUND_SERVICE
-                        ), 100
-                    )
-                }
             }
         }
     }

@@ -16,6 +16,7 @@ import com.mp.R
 import com.mp.controller.ppob.HlrController
 import com.mp.controller.ppob.PostPaidController
 import com.mp.controller.ppob.ProductController
+import com.mp.model.PhoneNumber
 import com.mp.model.Session
 import com.mp.model.User
 import kotlinx.android.synthetic.main.activity_post_paid_request.*
@@ -23,6 +24,7 @@ import org.json.JSONObject
 import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
 
 class PostPaidRequestActivity : AppCompatActivity() {
@@ -332,16 +334,34 @@ class PostPaidRequestActivity : AppCompatActivity() {
             loading.show()
             try {
                 if (PhoneNumberEditText.text.length >= 10 && PhoneNumberEditText.text.toString().isDigitsOnly() && nominal.isNotEmpty()) {
-                    onRequestPayment(
-                        session.getString("phone").toString(),
-                        PhoneNumberEditText.text.toString()
-                            .replace("-", "")
-                            .replace("+62", "0")
-                            .replace(" ", "")
-                            .replace(".", ""),
-                        nominal,
-                        type
-                    )
+                    val phoneNumber = PhoneNumberEditText.text.toString()
+                    val phoneArrayList = PhoneNumber.getPhone()
+                    val filter: Boolean = try {
+                        phoneArrayList.single { string -> string == phoneNumber }
+                        false
+                    } catch (e: Exception) {
+                        PhoneNumber.setPhone(phoneNumber)
+                        true
+                    }
+
+                    if (filter) {
+                        onRequestPayment(
+                            session.getString("phone").toString(),
+                            PhoneNumberEditText.text.toString()
+                                .replace("-", "")
+                                .replace("+62", "0")
+                                .replace(" ", "")
+                                .replace(".", ""),
+                            nominal,
+                            type
+                        )
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Tidak Boleh miengisi pulsa dengan nomor hp yang sama selama 1 menit.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                     Handler().postDelayed({
                         loading.dismiss()
                     }, 1000)
@@ -357,7 +377,7 @@ class PostPaidRequestActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this,
-                        "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.",
+                        "Provider tidak di temukan. nomor tidak boleh menggunakan sepasi atau simbol.",
                         Toast.LENGTH_LONG
                     ).show()
                     Handler().postDelayed({
@@ -368,7 +388,7 @@ class PostPaidRequestActivity : AppCompatActivity() {
                 e.printStackTrace()
                 Toast.makeText(
                     this,
-                    "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.",
+                    "Terjadi Kesalahan Ketika meperoses Data yang di kirim",
                     Toast.LENGTH_LONG
                 ).show()
                 Handler().postDelayed({

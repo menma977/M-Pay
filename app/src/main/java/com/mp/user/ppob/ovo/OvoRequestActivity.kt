@@ -14,6 +14,7 @@ import com.mp.R
 import com.mp.controller.ppob.HlrController
 import com.mp.controller.ppob.PostPaidController
 import com.mp.controller.ppob.ProductController
+import com.mp.model.PhoneNumber
 import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.ppob.postPaid.PostPaidResponseActivity
@@ -167,15 +168,34 @@ class OvoRequestActivity : AppCompatActivity() {
         continueButton.setOnClickListener {
             loading.show()
             if (phoneNumberEditText.text.length >= 10 && phoneNumberEditText.text.isDigitsOnly() && nominal.isNotEmpty()) {
-                onRequestPayment(
-                    session.getString("phone").toString(),
-                    phoneNumberEditText.text.toString().replace("-", "").replace(
-                        "+62",
-                        "0"
-                    ).replace(" ", ""),
-                    nominal,
-                    type
-                )
+                val phoneNumber = phoneNumberEditText.text.toString()
+                val phoneArrayList = PhoneNumber.getPhone()
+                val filter: Boolean = try {
+                    phoneArrayList.single { string -> string == phoneNumber }
+                    false
+                } catch (e: Exception) {
+                    PhoneNumber.setPhone(phoneNumber)
+                    true
+                }
+
+                if (filter) {
+                    onRequestPayment(
+                        session.getString("phone").toString(),
+                        phoneNumberEditText.text.toString().replace("-", "").replace(
+                            "+62",
+                            "0"
+                        ).replace(" ", ""),
+                        nominal,
+                        type
+                    )
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Tidak Boleh miengisi pulsa dengan nomor hp yang sama selama 1 menit.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
                 Handler().postDelayed({
                     loading.dismiss()
                 }, 1000)
@@ -189,7 +209,11 @@ class OvoRequestActivity : AppCompatActivity() {
                     loading.dismiss()
                 }, 500)
             } else {
-                Toast.makeText(this, "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Provider tidak di temukan. nomor tidak boleh menggunakan spasi atau simbol.",
+                    Toast.LENGTH_LONG
+                ).show()
                 Handler().postDelayed({
                     loading.dismiss()
                 }, 500)

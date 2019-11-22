@@ -38,17 +38,11 @@ class RegisterUserActivity : AppCompatActivity() {
     private var code = ""
     private var session: Session? = null
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
     }
 
-    @SuppressLint("ShowToast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_user)
@@ -286,13 +280,12 @@ class RegisterUserActivity : AppCompatActivity() {
 
     private fun uploadImageToServer(getFile: String): Boolean {
         return try {
-            val image =
-                MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
-                    .addFileToUpload(getFile, "file")
-                    //.addParameter("parameter", "content parameter")
-                    .setMaxRetries(0)
-                    .setAutoDeleteFilesAfterSuccessfulUpload(true)
-                    .startUpload()
+            MultipartUploadRequest(this, "http://picotele.com/neomitra/javacoin/mpay.php")
+                .addFileToUpload(getFile, "file")
+                //.addParameter("parameter", "content parameter")
+                .setMaxRetries(0)
+                .setAutoDeleteFilesAfterSuccessfulUpload(true)
+                .startUpload()
             true
         } catch (ex: Exception) {
             ex.printStackTrace()

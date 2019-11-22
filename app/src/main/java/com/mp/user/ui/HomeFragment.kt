@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.mp.MainActivity
 import com.mp.R
 import com.mp.controller.UserController
+import com.mp.model.PhoneNumber
 import com.mp.model.Session
 import com.mp.model.User
 import com.mp.user.menu.MPayIdActivity
@@ -56,7 +57,7 @@ class HomeFragment : Fragment() {
         Timer().schedule(1000, 5000) {
             try {
                 val response = UserController.Get(User.getPhone()).execute().get()
-                println(response)
+//                println(response)
                 if (response["Status"].toString() == "0") {
                     if (response["emai"].toString() == User.getImei()) {
                         val session: Session?
@@ -120,6 +121,10 @@ class HomeFragment : Fragment() {
                     activity?.finish()
                 }
             }
+        }
+
+        Timer().schedule(1000, 30000) {
+            PhoneNumber.clearPhone()
         }
 
         nameUser.text = Session(root.context).getString("name")
