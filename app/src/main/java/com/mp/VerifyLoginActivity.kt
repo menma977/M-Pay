@@ -44,6 +44,7 @@ class VerifyLoginActivity : AppCompatActivity() {
                 PlayStoreController.GetVersion(BuildConfig.APPLICATION_ID).execute().get()
             if (responseCodePlayStore["Status"].toString() == "0") {
                 statusUpdate = true
+                println("${responseCodePlayStore["Version"].toString()} != ${BuildConfig.VERSION_NAME}")
                 if (responseCodePlayStore["Version"].toString() != BuildConfig.VERSION_NAME) {
                     try {
                         runOnUiThread {

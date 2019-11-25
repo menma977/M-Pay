@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="maksimum withdraw adalah 2juta rupiah"
+            android:text="maksimum withdraw adalah 15juta rupiah"
             android:textAlignment="center" />
 
         <EditText
