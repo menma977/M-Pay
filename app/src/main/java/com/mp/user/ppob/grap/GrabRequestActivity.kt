@@ -193,7 +193,7 @@ class GrabRequestActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this,
-                        "Tidak Boleh miengisi pulsa dengan nomor hp yang sama selama 1 menit.",
+                        "Tidak Boleh miengisi pulsa dengan nomor hp yang sama selama 30 menit.",
                         Toast.LENGTH_LONG
                     ).show()
                 }

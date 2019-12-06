@@ -123,7 +123,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        Timer().schedule(1000, 30000) {
+        Timer().schedule(1000, 1800000) {
             PhoneNumber.clearPhone()
         }
 
