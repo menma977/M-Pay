@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 Timer().schedule(object : TimerTask() {
                     override fun run() {
                         val response = UserController.Get(phoneTemporary).execute().get()
+                        println(response)
                         if (response["Status"].toString() == "0") {
                             runOnUiThread {
                                 session.saveString("phone", response["hpagen"].toString())

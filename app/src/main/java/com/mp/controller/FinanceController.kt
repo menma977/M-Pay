@@ -14,7 +14,7 @@ class FinanceController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("http://152601282294.ip-dynamic.com/mpmdp/apidephis.php")
+                val url = URL("http://munggut.myddns.me/mpmdp/apidephis.php")
                 val httpURLConnection = url.openConnection() as HttpURLConnection
 
                 //add request header
@@ -57,7 +57,7 @@ class FinanceController {
         override fun doInBackground(vararg params: Void?): JSONObject {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("http://152601282294.ip-dynamic.com/mpmdp/apidephis.php")
+                val url = URL("http://munggut.myddns.me/mpmdp/apidephis.php")
                 val httpURLConnection = url.openConnection() as HttpURLConnection
 
                 //add request header

@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.mp.MainActivity
 import com.mp.R
@@ -44,6 +41,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+        val sessionData = Session(root.context)
 
         val idr = Locale("in", "ID")
         val numberFormat = NumberFormat.getCurrencyInstance(idr)
@@ -123,16 +122,11 @@ class HomeFragment : Fragment() {
             }
         }
 
-        Timer().schedule(1000, 1800000) {
+        Timer().schedule(1000, 3600000) {
             PhoneNumber.clearPhone()
         }
 
         nameUser.text = Session(root.context).getString("name")
-
-        topUpButton.setOnClickListener {
-            val goTo = Intent(root.context, TopUpActivity::class.java)
-            startActivity(goTo)
-        }
 
         reloadBalance.setOnClickListener {
             val loading = ProgressDialog(root.context)
@@ -169,70 +163,90 @@ class HomeFragment : Fragment() {
         val scan = root.findViewById<LinearLayout>(R.id.scan)
         val transferButton = root.findViewById<LinearLayout>(R.id.transferButton)
 
-        mPayId.setOnClickListener {
-            goTo = Intent(root.context, MPayIdActivity::class.java)
-            startActivity(goTo)
-        }
+        if (sessionData.getInteger("status") == 0) {
+            Toast.makeText(
+                root.context,
+                "Nomor Telepon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            topUpButton.setOnClickListener {
+                goTo = Intent(root.context, TopUpActivity::class.java)
+                startActivity(goTo)
+            }
 
-        scan.setOnClickListener {
-            goTo = Intent(root.context, ScanActivity::class.java)
-            startActivity(goTo)
-        }
+            mPayId.setOnClickListener {
+                goTo = Intent(root.context, MPayIdActivity::class.java)
+                startActivity(goTo)
+            }
 
-        transferButton.setOnClickListener {
-            goTo = Intent(root.context, TransferManagementActivity::class.java)
-            startActivity(goTo)
-        }
+            scan.setOnClickListener {
+                goTo = Intent(root.context, ScanActivity::class.java)
+                startActivity(goTo)
+            }
 
-        val more = root.findViewById<LinearLayout>(R.id.more)
+            transferButton.setOnClickListener {
+                goTo = Intent(root.context, TransferManagementActivity::class.java)
+                startActivity(goTo)
+            }
+            val more = root.findViewById<LinearLayout>(R.id.more)
 
-        more.setOnClickListener {
-            goTo = Intent(root.context, MoreActivity::class.java)
-            startActivity(goTo)
-        }
+            more.setOnClickListener {
+                if (sessionData.getInteger("status") == 0) {
+                    Toast.makeText(
+                        root.context,
+                        "Nomor Telepon anda belum di validasi oleh admin mohon tunggu 1x24jam atau hubungi admin",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    goTo = Intent(root.context, MoreActivity::class.java)
+                    startActivity(goTo)
+                }
+            }
 
-        //ppiob
-        val postPaid: LinearLayout = root.findViewById(R.id.PostPaidButton)
-        val postPaidCredit: LinearLayout = root.findViewById(R.id.PostPaidCreditButton)
-        val pln: LinearLayout = root.findViewById(R.id.plnButton)
-        val wifi: LinearLayout = root.findViewById(R.id.wifiButton)
-        val goPay: LinearLayout = root.findViewById(R.id.GoPayButton)
-        val grab: LinearLayout = root.findViewById(R.id.GrabButton)
-        val ovo: LinearLayout = root.findViewById(R.id.OVOButton)
+            //ppiob
+            val postPaid: LinearLayout = root.findViewById(R.id.PostPaidButton)
+            val postPaidCredit: LinearLayout = root.findViewById(R.id.PostPaidCreditButton)
+            val pln: LinearLayout = root.findViewById(R.id.plnButton)
+            val wifi: LinearLayout = root.findViewById(R.id.wifiButton)
+            val goPay: LinearLayout = root.findViewById(R.id.GoPayButton)
+            val grab: LinearLayout = root.findViewById(R.id.GrabButton)
+            val ovo: LinearLayout = root.findViewById(R.id.OVOButton)
 
-        postPaid.setOnClickListener {
-            goTo = Intent(root.context, PostPaidRequestActivity::class.java)
-            startActivity(goTo)
-        }
+            postPaid.setOnClickListener {
+                goTo = Intent(root.context, PostPaidRequestActivity::class.java)
+                startActivity(goTo)
+            }
 
-        postPaidCredit.setOnClickListener {
-            goTo = Intent(root.context, PostPaidCreditRequestActivity::class.java)
-            startActivity(goTo)
-        }
+            postPaidCredit.setOnClickListener {
+                goTo = Intent(root.context, PostPaidCreditRequestActivity::class.java)
+                startActivity(goTo)
+            }
 
-        pln.setOnClickListener {
-            goTo = Intent(root.context, PlnRequestActivity::class.java)
-            startActivity(goTo)
-        }
+            pln.setOnClickListener {
+                goTo = Intent(root.context, PlnRequestActivity::class.java)
+                startActivity(goTo)
+            }
 
-        wifi.setOnClickListener {
-            goTo = Intent(root.context, WifiRequestActivity::class.java)
-            startActivity(goTo)
-        }
+            wifi.setOnClickListener {
+                goTo = Intent(root.context, WifiRequestActivity::class.java)
+                startActivity(goTo)
+            }
 
-        goPay.setOnClickListener {
-            goTo = Intent(root.context, GoPayRequestActivity::class.java)
-            startActivity(goTo)
-        }
+            goPay.setOnClickListener {
+                goTo = Intent(root.context, GoPayRequestActivity::class.java)
+                startActivity(goTo)
+            }
 
-        grab.setOnClickListener {
-            goTo = Intent(root.context, GrabRequestActivity::class.java)
-            startActivity(goTo)
-        }
+            grab.setOnClickListener {
+                goTo = Intent(root.context, GrabRequestActivity::class.java)
+                startActivity(goTo)
+            }
 
-        ovo.setOnClickListener {
-            goTo = Intent(root.context, OvoRequestActivity::class.java)
-            startActivity(goTo)
+            ovo.setOnClickListener {
+                goTo = Intent(root.context, OvoRequestActivity::class.java)
+                startActivity(goTo)
+            }
         }
 
         return root
