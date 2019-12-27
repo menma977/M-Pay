@@ -41,5 +41,10 @@ class TransferManagementActivity : AppCompatActivity() {
             goTo = Intent(this, BankActivity::class.java)
             startActivity(goTo)
         }
+
+        ConvertButton.setOnClickListener {
+            goTo = Intent(this, ConvertToMDPActivity::class.java)
+            startActivity(goTo)
+        }
     }
 }

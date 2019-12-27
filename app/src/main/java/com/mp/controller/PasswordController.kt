@@ -16,7 +16,7 @@ class PasswordController {
             val response = JSONObject()
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("http://budisetiyono.com/seypogsms/index.php")
+                val url = URL("https://budisetiyono.com/seypogsms/index.php")
                 val httpURLConnection = url.openConnection() as HttpURLConnection
 
                 //add request header
@@ -28,7 +28,7 @@ class PasswordController {
                 val randomCode = (100000 until 999999).random()
 
                 val urlParameters =
-                    "nohp=$phone&isi=hallo $phone ini code untuk validasi nomor telfon anda ($randomCode). jika anda tidak merasa melakukan pengiriman code ini via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay"
+                    "user=Put24B4w4J4v4&nohp=$phone&isi=hallo $phone ini code untuk validasi nomor telfon anda ($randomCode). jika anda tidak merasa melakukan pengiriman code ini via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -66,7 +66,7 @@ class PasswordController {
         override fun doInBackground(vararg params: Void): Void? {
             try {
                 val userAgent = "Mozilla/5.0"
-                val url = URL("http://budisetiyono.com/seypogsms/index.php")
+                val url = URL("https://budisetiyono.com/seypogsms/index.php")
                 val httpURLConnection = url.openConnection() as HttpURLConnection
 
                 //add request header
@@ -76,7 +76,7 @@ class PasswordController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "nohp=$phone&isi=hallo $phone password anda saat ini adalah $password . jika anda tidak merasa melakukan pengiriman password via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay"
+                    "user=Put24B4w4J4v4&nohp=$phone&isi=hallo $phone password anda saat ini adalah $password . jika anda tidak merasa melakukan pengiriman password via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay"
 
                 // Send post request
                 httpURLConnection.doOutput = true

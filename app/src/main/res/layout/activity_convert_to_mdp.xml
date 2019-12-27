@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mp.user.menu.bank.BankActivity">
+    tools:context="com.mp.user.menu.ConvertToMDPActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,79 +12,34 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:autofillHints=""
             android:backgroundTint="@color/Success"
             android:drawableStart="@drawable/ic_account_circle_black_24dp"
             android:drawableTint="@color/Success"
             android:ems="10"
-            android:hint="@string/nama_sesuai_akun_bank"
-            android:inputType="text"
+            android:hint="@string/username"
+            android:inputType="textPersonName"
             android:textColor="@color/Success"
             android:textColorHint="@color/colorSecondaryLight"
-            tools:ignore="UnusedAttribute" />
-
-        <EditText
-            android:id="@+id/bankTarget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:autofillHints=""
-            android:backgroundTint="@color/Success"
-            android:drawableStart="@drawable/ic_account_balance_black_24dp"
-            android:drawableTint="@color/Success"
-            android:ems="10"
-            android:hint="@string/bank_tujuan"
-            android:inputType="text"
-            android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
-            tools:ignore="UnusedAttribute" />
-
-        <EditText
-            android:id="@+id/accountTarget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:autofillHints=""
-            android:backgroundTint="@color/Success"
-            android:drawableStart="@drawable/ic_account_balance_black_24dp"
-            android:drawableTint="@color/Success"
-            android:ems="10"
-            android:hint="@string/nomor_rekening"
-            android:inputType="phone"
-            android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
-            tools:ignore="UnusedAttribute" />
+            tools:targetApi="m" />
 
         <EditText
             android:id="@+id/nominal"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:backgroundTint="@color/Success"
             android:drawableStart="@drawable/ic_fiber_smart_record_black_24dp"
             android:drawableTint="@color/Success"
             android:ems="10"
-            android:gravity="center"
-            android:hint="@string/nominalBank"
-            android:inputType="numberSigned"
+            android:hint="@string/nominal_send"
+            android:inputType="numberDecimal"
             android:textColor="@color/Success"
             android:textColorHint="@color/colorSecondaryLight"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:ignore="Autofill,UnusedAttribute" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="maksimum withdraw adalah 15juta rupiah"
-            android:textAlignment="center" />
+            tools:targetApi="m" />
 
         <LinearLayout
             android:layout_margin="20dp"
@@ -121,21 +77,6 @@
                 android:textColor="@color/textPrimary" />
 
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:backgroundTint="@color/Success"
-            android:drawableStart="@drawable/ic_description_black_24dp"
-            android:drawableTint="@color/Success"
-            android:ems="10"
-            android:hint="@string/keterangan"
-            android:inputType="textPersonName"
-            android:textColor="@color/Success"
-            android:textColorHint="@color/colorSecondaryLight"
-            tools:ignore="Autofill,UnusedAttribute" />
 
         <Button
             android:id="@+id/transferButton"

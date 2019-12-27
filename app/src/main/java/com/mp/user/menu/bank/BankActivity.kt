@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import com.mp.MainActivity
 import com.mp.R
+import com.mp.controller.PasswordController
 import com.mp.controller.TransferController
 import com.mp.controller.UserController
 import com.mp.model.Session
@@ -26,6 +27,11 @@ import kotlin.concurrent.schedule
 
 class BankActivity : AppCompatActivity() {
 
+
+    private lateinit var codeValidation: EditText
+    private lateinit var sendCode: Button
+    private var code: String = "x"
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
@@ -37,7 +43,8 @@ class BankActivity : AppCompatActivity() {
         setContentView(R.layout.activity_bank)
 
         val nominal: EditText = findViewById(R.id.nominal)
-        val password: EditText = findViewById(R.id.password)
+        codeValidation = findViewById(R.id.codeValidation)
+        sendCode = findViewById(R.id.sendCode)
         val description: EditText = findViewById(R.id.description)
         val transfer: Button = findViewById(R.id.transferButton)
 
@@ -58,8 +65,42 @@ class BankActivity : AppCompatActivity() {
             finish()
         }
 
+        sendCode.setOnClickListener {
+            loading.show()
+            try {
+                Timer().schedule(1000) {
+                    val response =
+                        PasswordController.SendCode(session.getString("phone").toString()).execute()
+                            .get()
+                    runOnUiThread {
+                        if (response["status"].toString() == "0") {
+                            code = response["code"].toString()
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                response["massage"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(
+                    this,
+                    "Ada masalah saat pengiriman kode mohon ulangi lagi",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            Timer().schedule(1000) {
+                loading.dismiss()
+            }
+        }
+
         transfer.setOnClickListener {
-            if (bankTarget.text.isEmpty()) {
+            if (code != codeValidation.text.toString()) {
+                Toast.makeText(this, "Code tidak valid", Toast.LENGTH_SHORT).show()
+            } else if (bankTarget.text.isEmpty()) {
                 Toast.makeText(this, "Nama BANK tidak boleh kosong", Toast.LENGTH_LONG).show()
                 bankTarget.requestFocus()
             } else if (accountTarget.text.isEmpty() || !accountTarget.text.isDigitsOnly()) {
@@ -76,9 +117,6 @@ class BankActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 nominal.requestFocus()
-            } else if (password.text.toString() != session.getString("pin")) {
-                Toast.makeText(this, "password tidak cocok", Toast.LENGTH_LONG).show()
-                password.requestFocus()
             } else if (description.text.toString().isEmpty()) {
                 Toast.makeText(this, "Deskripsi tidak boleh kosong", Toast.LENGTH_LONG).show()
                 description.requestFocus()

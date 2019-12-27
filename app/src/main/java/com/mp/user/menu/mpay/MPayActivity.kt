@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import com.mp.MainActivity
 import com.mp.R
+import com.mp.controller.PasswordController
 import com.mp.controller.TransferController
 import com.mp.controller.UserController
 import com.mp.model.Session
@@ -23,6 +24,10 @@ import kotlin.concurrent.schedule
 
 class MPayActivity : AppCompatActivity() {
 
+    private lateinit var codeValidation: EditText
+    private lateinit var sendCode: Button
+    private var code: String = "x"
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
@@ -34,7 +39,8 @@ class MPayActivity : AppCompatActivity() {
 
         val phoneTarget: EditText = findViewById(R.id.phoneNumberTarget)
         val nominal: EditText = findViewById(R.id.nominal)
-        val password: EditText = findViewById(R.id.password)
+        codeValidation = findViewById(R.id.codeValidation)
+        sendCode = findViewById(R.id.sendCode)
         val description: EditText = findViewById(R.id.description)
         val transfer: Button = findViewById(R.id.transferButton)
 
@@ -44,8 +50,42 @@ class MPayActivity : AppCompatActivity() {
         loading.setMessage("Wait while loading...")
         loading.setCancelable(false)
 
+        sendCode.setOnClickListener {
+            loading.show()
+            try {
+                Timer().schedule(1000) {
+                    val response =
+                        PasswordController.SendCode(session.getString("phone").toString()).execute()
+                            .get()
+                    runOnUiThread {
+                        if (response["status"].toString() == "0") {
+                            code = response["code"].toString()
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                response["massage"].toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(
+                    this,
+                    "Ada masalah saat pengiriman kode mohon ulangi lagi",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            Timer().schedule(1000) {
+                loading.dismiss()
+            }
+        }
+
         transfer.setOnClickListener {
-            if (phoneTarget.text.toString().isEmpty()) {
+            if (code != codeValidation.text.toString()) {
+                Toast.makeText(this, "Code tidak valid", Toast.LENGTH_SHORT).show()
+            } else if (phoneTarget.text.toString().isEmpty()) {
                 Toast.makeText(
                     applicationContext,
                     "nomor telfon hanya boleh angka dan tidak boleh kosong",
@@ -80,9 +120,6 @@ class MPayActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 nominal.requestFocus()
-            } else if (password.text.toString() != session.getString("pin")) {
-                Toast.makeText(applicationContext, "password tidak cocok", Toast.LENGTH_LONG).show()
-                password.requestFocus()
             } else if (description.text.toString().isEmpty()) {
                 Toast.makeText(
                     applicationContext,
@@ -91,14 +128,6 @@ class MPayActivity : AppCompatActivity() {
                 ).show()
                 description.requestFocus()
             } else {
-                println("===============================================")
-                println("===============================================")
-                println(phoneTarget.text.toString())
-                println(nominal.text.toString())
-                println(password.text.toString())
-                println(description.text.toString())
-                println("===============================================")
-                println("===============================================")
                 loading.show()
                 Timer().schedule(1000) {
                     try {

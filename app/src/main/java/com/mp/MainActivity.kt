@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.isDigitsOnly
@@ -23,6 +24,10 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var codeValidation: EditText
+    private lateinit var sendCode: Button
+    private var code: String = "x"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         val loginButton: Button = findViewById(R.id.login)
         val registerButton: Button = findViewById(R.id.register)
+        codeValidation = findViewById(R.id.codeValidation)
+        sendCode = findViewById(R.id.sendCode)
         //val forgotPassword : Button = findViewById(R.id.forgotPassword)
 
         val session = Session(this)
@@ -58,10 +65,55 @@ class MainActivity : AppCompatActivity() {
 
         loading.dismiss()
 
+        sendCode.setOnClickListener {
+            loading.show()
+            try {
+                Timer().schedule(1000) {
+                    runOnUiThread {
+                        val phoneTemporary = phoneNumber.text.toString()
+                        if (phoneTemporary.isEmpty()) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Nomor Telfon tdaik boleh kosong",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } else {
+                            val response =
+                                PasswordController.SendCode(phoneTemporary).execute().get()
+                            runOnUiThread {
+                                if (response["status"].toString() == "0") {
+                                    code = response["code"].toString()
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        response["massage"].toString(),
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                Toast.makeText(
+                    this,
+                    "Ada masalah saat pengiriman kode mohon ulangi lagi",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            Timer().schedule(1000) {
+                loading.dismiss()
+            }
+        }
+
         loginButton.setOnClickListener {
             loading.show()
             val phoneTemporary = phoneNumber.text.toString()
-            if (phoneTemporary.isEmpty()) {
+            if (code != codeValidation.text.toString()) {
+                Toast.makeText(this, "Code tidak valid", Toast.LENGTH_SHORT).show()
+                loading.dismiss()
+            } else if (phoneTemporary.isEmpty()) {
                 Toast.makeText(this, "Nomor Telepon Anda Tidak boleh kosong", Toast.LENGTH_LONG)
                     .show()
                 loading.dismiss()

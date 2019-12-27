@@ -22,6 +22,11 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="n">
         <activity
+            android:name=".user.menu.ConvertToMDPActivity"
+            android:autoRemoveFromRecents="true"
+            android:finishOnCloseSystemDialogs="true"
+            android:label="@string/convert_rek_point_mdp" />
+        <activity
             android:name=".user.menu.TopUpActivity"
             android:autoRemoveFromRecents="true"
             android:finishOnCloseSystemDialogs="true"
