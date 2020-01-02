@@ -33,7 +33,9 @@ class PostPaidController {
                         "&username=${username}" +
                         "&nohp=$phone" +
                         "&nominal=$nominal" +
-                        "&type=$type"
+                        "&type=$type"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
                 println(urlParameters)
 
                 // Send post request
@@ -52,6 +54,7 @@ class PostPaidController {
                     val inputData: String = input.readLine()
                     val response = JSONObject(inputData)
                     input.close()
+                    println(response)
                     response
                 } else {
                     JSONObject("{Status: 1, Pesan: 'internet tidak setabil'}")
@@ -86,7 +89,9 @@ class PostPaidController {
                         "&username=${username}" +
                         "&nohp=$phone" +
                         "&nominal=$nominal" +
-                        "&type=$type"
+                        "&type=$type"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -139,7 +144,9 @@ class PostPaidController {
 
                 val urlParameters = "a=PayPulsa&username=$username&nohp=$phone" +
                         "&kode=$payCode&nominal=$nominal&saldoawal=$firstBalance&markup=$markupAdmin" +
-                        "&harga=$price&sisasaldo=$remainingBalance"
+                        "&harga=$price&sisasaldo=$remainingBalance"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true

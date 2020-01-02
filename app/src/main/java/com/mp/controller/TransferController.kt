@@ -30,7 +30,9 @@ class TransferController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "a=TransferMember&dari=$userPhone&ke=$targetPhone&ket=$description&nominal=$total"
+                    "a=TransferMember&dari=$userPhone&ke=$targetPhone&ket=$description&nominal=$total" +
+                            "&uzer=2d21dbba2eded322b504c811170190d6"+
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -80,7 +82,9 @@ class TransferController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "a=WdCash&nohp=$userPhone&bank=$bank&norek=$account&namarek=$name&nominal=$total"
+                    "a=WdCash&nohp=$userPhone&bank=$bank&norek=$account&namarek=$name&nominal=$total" +
+                            "&uzer=2d21dbba2eded322b504c811170190d6"+
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -129,7 +133,9 @@ class TransferController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "a=CvReg&nohp=$phone&username=$usernameMDP&nominal=$nominalTransfer"
+                    "a=CvReg&nohp=$phone&username=$usernameMDP&nominal=$nominalTransfer" +
+                            "&uzer=2d21dbba2eded322b504c811170190d6"+
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true

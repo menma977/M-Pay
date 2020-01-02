@@ -31,7 +31,9 @@ class PaymentController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "a=ReqPayment&username=${username}&idpel=${customerID}&nohp=$phone&saldoawal=$firstBalance&type=$type"
+                    "a=ReqPayment&username=${username}&idpel=${customerID}&nohp=$phone&saldoawal=$firstBalance&type=$type"+
+                            "&uzer=2d21dbba2eded322b504c811170190d6"+
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
                 println(urlParameters)
 
                 // Send post request
@@ -90,7 +92,9 @@ class PaymentController {
                 val urlParameters = "a=BayarPayment&username=$username" +
                         "&type=$type&idpel=$clientID&npelanggan=$clientName&jmltagih=$price" +
                         "&admin=$admin&totaltagih=$totalPrice&hppembeli=$phoneNumber&sisasaldo=$remainingBalance" +
-                        "&markup=$markupAdmin&ref=$ref&periodetagih=$periodic"
+                        "&markup=$markupAdmin&ref=$ref&periodetagih=$periodic"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 println(urlParameters)
 

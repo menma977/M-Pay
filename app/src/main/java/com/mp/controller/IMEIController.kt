@@ -24,7 +24,9 @@ class IMEIController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=UpdateEmai&nohp=${phone}&emai=${imei}"
+                val urlParameters = "a=UpdateEmai&nohp=${phone}&emai=${imei}"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true

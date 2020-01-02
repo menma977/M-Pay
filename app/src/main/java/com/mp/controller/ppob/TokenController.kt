@@ -29,7 +29,9 @@ class TokenController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=ReqToken&username=${username}&nohp=$phone&idpel=$token&type=$type"
+                val urlParameters = "a=ReqToken&username=${username}&nohp=$phone&idpel=$token&type=$type"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -81,7 +83,9 @@ class TokenController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters = "a=PayToken&username=$username&nohp=$phone&kode=$payCode" +
-                        "&idpel=$token&saldoawal=$firstBalance&markup=$markupAdmin&harga=$price&sisasaldo=$reamingBalance"
+                        "&idpel=$token&saldoawal=$firstBalance&markup=$markupAdmin&harga=$price&sisasaldo=$reamingBalance"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true

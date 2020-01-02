@@ -24,7 +24,9 @@ class RegisterController {
                 httpURLConnection.setRequestProperty("Accept-Language", "en-US,en;q=0.5")
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
-                val urlParameters = "a=Register&phone=${phone}"
+                val urlParameters = "a=Register&phone=${phone}"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -82,7 +84,9 @@ class RegisterController {
                         "&nama=${name}" +
                         "&password=${password}" +
                         "&status=0" +
-                        "&tipeuser=1"
+                        "&tipeuser=1"+
+                        "&uzer=2d21dbba2eded322b504c811170190d6"+
+                        "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
