@@ -28,7 +28,9 @@ class PasswordController {
                 val randomCode = (100000 until 999999).random()
 
                 val urlParameters =
-                    "user=Put24B4w4J4v4&nohp=$phone&isi=hallo $phone ini code untuk validasi nomor telfon anda ($randomCode). jika anda tidak merasa melakukan pengiriman code ini via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay"
+                    "user=Put24B4w4J4v4&nohp=$phone&isi=hallo $phone ini code untuk validasi nomor telfon anda ($randomCode). jika anda tidak merasa melakukan pengiriman code ini via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay" +
+                            "&uzer=2d21dbba2eded322b504c811170190d6" +
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -38,7 +40,6 @@ class PasswordController {
                 write.close()
 
                 val responseCode = httpURLConnection.responseCode
-                println(responseCode)
                 if (responseCode == 200) {
                     val input = BufferedReader(
                         InputStreamReader(httpURLConnection.inputStream)
@@ -76,7 +77,9 @@ class PasswordController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "user=Put24B4w4J4v4&nohp=$phone&isi=hallo $phone password anda saat ini adalah $password . jika anda tidak merasa melakukan pengiriman password via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay"
+                    "user=Put24B4w4J4v4&nohp=$phone&isi=hallo $phone password anda saat ini adalah $password . jika anda tidak merasa melakukan pengiriman password via sms mohon untuk mengganti password anda segera demi keamanan akun anda dari Mpay" +
+                            "&uzer=2d21dbba2eded322b504c811170190d6" +
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -120,7 +123,9 @@ class PasswordController {
                 httpURLConnection.setRequestProperty("Accept", "application/json")
 
                 val urlParameters =
-                    "a=GantiPassword&username=$phone&passlama=$password&passlama=$password&passbaru=$newPassword&imei=$getIMEI"
+                    "a=GantiPassword&username=$phone&passlama=$password&passlama=$password&passbaru=$newPassword&imei=$getIMEI" +
+                            "&uzer=2d21dbba2eded322b504c811170190d6" +
+                            "&passw=fd1d59e3076e99f13f29a783ac79aecf"
 
                 // Send post request
                 httpURLConnection.doOutput = true
@@ -130,7 +135,6 @@ class PasswordController {
                 write.close()
 
                 val responseCode = httpURLConnection.responseCode
-                println(responseCode)
                 return if (responseCode == 200) {
                     val input = BufferedReader(
                         InputStreamReader(httpURLConnection.inputStream)
